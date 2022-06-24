@@ -37,7 +37,7 @@ export default function IndexPage() {
 
   useEffect(()=>{
     start();
-  })
+  },[1])
   return (
     <div
     style={{

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { Button, Row, Form, Input, Checkbox } from 'antd'
 import { MailOutlined, LockOutlined } from '@ant-design/icons'
-import { Link } from 'umi'
 import { connect } from 'dva'
 
 export default function Index(props: any) {
