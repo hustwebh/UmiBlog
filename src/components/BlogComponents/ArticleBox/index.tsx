@@ -13,11 +13,15 @@ const IconText = ({ icon, text }: { icon: any, text: number }) => (
 )
 
 export default function Index(props: ArticleBoxType) {
-  const { title, createAt, tag = [], view, favorite, comment  } = props;
+  const { title, createAt, tag = [], view, favorite, comment, articleId, showDetail } = props;
 
   return (
     <>
-      <div className={styles.container}>
+      <div className={styles.container} onClick={()=>{
+        // if(showDetail) {
+          showDetail(articleId);
+        // }
+      }}>
         <Skeleton avatar title={false} loading={false} active style={{height:'100%'}}>
           <div className={styles.articleContainer}>
             <h2>{title}</h2>

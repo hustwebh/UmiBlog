@@ -1,6 +1,7 @@
 import {
   getArticles,
-  getTags
+  getTags,
+  getAllClasses
 } from '@/service/article'
 
 export default {
@@ -10,6 +11,7 @@ export default {
     articles: [],
     comments: [],
     tags: [],
+    classesList: [],
     detail: {},
     articleCount: 0,
     isFavorite: false,
@@ -17,8 +19,8 @@ export default {
   },
   effects: {
     *articles({ payload }, { call, put }) {
-      // const { status, data } = yield call(getArticles, payload)
-      // if (status === 200) {
+      // const { code, data } = yield call(getArticles, payload)
+      // if (code === 200) {
       //   yield put({
       //     type: 'handle',
       //     payload: {
@@ -44,8 +46,8 @@ export default {
       })
     },
     *tags({ payload }, { call, put }) {
-      // const { status, data } = yield call(getTags, payload)
-      // if (status === 200) {
+      // const { code, data } = yield call(getTags, payload)
+      // if (code === 200) {
       //   yield put({
       //     type: 'handle',
       //     payload: {
@@ -53,6 +55,7 @@ export default {
       //     },
       //   })
       // }
+      
       const data = ["javaScript", "react"];
       yield put({
         type: 'handle',
@@ -61,6 +64,26 @@ export default {
         },
       })
     },
+    *classes({ payload }, { call, put }) {
+      // const { code,data } = yield call(getAllClasses,payload)
+      // if(code===200) {
+      //   yield put({
+      //     type:'handle',
+      //     payload: {
+      //       classesList: data
+      //     }
+      //   })
+      // }
+      const data = [
+        { name: "yi", number: 1 }, { name: "yi", number: 1 }, { name: "yi", number: 1 }
+      ]
+      yield put({
+        type: 'handle',
+        payload: {
+          classesList: data
+        }
+      })
+    }
   },
   reducers: {
     handle(state, { payload }) {

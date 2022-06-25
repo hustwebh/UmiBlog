@@ -15,13 +15,13 @@ const accountList = [
 
 
 const Index: React.FC = (props: any) => {
-  console.log("props", props);
   const {
     dispatch,
     articles,
     articleCount,
     tags,
     loading,
+    history,
     location: { state = {} },
   } = props;
   const { category, tag } = state
@@ -59,6 +59,14 @@ const Index: React.FC = (props: any) => {
     }
   }
 
+  onclick = props.onClick;
+
+  const showDetail = (articleId:number)=>{
+    console.log(123);
+    
+    history.push(`/detail/${articleId}`);
+  } 
+
   return (
     <>
       <Row style={{
@@ -68,7 +76,7 @@ const Index: React.FC = (props: any) => {
       >
         <Col span={17}>
           {articles.map((item: ArticleBoxType, index: number) => {
-            return (<ArticleBox {...item} key={index} />);
+            return (<ArticleBox {...item} key={index} showDetail={showDetail}/>);
           })}
 
         </Col>

@@ -11,7 +11,8 @@ import {
   HighlightOutlined,
   TagsOutlined,
   MessageOutlined,
-  SmileOutlined
+  SmileOutlined,
+  EnvironmentOutlined
 } from '@ant-design/icons'
 import { Link } from 'umi'
 // import UserAvatar from '@/components/UserAvatar'
@@ -27,6 +28,7 @@ const items: MenuProps["items"] = [
     key: 'artical',
     icon: <BookTwoTone />,
     children: [
+      { label: '首页', key: 'blog', icon: <EnvironmentOutlined /> },
       { label: '搜索', key: 'search', icon: <SearchOutlined /> },
       { label: '分类', key: 'classes', icon: <UnorderedListOutlined /> },
       { label: '标签', key: 'tags', icon: <TagsOutlined /> }
