@@ -1,5 +1,5 @@
 declare module '*.css';
-declare module '*.less';
+// declare module '*.less';
 declare module '*.png';
 declare module '*.svg' {
   export function ReactComponent(
@@ -7,4 +7,8 @@ declare module '*.svg' {
   ): React.ReactElement;
   const url: string;
   export default url;
+}
+declare module '*.less' {
+  const classes: { [key: string]: string };
+  export default classes;
 }

@@ -1,41 +1,44 @@
 export default [
   {
-    path: "/",
-    component: "@/pages"
+    path: '/',
+    component: '@/pages',
   },
   {
-    path: "/",
-    component: "@/layouts/BlogLayouts/index",
+    path: '/',
+    component: '@/layouts/BlogLayouts/index',
     routes: [
       {
-        path: "/blog",
-        component: "@/pages/blog",
+        path: '/blog',
+        component: '@/pages/blog',
       },
       {
-        path: "/search",
-        component: "@/pages/search",
+        path: '/search',
+        component: '@/pages/search',
       },
       {
-        path: "/classes",
-        component: "@/pages/classes",
+        path: '/classes',
+        component: '@/pages/classes',
       },
       {
-        path:"/tags",
-        component :"@/pages/tags",
+        path: '/tags',
+        component: '@/pages/tags',
       },
       {
-        path: "/shortSpeak",
-        component: "@/pages/shortSpeak",
+        path: '/shortSpeak',
+        component: '@/pages/shortSpeak',
       },
       {
-        path: "/friends",
-        component: "@/pages/friends",
+        path: '/friends',
+        component: '@/pages/friends',
       },
       {
-        path: "/about",
-        component: "@/pages/about",
+        path: '/about',
+        component: '@/pages/about',
       },
-      
-    ]
-  }
+      {
+        path: '/detail/:articleId',
+        component: '@/pages/articleDetail/[index].tsx',
+      },
+    ],
+  },
 ];
