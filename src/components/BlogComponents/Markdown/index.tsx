@@ -7,10 +7,12 @@ import MathTag from './MathTag';
 import MathInline from './MathInline';
 
 const Markdown = (props: any) => {
+  
   const { markdown } = props;
   return (
     <ReactMarkdown
-      source={markdown}
+      // source={markdown}
+      children={markdown}
       linkTarget={() => '_blank'}
       plugins={[[require('remark-math')]]}
       renderers={{

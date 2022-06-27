@@ -5,9 +5,42 @@ import { connect } from 'dva'
 
 export default function Index(props: any) {
   const [form] = Form.useForm()
-  const { dispatch, title, typeHandler } = props
+  const { dispatch, title, typeHandler, handleCancel,location } = props
+
   const onFinish = (values: FormData) => {
-    console.log(values);
+    if(dispatch) {
+      if (title === "登录") { 
+        dispatch({
+          type: 'user/login',
+          payload: values
+        })
+          .then((res: boolean) => {
+            if(res){
+              console.log("登录成功,向数据库请求用户信息",res);
+              dispatch({
+                type: 'user/account',
+              })
+              .then((res:boolean)=>{
+                if(res && location.isRegister) {
+                  handleCancel();
+                }else{
+                  //清空表单
+                  form.resetFields();
+                }
+              })
+            }
+          })
+      } else {
+        dispatch({
+          type: 'user/register',
+          payload: values
+        })
+        .then((res:boolean)=>{
+          console.log(res);
+          if(res) typeHandler("登录")
+        })
+      }
+    }
   }
   return (
     <>

@@ -23,6 +23,7 @@ const accountList = [
 ];
 
 const Index: React.FC = (props: any) => {
+  
   const {
     dispatch,
     articles,
@@ -46,7 +47,7 @@ const Index: React.FC = (props: any) => {
         });
       }
     },
-    tag ? [tag] : category ? [category] : [],
+    tag ? [tag] : [],
   );
 
   //获取博客标签列表

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext } from 'react'
-import { Menu, Drawer, Button, Dropdown, Modal } from 'antd'
+import { Menu, Drawer, Button, Dropdown, Modal, Avatar } from 'antd'
 import type { MenuProps } from 'antd';
 import { connect } from 'dva'
 import {
@@ -12,7 +12,8 @@ import {
   TagsOutlined,
   MessageOutlined,
   SmileOutlined,
-  EnvironmentOutlined
+  EnvironmentOutlined,
+  UserOutlined
 } from '@ant-design/icons'
 import { Link } from 'umi'
 // import UserAvatar from '@/components/UserAvatar'
@@ -54,14 +55,15 @@ const items: MenuProps["items"] = [
 ]
 
 const Index: React.FC = (props: any) => {
-  const { dispatch, account, history } = props
+  const { dispatch, account, history, location } = props
+
+  console.log("account", account);
+
+
 
   const [menuVisible, setMenuVisible] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const [modalType, setModalType] = useState('')
-  const [modalLoading,setModalLoading] = useState(false)
-
-  useEffect(() => { }, [])
 
   const showDrawer = () => {
     setMenuVisible(true)
@@ -70,7 +72,10 @@ const Index: React.FC = (props: any) => {
     setMenuVisible(false)
   }
   const logout = () => {
-
+    storageHelper.clear('user')
+    if (dispatch) {
+      dispatch({ type: 'user/logout' })
+    }
   }
   const handleClick: MenuProps['onClick'] = e => {
     history.push(`/${e.key}`)
@@ -85,13 +90,13 @@ const Index: React.FC = (props: any) => {
     setModalVisible(false);
   };
 
-  const typeHandler = (type:string)=>{
+  const typeHandler = (type: string) => {
     setModalType(type);
   }
 
   return (
     <>
-    {/* // <ReachableContext.Provider value={}> */}
+      {/* // <ReachableContext.Provider value={}> */}
       <div className={styles.homeHeader}>
         <div className={styles.homeHeaderLeft}>
           <div className={styles.homeHeaderPc}>
@@ -162,15 +167,16 @@ const Index: React.FC = (props: any) => {
                 onClick={e => e.preventDefault()}
               >
                 {/* <UserAvatar src={account.avatar} size="large" /> */}
+                {account.avatar
+                  ? (<Avatar size={props.size || 'default'} src={account.avatar} />)
+                  : (<Avatar size={props.size || 'default'} icon={<UserOutlined />} />)}
               </a>
             </Dropdown>
           ) : (
             <span>
-              {/* <Link to="/login">登录</Link> */}
               <Button onClick={() => (userEvent('登录'))}>登录</Button>
-              <span className="pd-5">·</span>
+              <span className="pd-5"> </span>
               <Button onClick={() => (userEvent('注册'))}>注册</Button>
-              {/* <Link to="/register">注册</Link> */}
             </span>
           )}
         </div>
@@ -198,16 +204,33 @@ const Index: React.FC = (props: any) => {
         >
         </Menu>
       </Drawer>
-      
-        <Modal 
+
+      <Modal
         visible={modalVisible}
         onCancel={handleCancel}
         footer={null}>
-        <ModalForm title={modalType} dispatch={dispatch} typeHandler={typeHandler}/>
-        </Modal>
+        <ModalForm
+          title={modalType}
+          dispatch={dispatch}
+          typeHandler={typeHandler}
+          handleCancel={handleCancel}
+          location={location}
+        />
+      </Modal>
       {/* </ReachableContext.Provider> */}
-      </>
+    </>
   );
 };
 
-export default Index;
+const mapStateToProps = ({ user: { account } }:
+  {
+    user: {
+      account: any;
+    }
+  }) => {
+  return {
+    account,
+  }
+}
+
+export default connect(mapStateToProps)(Index);

@@ -37,7 +37,7 @@ export default [
       },
       {
         path: '/detail/:articleId',
-        component: '@/pages/articleDetail/[index].tsx',
+        component: '@/pages/articleDetail/[index]',
       },
     ],
   },
