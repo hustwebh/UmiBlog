@@ -4,9 +4,13 @@ import {
   getAllClasses,
   getComments,
   getArticleDetail,
+  getIsFavorite,
   createNoLoginComment,
-  createComment
+  createComment,
+  updateFavorite
 } from '@/service/article'
+
+import {message} from 'antd'
 
 export default {
   namespace: 'article',
@@ -89,8 +93,8 @@ export default {
       })
     },
     *detail({ payload }, { call, put }) {
-      // const { status, data } = yield call(getArticleDetail, payload)
-      // if (status === 200) {
+      // const { code, data } = yield call(getArticleDetail, payload)
+      // if (code === 200) {
       //   yield put({
       //     type: 'handle',
       //     payload: {
@@ -102,11 +106,9 @@ export default {
       const data = {
         "view": 123,
         "title": "标题1",
-        "markdown": `## halloWorld!\nqweasd\n123qwe
-        ~~~js
-          console.log(123)
-        ~~~
-        `,
+        "markdown": `## halloWorld!
+        qweasd
+        123qwe`,
         "anchor": `[]`,
         "uid": 1,
         "user": {
@@ -119,7 +121,8 @@ export default {
         },
         "creatAt": "2022-6-27-10:10",
         "comment": 10,
-        "favorite": 100
+        "favorite": 100,
+        "isFavorite": 1
       }
       yield put({
         type: 'handle',
@@ -130,8 +133,8 @@ export default {
       })
     },
     *comments({ payload }, { call, put }) {
-      // const { status, data } = yield call(getComments, payload)
-      // if (status === 200) {
+      // const { code, data } = yield call(getComments, payload)
+      // if (code === 200) {
       //   yield put({
       //     type: 'handle',
       //     payload: {
@@ -148,27 +151,61 @@ export default {
       })
     },
     *addNoLoginComment({ payload }, { call, put }) {
-      const { status, data } = yield call(createNoLoginComment, payload)
-      if (status === 200) {
+      const { code, data } = yield call(createNoLoginComment, payload)
+      if (code === 200) {
         yield put({
           type: 'createCommentHandle',
           payload: data,
         })
       }
     },
-
-    *addComment({ payload }, { call, put }) {
-      const { status, data } = yield call(createComment, payload)
-      if (status === 200) {
+    *comments({ payload }, { call, put }) {
+      const { code, data } = yield call(createComment, payload)
+      if (code === 200) {
         yield put({
           type: 'createCommentHandle',
           payload: data,
         })
       }
     },
+    *favorite({ payload }, { call, put }) {
+      // const { code } = yield call(updateFavorite, payload)
+      // if (code === 200) {
+        yield put({ type: 'changeFavorite' })
+      // } else {
+        // message.warning("请先登录")
+      // }
+    },
+  },
+  *isFavorite({ payload}, { call, put }) {
+    const { status, data } = yield call(getIsFavorite, payload)
+    if (status === 200) {
+      yield put({
+        type: 'handle',
+        payload: {
+          isFavorite: data,
+        },
+      })
+    }
   },
 
   reducers: {
+    changeFavorite(state) {
+      console.log(state);
+      const type = state.isFavorite ? 'reduce' : 'plus'
+      let favoriteCount = state.favoriteCount
+      if (type === 'plus') {
+        favoriteCount += 1
+      }
+      if (type === 'reduce') {
+        favoriteCount -= 1
+      }
+      return {
+        ...state,
+        isFavorite: !state.isFavorite,
+        favoriteCount,
+      }
+    },
     handle(state, { payload }) {
       return { ...state, ...payload }
     },

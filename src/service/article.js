@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 
 export async function getArticles(data) {
-  return request(`/api/article/articles`,{
+  return request(`/api/article/articles`, {
     method: 'POST',
     data,
   })
@@ -14,6 +14,19 @@ export async function getTags() {
 
 export async function getArticleDetail(params) {
   return request(`/api/detail?${stringify(params)}`)
+}
+
+// 文章点赞
+export async function updateFavorite(data) {
+  return request('/api/update/favorite',{
+    method: 'POST',
+    data
+  })
+}
+
+// 是否已点赞
+export async function getIsFavorite(params) {
+  return request(`/api/isFavorite?${stringify(params)}`)
 }
 
 // 获取用户评论

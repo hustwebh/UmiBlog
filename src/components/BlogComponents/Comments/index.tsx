@@ -2,8 +2,8 @@ import React, { useEffect } from 'react'
 import { connect } from 'dva'
 import { Comment, Divider, Tooltip, List, Card, Avatar } from 'antd'
 import { UserOutlined } from '@ant-design/icons';
-import LoginCommentForm from '@/components/BlogComponents/AddComment/LoginCommentForm'
-import NoLoginCommentForm from '@/components/BlogComponents/AddComment/NoLoginCommentForm'
+import LoginCommentForm from '@/components/BlogComponents/Comments/LoginCommentForm'
+import NoLoginCommentForm from '@/components/BlogComponents/Comments/NoLoginCommentForm'
 
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime'
@@ -27,25 +27,18 @@ const UserAvatar = (props: any) =>
     <Avatar size={props.size || 'default'} icon={<UserOutlined />} />
   );
 
-const AddComment = (props:any) => {
-  const { account, dispatch, id, author, comments, loading } = props
-  useEffect(() => {
-    if (dispatch) {
-      dispatch({ type: 'article/comments', payload: { id } })
-    }
-  }, [])
+  export default function Comments(props:any)  {
+  const { account, id, author, comments, loading } = props
   return (
     <Card
       title="评论"
       bordered={false}
       loading={loading}
-      className="mtb-20"
-      id="comment"
     >
       <List
-        className="comment-list"
         itemLayout="horizontal"
         split={false}
+        locale={{emptyText:"暂无评论" }}
         dataSource={comments}
         renderItem={(item:any) => (
           <List.Item>
@@ -70,20 +63,3 @@ const AddComment = (props:any) => {
     </Card>
   )
 }
-
-export default connect(
-  ({ article: { comments }, user: { account }, loading }
-    :{
-      article:{
-        comments:any
-      },
-      user:{
-        account:any
-      },
-      loading:any
-    }) => ({
-    comments,
-    account,
-    loading: loading.effects['article/comments'],
-  }),
-)(AddComment)

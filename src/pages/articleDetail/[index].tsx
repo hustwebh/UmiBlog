@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Layout, Card, Avatar, Row, Col, Divider, Tooltip } from 'antd';
 import { UserOutlined, MessageOutlined, LikeOutlined, GlobalOutlined, GithubOutlined, WeiboCircleOutlined, createFromIconfontCN } from '@ant-design/icons';
 import MathJax from 'react-mathjax';
-import Markdown from '@/components/BlogComponents/Markdown';
+// import Markdown from '@/components/BlogComponents/Markdown';
+import MarkdownIt from 'markdown-it';
+import hljs from "highlight.js"
 // import Markdown from 'react-markdown';
 import ArticleAnchor from '@/components/BlogComponents/ArticleAnchor';
-import AddComment from '@/components/BlogComponents/AddComment'
+import Comments from '@/components/BlogComponents/Comments'
 
 import styles from './index.less';
 import './markdown.css';
@@ -35,14 +37,19 @@ const Index: React.FC = (props: any) => {
     favoriteCount,
     detail,
     loading,
+    comments,
+    account,
+    loading2
   } = props;
   console.log("detail", detail);
 
+  const markdownRenderer = new MarkdownIt();
 
   useEffect(() => {
     if (dispatch) {
       dispatch({ type: 'article/detail', payload: { articleId } });
-      // dispatch({ type: 'article/isFavorite', payload: { articleId } });
+      dispatch({ type: 'article/isFavorite', payload: { articleId } });
+      dispatch({ type: 'article/comments',payload: { articleId } });
     }
   }, []);
 
@@ -88,14 +95,15 @@ const Index: React.FC = (props: any) => {
               </div>
 
               <h1>{detail.title}</h1>
-              <div className="markdown-body">
-                <MathJax.Provider>
-                  <Markdown markdown={detail.markdown}></Markdown>
-                </MathJax.Provider>
-              </div>
+              { detail.markdown && (<div
+                className="markdown-body"
+                dangerouslySetInnerHTML={{__html:markdownRenderer.render(detail.markdown)}}
+                >
+                </div>) }
             </div>
           </Card>
-          {/* <AddComment id={articleId} author={detail.uid} /> */}
+          <Divider />
+          <Comments id={articleId} author={detail.uid} loading={loading2} comments={comments} account={account}/>
         </div>
         <div className={styles.articleContainerSider}>
           <Card
@@ -139,7 +147,6 @@ const Index: React.FC = (props: any) => {
                 <small>评论</small>
               </Col>
             </Row>
-            {/* <Divider dashed className="mb-0" /> */}
           </Card>
           TODO：生成文章锚点
           {detail && detail.anchor && (
@@ -173,17 +180,24 @@ const Index: React.FC = (props: any) => {
 };
 
 const mapStateToProps = ({
-  article: { detail, isFavorite, favoriteCount },
+  article: { detail, isFavorite, favoriteCount, comments },
+  user: { account },
   loading,
+  loading2
 }: {
-  article: { detail: object; isFavorite: any; favoriteCount: number };
-  loading: any;
+  article: { detail: object; isFavorite: any; favoriteCount: number;comments:any[] };
+  user: { account:object }
+  loading:any;
+  loading2:any;
 }) => {
   return {
     detail,
     isFavorite,
     favoriteCount,
+    account,
+    comments,
     loading: loading.effects['article/detail'],
+    loading2: loading.effects['article/comments']
   };
 };
 
