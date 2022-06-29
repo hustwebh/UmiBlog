@@ -17,18 +17,11 @@ export default function Index(props: any) {
       justifyContent:'center'
     }}
     >
-      {isSpecial
-      ?(<div
-        className={styles.withoutMarginTop}
+      <div
+        className={styles.accountPage}
       >
         {props.children}
-      </div>)
-    :(<div
-      className={styles.normal}
-    >
-      {props.children}
-    </div>)
-    }
+      </div>
     </div>    
     </>
   )

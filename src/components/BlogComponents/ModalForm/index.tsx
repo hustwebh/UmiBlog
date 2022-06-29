@@ -16,12 +16,11 @@ export default function Index(props: any) {
         })
           .then((res: boolean) => {
             if(res){
-              console.log("登录成功,向数据库请求用户信息",res);
               dispatch({
                 type: 'user/account',
               })
               .then((res:boolean)=>{
-                if(res && location.isRegister) {
+                if(res || location.isRegister) {
                   handleCancel();
                 }else{
                   //清空表单

@@ -4,8 +4,18 @@ export default [
     component: '@/pages',
   },
   {
+    path: '/write',
+    component: '@/layouts/BlogLayouts/writePageLayout',
+    routes: [
+      {
+        path: '/write/:key',
+        component: '@/pages/write',
+      }
+    ]
+  },
+  {
     path: '/',
-    component: '@/layouts/BlogLayouts/index',
+    component: '@/layouts/BlogLayouts/webPageLayout/index',
     routes: [
       {
         path: '/blog',

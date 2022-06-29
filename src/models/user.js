@@ -53,11 +53,11 @@ export default {
       //   message.success('登录成功')
       //   return true;
       // }
+      // history.push({ isRegister: true })
       return true;
     },
 
     *account({ payload }, { call, put }) {
-      console.log("storageHelper",storageHelper.set);
       // const {code, data} = yield call(getAccount, payload)
       // if (code === 200) {
       //   storageHelper.set('user',data)
@@ -77,7 +77,6 @@ export default {
         // "avatar":"123.jpg"
        }
       storageHelper.set('user',data);
-      console.log("设置Storage完毕");
         yield put({
           type: 'handle',
           payload: {

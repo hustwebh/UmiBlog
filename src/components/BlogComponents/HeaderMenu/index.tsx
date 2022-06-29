@@ -134,16 +134,16 @@ const Index: React.FC = (props: any) => {
               overlay={
                 <Menu>
                   <Menu.Item key="write-article-key">
-                    <Link to="/write/draft/new">写文章</Link>
+                    <Link to="/write/new">写文章</Link>
                   </Menu.Item>
                   <Menu.Item key="drafts-key">
                     <Link to="/write/drafts">草稿箱</Link>
                   </Menu.Item>
                   <Menu.Divider />
-                  <Menu.Item key="write-course-key">
+                  {/* <Menu.Item key="write-course-key">
                     <Link to="/write/course">写教程</Link>
-                  </Menu.Item>
-                  <Menu.Divider />
+                  </Menu.Item> */}
+                  {/* <Menu.Divider /> */}
                   {account.account_type === 'ADMIN' ? (
                     <Menu.Item key="manager-center-key">
                       <Link to="/admin">管理中心</Link>
