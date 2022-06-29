@@ -23,16 +23,16 @@ export default {
   },
   effects: {
     *saveDraft({ payload, callback }, { call, put }) {
-      const { status, data } = yield call(createDraft, payload)
-      if (status === 200) {
+      const { code, data } = yield call(createDraft, payload)
+      if (code === 200) {
         history.push(`/write/draft/${data.id}`)
         message.success('保存草稿成功')
       }
     },
     //根据key获得草稿数据
     *draft({ payload }, { call, put }) {
-      const { status, data } = yield call(getDraft, payload)
-      if (status === 200) {
+      const { code, data } = yield call(getDraft, payload)
+      if (code === 200) {
         yield put({
           type: 'handle',
           payload: {
@@ -44,8 +44,8 @@ export default {
     },
 
     *drafts({ payload }, { call, put }) {
-      const { status, data } = yield call(getDrafts, payload)
-      if (status === 200) {
+      const { code, data } = yield call(getDrafts, payload)
+      if (code === 200) {
         yield put({
           type: 'handle',
           payload: {
@@ -56,8 +56,8 @@ export default {
     },
 
     *categories({ payload }, { call, put }) {
-      const { status, data } = yield call(getCategories, payload)
-      if (status === 200) {
+      const { code, data } = yield call(getCategories, payload)
+      if (code === 200) {
         yield put({
           type: 'categoriesHandle',
           payload: {
@@ -72,15 +72,15 @@ export default {
     },
 
     *updateDraft({ payload }, { call, put }) {
-      const { status } = yield call(updateDraft, payload)
-      if (status === 200) {
+      const { code } = yield call(updateDraft, payload)
+      if (code === 200) {
         message.success('保存草稿成功')
       }
     },
 
     *deleteDraft({ payload }, { call, put }) {
-      const { status, data } = yield call(deleteDraft, payload)
-      if (status === 200) {
+      const { code, data } = yield call(deleteDraft, payload)
+      if (code === 200) {
         yield put({
           type: 'deleteDraftHandle',
           payload: data,
@@ -89,8 +89,8 @@ export default {
     },
 
     *publish({ payload, callback }, { call, put }) {
-      const { status } = yield call(createPublish, payload)
-      if (status === 200) {
+      const { code } = yield call(createPublish, payload)
+      if (code === 200) {
         message.success('发布文章成功')
         yield put({
           type: 'setMarkdown',

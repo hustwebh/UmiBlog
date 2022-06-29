@@ -137,7 +137,7 @@ const Index: React.FC = (props: any) => {
                     <Link to="/write/new">写文章</Link>
                   </Menu.Item>
                   <Menu.Item key="drafts-key">
-                    <Link to="/write/drafts">草稿箱</Link>
+                    <Link to="/drafts">草稿箱</Link>
                   </Menu.Item>
                   <Menu.Divider />
                   {/* <Menu.Item key="write-course-key">

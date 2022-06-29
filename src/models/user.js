@@ -73,7 +73,7 @@ export default {
       const data = { 
         "email":"123@qq.com",
         "id": 1,
-        "account.addount_type":"ADMIN",
+        "account_type":"ADMIN",
         // "avatar":"123.jpg"
        }
       storageHelper.set('user',data);

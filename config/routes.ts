@@ -14,6 +14,42 @@ export default [
     ]
   },
   {
+    path: '/drafts',
+    component: '@/layouts/BlogLayouts/writePageLayout',
+    routes: [
+      {
+        path: '/drafts',
+        component: '@/pages/drafts',
+      }
+    ]
+  },
+  {
+    path: '/admin',
+    component: '@/layouts/BlogLayouts/adminLayout',
+    routes: [
+      {
+        path: '/admin',
+        redirect: '/admin/categories',
+      },
+      {
+        path: '/admin/categories',
+        component: '@/pages/admin/categories',
+      },
+      {
+        path: '/admin/tags',
+        component: '@/pages/admin/tags',
+      },
+      {
+        path: '/admin/articles',
+        component: '@/pages/admin/articles',
+      },
+      {
+        path: '/admin/comments',
+        component: '@/pages/admin/comments',
+      },
+    ],
+  },
+  {
     path: '/',
     component: '@/layouts/BlogLayouts/webPageLayout/index',
     routes: [
