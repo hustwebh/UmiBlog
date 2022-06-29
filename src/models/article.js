@@ -159,6 +159,16 @@ export default {
         })
       }
     },
+
+    *addComment({ payload }, { call, put }) {
+      const { code, data } = yield call(createComment, payload)
+      if (code === 200) {
+        yield put({
+          type: 'createCommentHandle',
+          payload: data,
+        })
+      }
+    },
     *comments({ payload }, { call, put }) {
       const { code, data } = yield call(createComment, payload)
       if (code === 200) {
@@ -178,8 +188,8 @@ export default {
     },
   },
   *isFavorite({ payload}, { call, put }) {
-    const { status, data } = yield call(getIsFavorite, payload)
-    if (status === 200) {
+    const { code, data } = yield call(getIsFavorite, payload)
+    if (code === 200) {
       yield put({
         type: 'handle',
         payload: {

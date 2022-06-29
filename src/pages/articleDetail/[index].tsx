@@ -41,7 +41,6 @@ const Index: React.FC = (props: any) => {
     account,
     loading2
   } = props;
-  console.log("detail", detail);
 
   const markdownRenderer = new MarkdownIt();
 
