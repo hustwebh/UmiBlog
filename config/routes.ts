@@ -70,10 +70,6 @@ export default [
         component: '@/pages/tags',
       },
       {
-        path: '/shortSpeak',
-        component: '@/pages/shortSpeak',
-      },
-      {
         path: '/friends',
         component: '@/pages/friends',
       },

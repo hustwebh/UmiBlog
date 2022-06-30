@@ -39,7 +39,7 @@ const Comment = (props:any) => {
       width: 150,
       render(article:any) {
         return (
-          <Link className="ft-13" to={`/article/${article.id}`}>
+          <Link to={`/detail/${article.id}`}>
             {article.title}
           </Link>
         )

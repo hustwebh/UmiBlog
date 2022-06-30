@@ -1,7 +1,103 @@
-import React from 'react'
+import React,{ useEffect,useState,useRef } from 'react'
+import { connect } from 'dva';
+import { Pagination,Input } from 'antd'
+import { SearchOutlined } from '@ant-design/icons'
+import type {InputRef} from 'antd'
+import styles from './index.less'
+import articles from '../admin/articles';
 
-export default function Index() {
+const SearchBox = (props:any)=>{
+  const {title,createAt,showDetail,articleId} = props;
   return (
-    <div>Search</div>
+    <>
+      <div className={styles.articleBtn} onClick={()=>{showDetail(articleId)}}>
+      <div style={{marginLeft:20,fontSize:20}}>{title}</div>
+      <div style={{marginRight:20,fontSize:20}}>{createAt}</div>
+    </div>
+    </>
+  );
+}
+
+const Index:React.FC=(props:any)=> {
+
+  const { dispatch,articles,articleCount,history } = props;
+
+  const searchInput = useRef<InputRef>(null)
+  
+  const [page,setPage] = useState(1);
+  useEffect(()=>{
+    if(dispatch) {      
+      dispatch({
+        type:'article/articles',
+        payload:{
+          page, pageSize: 5
+        }
+      })
+    }
+  },[])
+
+  const showDetail = (articleId: number) => {
+    history.push(`/detail/${articleId}`);
+  };
+
+  const pageChange = (pageNum: number, pageSize = 5) => {
+    setPage(pageNum);
+    if (dispatch) {
+      dispatch({
+        type: 'article/articles',
+        payload: { page: pageNum, pageSize },
+      });
+    }
+  };
+
+  const searchByTitle = (value:string) =>{
+    console.log(123);
+  }
+
+  return (
+    <div style={{
+      display:'flex',
+      minHeight:600,
+      justifyContent:'space-around',
+      flexDirection:'column',
+      alignItems:'center'
+    }}>
+      <div className={styles.title}>搜索文章</div>
+      <div className={styles.container}>
+          <div className={styles.searchInputContainer}>
+            <Input
+            ref={searchInput}
+            className={styles.searchInput}
+            bordered={false}
+            placeholder="请输入想搜索文章的标题"/>
+            <div className={styles.searchBtn} onClick={searchByTitle}>
+              <SearchOutlined style={{fontSize:"30px"}}/>
+            </div>
+          </div>
+          {articles&&articles.map((item:any, index: number) => {
+            return <SearchBox title={item.title} articleId={item.articleId} createAt={item.createAt} key={index} showDetail={showDetail}/>;
+          })}
+          <Pagination
+          style={{marginBottom:10}}
+          total={articleCount}
+          showTotal={(articleCount:number) => `共有${articleCount}篇文章`}
+          defaultPageSize={5}
+          defaultCurrent={page}
+          onChange={pageChange}
+        />
+      </div>
+    </div>
   )
 }
+
+const mapStateToProps = ({article:{articles,articleCount}}:{
+  article:{
+    articles:any[],
+    articleCount:number
+  }
+})=>({
+  articles,
+  articleCount,
+})
+
+export default connect(mapStateToProps)(Index)

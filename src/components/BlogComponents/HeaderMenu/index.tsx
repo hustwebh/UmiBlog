@@ -30,15 +30,14 @@ const items: MenuProps["items"] = [
     icon: <BookTwoTone />,
     children: [
       { label: '首页', key: 'blog', icon: <EnvironmentOutlined /> },
-      { label: '搜索', key: 'search', icon: <SearchOutlined /> },
       { label: '分类', key: 'classes', icon: <UnorderedListOutlined /> },
       { label: '标签', key: 'tags', icon: <TagsOutlined /> }
     ]
   },
   {
-    label: '说说',
-    key: 'shortSpeak',
-    icon: <MessageOutlined />,
+    label: '搜索',
+    key: 'search',
+    icon: <SearchOutlined />
   },
   {
 

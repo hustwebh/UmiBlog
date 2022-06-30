@@ -187,7 +187,7 @@ export default {
       // }
     },
   },
-  *isFavorite({ payload}, { call, put }) {
+    *isFavorite({ payload}, { call, put }) {
     const { code, data } = yield call(getIsFavorite, payload)
     if (code === 200) {
       yield put({

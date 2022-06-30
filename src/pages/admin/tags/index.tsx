@@ -56,21 +56,21 @@ const Tag = (props:any) => {
       dataIndex: 'name',
       key: 'name',
     },
-    {
-      title: '英文名称',
-      dataIndex: 'en_name',
-      key: 'en_name',
-    },
+    // {
+    //   title: '英文名称',
+    //   dataIndex: 'en_name',
+    //   key: 'en_name',
+    // },
     {
       title: '创建时间',
       dataIndex: 'createdAt',
-      render(date) {
+      render(date:string) {
         return <span>{moment(date).format('YYYY-MM-DD')}</span>
       },
     },
     {
       title: '操作',
-      render(tag) {
+      render(tag:any) {
         return (
           <Popconfirm
             title="确定要删除吗？"
@@ -78,7 +78,7 @@ const Tag = (props:any) => {
             okText="确定"
             onConfirm={() => deleteTag(tag.id)}
           >
-            <Button size="small" type="danger">
+            <Button size="small" danger>
               删除
             </Button>
           </Popconfirm>
@@ -111,20 +111,6 @@ const Tag = (props:any) => {
         footer={null}
       >
         <Form form={form} layout="vertical" onFinish={onSubmit}>
-          <Form.Item
-            name="category_id"
-            label="分类名称"
-            rules={[{ required: true, message: '请选择分类' }]}
-          >
-            <Select placeholder="请选择分类">
-              {categories &&
-                categories.map(category => (
-                  <Option value={category.id} key={category.en_name}>
-                    {category.name}
-                  </Option>
-                ))}
-            </Select>
-          </Form.Item>
           <Form.Item
             name="name"
             label="标签名称"

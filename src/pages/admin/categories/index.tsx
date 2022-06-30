@@ -52,11 +52,11 @@ const Category = (props:any) => {
       dataIndex: 'name',
       key: 'name',
     },
-    {
-      title: '英文名称',
-      dataIndex: 'en_name',
-      key: 'en_name',
-    },
+    // {
+    //   title: '英文名称',
+    //   dataIndex: 'en_name',
+    //   key: 'en_name',
+    // },
     {
       title: '创建时间',
       dataIndex: 'createdAt',
