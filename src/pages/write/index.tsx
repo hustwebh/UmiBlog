@@ -120,7 +120,6 @@ const Index: React.FC = (props: any) => {
 
   const onChangeTitle = (e: any) => {
     if (dispatch) {
-      console.log(e.target.value)
       dispatch({ type: 'write/setTitle', payload: { title: e.target.value } })
     }
   }

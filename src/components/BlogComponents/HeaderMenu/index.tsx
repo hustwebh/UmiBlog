@@ -56,10 +56,6 @@ const items: MenuProps["items"] = [
 const Index: React.FC = (props: any) => {
   const { dispatch, account, history, location } = props
 
-  console.log("account", account);
-
-
-
   const [menuVisible, setMenuVisible] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const [modalType, setModalType] = useState('')

@@ -35,7 +35,6 @@ export default function Index(props: any) {
           payload: values
         })
         .then((res:boolean)=>{
-          console.log(res);
           if(res) typeHandler("登录")
         })
       }
