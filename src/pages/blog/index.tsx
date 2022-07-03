@@ -23,7 +23,6 @@ const accountList = [
 ];
 
 const Index: React.FC = (props: any) => {
-  
   const {
     dispatch,
     articles,
@@ -43,7 +42,7 @@ const Index: React.FC = (props: any) => {
       if (dispatch) {
         dispatch({
           type: 'article/articles',
-          payload: { page, pageSize: 5, category, tag },
+          payload: { page, pageSize: 5, keywords: '' },
         });
       }
     },
@@ -64,7 +63,7 @@ const Index: React.FC = (props: any) => {
     if (dispatch) {
       dispatch({
         type: 'article/articles',
-        payload: { page: pageNum, pageSize, category, tag },
+        payload: { page: pageNum, pageSize, keywords: '' },
       });
     }
   };
@@ -178,4 +177,3 @@ const mapStateToProps = ({
 });
 
 export default connect(mapStateToProps)(Index);
-// export default Index;

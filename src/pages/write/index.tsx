@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react'
-import ReactDOMServer from 'react-dom/server'
-import { connect } from 'dva'
-import moment from 'moment'
+import React, { useState, useEffect, useRef } from 'react';
+import ReactDOMServer from 'react-dom/server';
+import { connect } from 'dva';
+import moment from 'moment';
 import {
   Input,
   Row,
@@ -16,26 +16,25 @@ import {
   Modal,
   Table,
   Avatar,
-  message
-} from 'antd'
-import type { InputRef } from 'antd'
+  message,
+} from 'antd';
+import type { InputRef } from 'antd';
 import {
   CaretDownOutlined,
   PictureOutlined,
   QuestionCircleOutlined,
-  UserOutlined
-} from '@ant-design/icons'
-import { history, Link } from 'umi'
-import MathJax from 'react-mathjax'
+  UserOutlined,
+} from '@ant-design/icons';
+import { history, Link } from 'umi';
+import MathJax from 'react-mathjax';
 
-import Editor, { Plugins } from "react-markdown-editor-lite";
+import Editor, { Plugins } from 'react-markdown-editor-lite';
 import MarkdownIt from 'markdown-it';
 import dayjs from 'dayjs';
-import hljs from 'highlight.js'
-import "react-markdown-editor-lite/lib/index.css";
+import hljs from 'highlight.js';
+import 'react-markdown-editor-lite/lib/index.css';
 
-import styles from './index.less'
-
+import styles from './index.less';
 
 const UserAvatar = (props: any) =>
   props.src ? (
@@ -45,11 +44,7 @@ const UserAvatar = (props: any) =>
   );
 
 const Content = (props: any) => {
-  const {
-    tags,
-    category,
-    onPublish,
-  } = props
+  const { tags, category, onPublish } = props;
 
   return (
     <div>
@@ -59,7 +54,10 @@ const Content = (props: any) => {
       </div>
       <h4 style={{ marginBottom: 16, marginTop: 10 }}>标签</h4>
       <div>
-        <Input placeholder="请输入文章所带标签，多个标签以逗号分隔" ref={tags} />
+        <Input
+          placeholder="请输入文章所带标签，多个标签以逗号分隔"
+          ref={tags}
+        />
       </div>
       <div>
         <Button type="primary" onClick={onPublish}>
@@ -67,11 +65,10 @@ const Content = (props: any) => {
         </Button>
       </div>
     </div>
-  )
-}
+  );
+};
 
 const Index: React.FC = (props: any) => {
-
   const {
     dispatch,
     title,
@@ -84,7 +81,7 @@ const Index: React.FC = (props: any) => {
   } = props;
 
   const [visible, setVisible] = useState(false);
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = React.useState('');
   const inputRef = useRef<InputRef>(null) || undefined;
   const category = useRef<InputRef>(null);
   const tags = useRef<InputRef>(null);
@@ -97,84 +94,84 @@ const Index: React.FC = (props: any) => {
   Editor.use(Plugins.TabInsert, {
     tabMapValue: 1,
   });
-  Editor.unuse(Plugins.FullScreen)
+  Editor.unuse(Plugins.FullScreen);
 
   useEffect(() => {
     if (!account || !account.id) {
-      message.info("请先登录")
-      history.push('/blog')
+      message.info('请先登录');
+      history.push('/blog');
     }
     if (dispatch) {
-      dispatch({ type: 'write/category' })
+      // dispatch({ type: 'write/category' })
       if (key !== 'new' && /^\d+$/.test(key)) {
-        dispatch({ type: 'write/draft', payload: { id: key } })
+        dispatch({ type: 'write/draft', payload: { id: key } });
       } else {
-        dispatch({ type: 'write/setMarkdown', payload: { markdown: null } })
-        dispatch({ type: 'write/setTitle', payload: { title: null } })
+        dispatch({ type: 'write/setMarkdown', payload: { markdown: null } });
+        dispatch({ type: 'write/setTitle', payload: { title: null } });
       }
     }
     if (inputRef.current) {
-      inputRef.current.focus()
+      inputRef.current.focus();
     }
-  }, [key])
+  }, [key]);
 
   const onChangeTitle = (e: any) => {
     if (dispatch) {
-      dispatch({ type: 'write/setTitle', payload: { title: e.target.value } })
+      dispatch({ type: 'write/setTitle', payload: { title: e.target.value } });
     }
-  }
+  };
 
   const saveDraft = () => {
     if (dispatch) {
-      const markdownCurrent = (mdEditor.current && mdEditor.current.getMdValue());
+      const markdownCurrent = mdEditor.current && mdEditor.current.getMdValue();
       if (key !== 'new' && /^\d+$/.test(key)) {
         dispatch({
           type: 'write/updateDraft',
           payload: { markdown: markdownCurrent, title, id: key },
-        })
+        });
       } else {
         dispatch({
           type: 'write/saveDraft',
           payload: { markdown: markdownCurrent, title },
-        })
+        });
       }
     }
-  }
+  };
 
   const onPublish = () => {
     if (dispatch) {
-      if (tags.current && category.current && tags.current.input && category.current.input) {
+      if (tags?.current?.input && category?.current?.input) {
         const articleTags = tags.current.input.attributes[3];
         const articleCategory = category.current.input.attributes[3];
         dispatch({
           type: 'write/publish',
           payload: {
-            markdown: (mdEditor.current && mdEditor.current.getMdValue()),
+            markdown: mdEditor.current && mdEditor.current.getMdValue(),
             title,
             articleTags,
             articleCategory,
           },
-        })
+        });
       }
     }
-  }
+  };
 
   const writeNew = () => {
-    dispatch({ type: 'write/setMarkdown', payload: { markdown: null } })
-    dispatch({ type: 'write/setTitle', payload: { title: null } })
-    history.push('/write/new')
-  }
+    dispatch({ type: 'write/setMarkdown', payload: { markdown: null } });
+    dispatch({ type: 'write/setTitle', payload: { title: null } });
+    history.push('/write/new');
+  };
 
   const showDrawer = () => {
     if (dispatch) {
-      dispatch({ type: 'write/drafts' })
+      dispatch({ type: 'write/drafts' });
     }
-    setVisible(true)
-  }
+    setVisible(true);
+  };
 
   const onClose = () => {
-    setVisible(false)
-  }
+    setVisible(false);
+  };
 
   const handleEditorChange = ({ text }: { text: string }) => {
     setValue(text);
@@ -193,7 +190,7 @@ const Index: React.FC = (props: any) => {
         <Link to="/">回到首页</Link>
       </Menu.Item>
     </Menu>
-  )
+  );
 
   const ShortCutKey = () => {
     const columns = [
@@ -212,7 +209,7 @@ const Index: React.FC = (props: any) => {
         dataIndex: 'keybord',
         key: 'keybord',
       },
-    ]
+    ];
     const dataSource = [
       {
         markdown: '**文本**',
@@ -244,7 +241,7 @@ const Index: React.FC = (props: any) => {
         explain: '行代码块',
         keybord: 'Ctrl / ⌘ + Alt + K',
       },
-    ]
+    ];
     return (
       <Table
         columns={columns}
@@ -252,9 +249,8 @@ const Index: React.FC = (props: any) => {
         pagination={false}
         size="small"
       />
-    )
-  }
-
+    );
+  };
 
   return (
     <>
@@ -266,7 +262,7 @@ const Index: React.FC = (props: any) => {
             bordered={false}
             size="large"
             placeholder="请输入标题"
-            style={{ backgroundColor: '#fff', borderRight: "3px soild gray" }}
+            style={{ backgroundColor: '#fff', borderRight: '3px soild gray' }}
             ref={inputRef}
           />
         </Col>
@@ -283,11 +279,7 @@ const Index: React.FC = (props: any) => {
             placement="bottom"
             title={<strong>发布文章</strong>}
             content={
-              <Content
-                tags={tags}
-                category={category}
-                onPublish={onPublish}
-              />
+              <Content tags={tags} category={category} onPublish={onPublish} />
             }
             overlayStyle={{ width: 300 }}
             trigger="click"
@@ -301,12 +293,20 @@ const Index: React.FC = (props: any) => {
             loading={loading}
             type="primary"
             onClick={saveDraft}
-            style={{ marginRight: 20, marginLeft: 10, marginTop: 5, marginBottom: 5 }}
+            style={{
+              marginRight: 20,
+              marginLeft: 10,
+              marginTop: 5,
+              marginBottom: 5,
+            }}
           >
             保存草稿
           </Button>
           <Dropdown overlay={writeMenu} trigger={['click']}>
-            <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+            <a
+              className="ant-dropdown-link"
+              onClick={(e) => e.preventDefault()}
+            >
               <UserAvatar src={account.avatar} />
             </a>
           </Dropdown>
@@ -321,8 +321,8 @@ const Index: React.FC = (props: any) => {
                       title={
                         <a
                           onClick={() => {
-                            history.push(`/write/draft/${item.id}`)
-                            onClose()
+                            history.push(`/write/draft/${item.id}`);
+                            onClose();
                           }}
                         >
                           {item.title}
@@ -333,7 +333,9 @@ const Index: React.FC = (props: any) => {
                           ) : null}
                         </a>
                       }
-                    description={`${dayjs(item.updatedAt).format('YYYY[年]MM[月]DD[日] HH:mm')}`}
+                      description={`${dayjs(item.updatedAt).format(
+                        'YYYY[年]MM[月]DD[日] HH:mm',
+                      )}`}
                     />
                   </List.Item>
                 )}
@@ -351,11 +353,12 @@ const Index: React.FC = (props: any) => {
           className={styles.editor}
           syncScrollMode={['rightFollowLeft']}
           onChange={handleEditorChange}
-          renderHTML={text => mdParser.render(text)}
+          renderHTML={(text) => mdParser.render(text)}
         />
       </Row>
-    </>);
-}
+    </>
+  );
+};
 
 const mapStateToProps = ({
   write: {
@@ -371,16 +374,16 @@ const mapStateToProps = ({
   loading,
 }: {
   write: {
-    title: string,
-    markdown: string,
-    drafts: any[],
-    category: string,
-    tags: string[],
-    selectedCategory: any,
-    selectedTag: any,
-  },
-  user: { account: any },
-  loading: any,
+    title: string;
+    markdown: string;
+    drafts: any[];
+    category: string;
+    tags: string[];
+    selectedCategory: any;
+    selectedTag: any;
+  };
+  user: { account: any };
+  loading: any;
 }) => {
   return {
     category,
@@ -392,7 +395,7 @@ const mapStateToProps = ({
     selectedTag,
     account,
     loading: loading.effects['write/updateDraft'],
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps)(Index)
+export default connect(mapStateToProps)(Index);

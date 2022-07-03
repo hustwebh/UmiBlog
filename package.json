@@ -21,15 +21,20 @@
   },
   "dependencies": {
     "@ant-design/pro-layout": "^6.5.0",
+    "@types/markdown-it": "^12.2.3",
+    "ammojs-typed": "^1.0.6",
     "classnames": "^2.3.1",
     "crypto-js": "^4.1.1",
     "dva": "^2.4.1",
     "markdown-it": "^13.0.1",
     "react": "17.x",
     "react-dom": "17.x",
+    "react-markdown-editor-lite": "^1.3.2",
     "react-mathjax": "^1.0.1",
     "react-syntax-highlighter": "^15.5.0",
-    "umi": "^4.0.2"
+    "stats.js": "^0.17.0",
+    "three": "^0.142.0",
+    "umi": "^3.5.26"
   },
   "devDependencies": {
     "@types/react": "^17.0.0",

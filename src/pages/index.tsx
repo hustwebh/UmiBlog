@@ -1,20 +1,18 @@
 import styles from './index.less';
 import * as THREE from 'three';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
-import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js'
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 import { useEffect, useRef } from 'react';
 import Ammo from 'ammojs-typed';
 
 import {
   createWorld,
-  createLensFlare,
   scene,
   stats,
   clock,
   galaxyClock,
   manager,
   addParticles,
-  glowingParticles,
   generateGalaxy,
   renderer,
   camera,
@@ -22,26 +20,37 @@ import {
 } from '@/components/3DComponents/world.js';
 
 import {
-  setupEventHandlers,
-  moveDirection,
-} from '@/components/3DComponents/eventHandler.js'
+  billboardTextures,
+  boxTexture,
+  URL,
+  woodTexture,
+} from '@/components/3DComponents/textures.js';
 
 import {
-  rotateCamera
-} from '@/components/3DComponents/utils.js'
+  setupEventHandlers,
+  moveDirection,
+} from '@/components/3DComponents/eventHandler.js';
 
-import earthImg from '@/assets/earth.jpg'
-// import FONTJSON from '@/assets/Roboto_Regular.json'
+import { floatingLabel } from '@/components/3DComponents/surfaces.js';
+
+import {
+  rotateCamera,
+  launchClickPosition,
+  launchHover,
+} from '@/components/3DComponents/utils.js';
+
+import earthImg from '@/assets/earth.jpg';
+import BeachBallImg from '@/assets/BeachBallColor.jpg';
+
+// export let cursorHoverObjects: any = [];
 
 export default function IndexPage() {
-
   const _3DContainer = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     Ammo().then((Ammo) => {
       let rigidBodies: any[] = [],
         physicsWorld: any;
-
 
       let ballObject: any = null;
       const STATE = { DISABLE_DEACTIVATION: 4 };
@@ -51,24 +60,20 @@ export default function IndexPage() {
       let objectsWithLinks = [];
 
       const createPhysicsWorld = () => {
-
         let collisionConfiguration = new Ammo.btDefaultCollisionConfiguration(),
           dispatcher = new Ammo.btCollisionDispatcher(collisionConfiguration),
-          overlappingPairCache = new Ammo.btDbvtBroadphase(), 
+          overlappingPairCache = new Ammo.btDbvtBroadphase(),
           constraintSolver = new Ammo.btSequentialImpulseConstraintSolver();
-
 
         physicsWorld = new Ammo.btDiscreteDynamicsWorld(
           dispatcher,
           overlappingPairCache,
           constraintSolver,
-          collisionConfiguration
+          collisionConfiguration,
         );
 
-
         physicsWorld.setGravity(new Ammo.btVector3(0, -50, 0));
-
-      }
+      };
 
       const createGridPlane = () => {
         let pos = { x: 0, y: -0.25, z: 0 };
@@ -76,10 +81,11 @@ export default function IndexPage() {
         let quat = { x: 0, y: 0, z: 0, w: 1 };
         let mass = 0;
 
-
         let grid = new THREE.GridHelper(175, 20, 0xffffff, 0xffffff);
-        grid.material.opacity = 0.5;
+
+        grid.material.opacity = 0.1;
         grid.material.transparent = true;
+
         grid.position.y = 0.005;
         scene.add(grid);
 
@@ -88,8 +94,8 @@ export default function IndexPage() {
           new THREE.MeshPhongMaterial({
             color: 0xffffff,
             transparent: true,
-            opacity: 0.25,
-          })
+            opacity: 0.15,
+          }),
         );
         blockPlane.position.set(pos.x, pos.y, pos.z);
         blockPlane.scale.set(scale.x, scale.y, scale.z);
@@ -97,15 +103,15 @@ export default function IndexPage() {
         scene.add(blockPlane);
 
         let transform = new Ammo.btTransform();
-        transform.setIdentity(); 
+        transform.setIdentity();
         transform.setOrigin(new Ammo.btVector3(pos.x, pos.y, pos.z));
         transform.setRotation(
-          new Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w)
+          new Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w),
         );
         let motionState = new Ammo.btDefaultMotionState(transform);
 
         let colShape = new Ammo.btBoxShape(
-          new Ammo.btVector3(scale.x * 0.5, scale.y * 0.5, scale.z * 0.5)
+          new Ammo.btVector3(scale.x * 0.5, scale.y * 0.5, scale.z * 0.5),
         );
         colShape.setMargin(0.05);
 
@@ -116,15 +122,14 @@ export default function IndexPage() {
           mass,
           motionState,
           colShape,
-          localInertia
+          localInertia,
         );
         let body = new Ammo.btRigidBody(rigidBodyStruct);
         body.setFriction(10);
         body.setRollingFriction(10);
 
         physicsWorld.addRigidBody(body);
-
-      }
+      };
 
       const createWallX = (x: number, y: number, z: number) => {
         const wallScale = { x: 0.125, y: 4, z: 175 };
@@ -135,7 +140,7 @@ export default function IndexPage() {
             color: 0xffffff,
             opacity: 0.25,
             transparent: true,
-          })
+          }),
         );
 
         wall.position.x = x;
@@ -147,7 +152,7 @@ export default function IndexPage() {
         scene.add(wall);
 
         addRigidPhysics(wall, wallScale);
-      }
+      };
       const createWallZ = (x: number, y: number, z: number) => {
         const wallScale = { x: 175, y: 4, z: 0.125 };
 
@@ -157,7 +162,7 @@ export default function IndexPage() {
             color: 0xffffff,
             opacity: 0.25,
             transparent: true,
-          })
+          }),
         );
 
         wall.position.x = x;
@@ -169,7 +174,7 @@ export default function IndexPage() {
         scene.add(wall);
 
         addRigidPhysics(wall, wallScale);
-      }
+      };
 
       //为字体添加物理性质
       const PysicleWords = (x: number, y: number, z: number) => {
@@ -181,7 +186,7 @@ export default function IndexPage() {
           new THREE.BoxBufferGeometry(boxScale.x, boxScale.y, boxScale.z),
           new THREE.MeshPhongMaterial({
             color: 0xff6600,
-          })
+          }),
         );
 
         linkBox.position.set(x, y, z);
@@ -190,19 +195,17 @@ export default function IndexPage() {
         objectsWithLinks.push(linkBox.uuid);
 
         addRigidPhysics(linkBox, boxScale);
-      }
+      };
 
       const loadNameText = () => {
         let text_loader = new FontLoader();
-        console.log("loadtextStart");
         const fontUrl = './Roboto_Regular.json';
         text_loader.load(fontUrl, function (font: any) {
-          console.log("loading!");
           let xMid, text;
 
           let textMaterials = [
-            new THREE.MeshBasicMaterial({ color: 0xfffc00 }), // front
-            new THREE.MeshPhongMaterial({ color: 0xfffc00 }), // side
+            new THREE.MeshBasicMaterial({ color: 0xfffc00 }),
+            new THREE.MeshPhongMaterial({ color: 0xfffc00 }),
           ];
 
           let geometry = new TextGeometry('ZHANG YUERAN', {
@@ -219,11 +222,7 @@ export default function IndexPage() {
 
           geometry.computeBoundingBox();
           geometry.computeVertexNormals();
-
-
-          xMid = -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
-
-          geometry.translate(xMid, 0, 0);
+          geometry.translate(-12, 0, 0);
 
           text = new THREE.Mesh(geometry, textMaterials);
           text.position.z = -20;
@@ -232,7 +231,7 @@ export default function IndexPage() {
           text.castShadow = true;
           scene.add(text);
         });
-      }
+      };
 
       const loadWorkerText = () => {
         let text_loader = new FontLoader();
@@ -242,8 +241,8 @@ export default function IndexPage() {
           let xMid, text;
 
           let textMaterials = [
-            new THREE.MeshBasicMaterial({ color: 0x00ff08 }), // front
-            new THREE.MeshPhongMaterial({ color: 0x00ff08 }), // side
+            new THREE.MeshBasicMaterial({ color: 0x00ff08 }),
+            new THREE.MeshPhongMaterial({ color: 0x00ff08 }),
           ];
 
           let geometry = new TextGeometry('HUST STUDENT', {
@@ -258,12 +257,7 @@ export default function IndexPage() {
 
           geometry.computeBoundingBox();
           geometry.computeVertexNormals();
-
-          xMid = -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
-
-          geometry.translate(xMid, 0, 0);
-
-          // let textGeo = new THREE.BufferGeometry().fromGeometry(geometry);
+          geometry.translate(-5, 0, 0);
 
           text = new THREE.Mesh(geometry, textMaterials);
           text.position.z = -20;
@@ -273,8 +267,7 @@ export default function IndexPage() {
           text.castShadow = true;
           scene.add(text);
         });
-      }
-
+      };
 
       const createBall = () => {
         let pos = { x: 8.75, y: 0, z: 0 };
@@ -292,7 +285,7 @@ export default function IndexPage() {
         //threeJS Section
         let ball = (ballObject = new THREE.Mesh(
           new THREE.SphereGeometry(radius, 32, 32),
-          new THREE.MeshLambertMaterial({ map: marbleTexture })
+          new THREE.MeshLambertMaterial({ map: marbleTexture }),
         ));
 
         ball.geometry.computeBoundingSphere();
@@ -310,7 +303,7 @@ export default function IndexPage() {
         transform.setIdentity();
         transform.setOrigin(new Ammo.btVector3(pos.x, pos.y, pos.z));
         transform.setRotation(
-          new Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w)
+          new Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w),
         );
         let motionState = new Ammo.btDefaultMotionState(transform);
 
@@ -324,108 +317,105 @@ export default function IndexPage() {
           mass,
           motionState,
           colShape,
-          localInertia
+          localInertia,
         );
         let body = new Ammo.btRigidBody(rbInfo);
-        //body.setFriction(4);
+
         body.setRollingFriction(10);
 
-        //set ball friction
-
-        //once state is set to disable, dynamic interaction no longer calculated
         body.setActivationState(STATE.DISABLE_DEACTIVATION);
 
-        physicsWorld.addRigidBody(
-          body //collisionGroupRedBall, collisionGroupGreenBall | collisionGroupPlane
-        );
+        physicsWorld.addRigidBody(body);
 
         ball.userData.physicsBody = body;
         ballObject.userData.physicsBody = body;
 
         rigidBodies.push(ball);
         rigidBodies.push(ballObject);
-      }
+      };
 
-      // function createBillboard(
-      //   x:number,
-      //   y:number,
-      //   z:number,
-      //   textureImage = billboardTextures.grassImage,
-      //   urlLink:string,
-      //   rotation = 0
-      // ) {
-      //   const billboardPoleScale = { x: 1, y: 5, z: 1 };
-      //   const billboardSignScale = { x: 30, y: 15, z: 1 };
-    
-      //   /* default texture loading */
-      //   const loader = new THREE.TextureLoader(manager);
-    
-      //   const billboardPole = new THREE.Mesh(
-      //     new THREE.BoxBufferGeometry(
-      //       billboardPoleScale.x,
-      //       billboardPoleScale.y,
-      //       billboardPoleScale.z
-      //     ),
-      //     new THREE.MeshStandardMaterial({
-      //       map: loader.load(woodTexture),
-      //     })
-      //   );
-    
-      //   const texture = loader.load(textureImage);
-      //   texture.magFilter = THREE.LinearFilter;
-      //   texture.minFilter = THREE.LinearFilter;
-      //   texture.encoding = THREE.sRGBEncoding;
-      //   var borderMaterial = new THREE.MeshBasicMaterial({
-      //     color: 0x000000,
-      //   });
-      //   const loadedTexture = new THREE.MeshBasicMaterial({
-      //     map: texture,
-      //   });
-    
-      //   var materials = [
-      //     borderMaterial, // Left side
-      //     borderMaterial, // Right side
-      //     borderMaterial, // Top side   ---> THIS IS THE FRONT
-      //     borderMaterial, // Bottom side --> THIS IS THE BACK
-      //     loadedTexture, // Front side
-      //     borderMaterial, // Back side
-      //   ];
-      //   // order to add materials: x+,x-,y+,y-,z+,z-
-      //   const billboardSign = new THREE.Mesh(
-      //     new THREE.BoxGeometry(
-      //       billboardSignScale.x,
-      //       billboardSignScale.y,
-      //       billboardSignScale.z
-      //     ),
-      //     materials
-      //   );
-    
-      //   billboardPole.position.x = x;
-      //   billboardPole.position.y = y;
-      //   billboardPole.position.z = z;
-    
-      //   billboardSign.position.x = x;
-      //   billboardSign.position.y = y + 10;
-      //   billboardSign.position.z = z;
-    
-      //   /* Rotate Billboard */
-      //   billboardPole.rotation.y = rotation;
-      //   billboardSign.rotation.y = rotation;
-    
-      //   billboardPole.castShadow = true;
-      //   billboardPole.receiveShadow = true;
-    
-      //   billboardSign.castShadow = true;
-      //   billboardSign.receiveShadow = true;
-    
-      //   billboardSign.userData = { URL: urlLink };
-    
-      //   scene.add(billboardPole);
-      //   scene.add(billboardSign);
-      //   addRigidPhysics(billboardPole, billboardPoleScale);
-    
-      //   cursorHoverObjects.push(billboardSign);
-      // }
+      const createBillboard = (
+        x: number,
+        y: number,
+        z: number,
+        textureImage: any,
+        urlLink: string,
+        rotation: number = 0,
+      ) => {
+        console.log('BillboardStart');
+        const billboardPoleScale = { x: 1, y: 5, z: 1 };
+        const billboardSignScale = { x: 30, y: 15, z: 1 };
+
+        /* default texture loading */
+        const loader = new THREE.TextureLoader(manager);
+
+        const billboardPole = new THREE.Mesh(
+          new THREE.BoxBufferGeometry(
+            billboardPoleScale.x,
+            billboardPoleScale.y,
+            billboardPoleScale.z,
+          ),
+          new THREE.MeshStandardMaterial({
+            map: loader.load(woodTexture),
+          }),
+        );
+
+        const texture = loader.load(textureImage);
+        texture.magFilter = THREE.LinearFilter;
+        texture.minFilter = THREE.LinearFilter;
+        texture.encoding = THREE.sRGBEncoding;
+        let borderMaterial = new THREE.MeshBasicMaterial({
+          color: 0xffffff,
+        });
+        const loadedTexture = new THREE.MeshBasicMaterial({
+          map: texture,
+        });
+
+        let materials = [
+          borderMaterial,
+          borderMaterial,
+          borderMaterial,
+          borderMaterial,
+          loadedTexture,
+          borderMaterial,
+        ];
+
+        const billboardSign = new THREE.Mesh(
+          new THREE.BoxGeometry(
+            billboardSignScale.x,
+            billboardSignScale.y,
+            billboardSignScale.z,
+          ),
+          materials,
+        );
+
+        billboardPole.position.x = x;
+        billboardPole.position.y = y;
+        billboardPole.position.z = z;
+
+        billboardSign.position.x = x;
+        billboardSign.position.y = y + 10;
+        billboardSign.position.z = z;
+
+        /* Rotate Billboard */
+        billboardPole.rotation.y = rotation;
+        billboardSign.rotation.y = rotation;
+
+        billboardPole.castShadow = true;
+        billboardPole.receiveShadow = true;
+
+        billboardSign.castShadow = true;
+        billboardSign.receiveShadow = true;
+
+        billboardSign.userData = { URL: urlLink };
+
+        scene.add(billboardPole);
+        scene.add(billboardSign);
+        addRigidPhysics(billboardPole, billboardPoleScale);
+        console.log('BillboardEnd');
+
+        // cursorHoverObjects.push(billboardSign);
+      };
 
       const moveBall = () => {
         let scalingFactor = 20;
@@ -443,20 +433,128 @@ export default function IndexPage() {
           moveY = -0.25;
         }
 
-        // no movement
         if (moveX == 0 && moveY == 0 && moveZ == 0) return;
 
         let resultantImpulse = new Ammo.btVector3(moveX, moveY, moveZ);
         resultantImpulse.op_mul(scalingFactor);
         let physicsBody = ballObject.userData.physicsBody;
         physicsBody.setLinearVelocity(resultantImpulse);
+      };
+
+      function createBeachBall() {
+        let pos = { x: 20, y: 30, z: 0 };
+        let radius = 2;
+        let quat = { x: 0, y: 0, z: 0, w: 1 };
+        let mass = 20;
+
+        //import beach ball texture
+        let texture_loader = new THREE.TextureLoader(manager);
+        let beachTexture = texture_loader.load(BeachBallImg);
+        beachTexture.wrapS = beachTexture.wrapT = THREE.RepeatWrapping;
+        beachTexture.repeat.set(1, 1);
+        beachTexture.anisotropy = 1;
+        beachTexture.encoding = THREE.sRGBEncoding;
+
+        //threeJS Section
+        let ball = new THREE.Mesh(
+          new THREE.SphereGeometry(radius, 32, 32),
+          new THREE.MeshLambertMaterial({ map: beachTexture }),
+        );
+
+        ball.position.set(pos.x, pos.y, pos.z);
+        ball.castShadow = true;
+        ball.receiveShadow = true;
+        scene.add(ball);
+
+        //Ammojs Section
+        let transform = new Ammo.btTransform();
+        transform.setIdentity();
+        transform.setOrigin(new Ammo.btVector3(pos.x, pos.y, pos.z));
+        transform.setRotation(
+          new Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w),
+        );
+        let motionState = new Ammo.btDefaultMotionState(transform);
+
+        let colShape = new Ammo.btSphereShape(radius);
+        colShape.setMargin(0.05);
+
+        let localInertia = new Ammo.btVector3(0, 0, 0);
+        colShape.calculateLocalInertia(mass, localInertia);
+
+        let rbInfo = new Ammo.btRigidBodyConstructionInfo(
+          mass,
+          motionState,
+          colShape,
+          localInertia,
+        );
+        let body = new Ammo.btRigidBody(rbInfo);
+
+        body.setRollingFriction(1);
+        physicsWorld.addRigidBody(body);
+
+        ball.userData.physicsBody = body;
+        rigidBodies.push(ball);
       }
 
+      const createBox = (
+        x: number,
+        y: number,
+        z: number,
+        scaleX: number,
+        scaleY: number,
+        scaleZ: number,
+        boxTexture: any,
+        URLLink: any,
+        color = 0x000000,
+        transparent = true,
+      ) => {
+        const boxScale = { x: scaleX, y: scaleY, z: scaleZ };
+        let quat = { x: 0, y: 0, z: 0, w: 1 };
+        let mass = 0;
+
+        const loader = new THREE.TextureLoader(manager);
+        const texture = loader.load(boxTexture);
+        texture.magFilter = THREE.LinearFilter;
+        texture.minFilter = THREE.LinearFilter;
+        texture.encoding = THREE.sRGBEncoding;
+        const loadedTexture = new THREE.MeshBasicMaterial({
+          map: texture,
+          transparent: transparent,
+          color: 0xffffff,
+        });
+
+        let borderMaterial = new THREE.MeshBasicMaterial({
+          color: color,
+        });
+        borderMaterial.color.convertSRGBToLinear();
+
+        let materials = [
+          borderMaterial,
+          borderMaterial,
+          borderMaterial,
+          borderMaterial,
+          loadedTexture,
+          borderMaterial,
+        ];
+
+        const linkBox = new THREE.Mesh(
+          new THREE.BoxBufferGeometry(boxScale.x, boxScale.y, boxScale.z),
+          materials,
+        );
+        linkBox.position.set(x, y, z);
+        linkBox.renderOrder = 1;
+        linkBox.castShadow = true;
+        linkBox.receiveShadow = true;
+        linkBox.userData = { URL: URLLink, email: URLLink };
+        scene.add(linkBox);
+        objectsWithLinks.push(linkBox.uuid);
+
+        addRigidPhysics(linkBox, boxScale);
+      };
+
       const updatePhysics = (deltaTime: any) => {
-        // Step world
         physicsWorld.stepSimulation(deltaTime, 10);
 
-        // Update rigid bodies
         for (let i = 0; i < rigidBodies.length; i++) {
           let objThree: any = rigidBodies[i];
           let objAmmo = objThree.userData.physicsBody;
@@ -470,19 +568,20 @@ export default function IndexPage() {
           }
         }
 
-        //check to see if ball escaped the plane
         if (ballObject.position.y < -50) {
           scene.remove(ballObject);
           createBall();
         }
 
-        //check to see if ball is on text to rotate camera
-
         rotateCamera(ballObject);
-      }
+      };
 
       const addRigidPhysics = (item: any, itemScale: any) => {
-        let pos = { x: item.position.x, y: item.position.y, z: item.position.z };
+        let pos = {
+          x: item.position.x,
+          y: item.position.y,
+          z: item.position.z,
+        };
         let scale = { x: itemScale.x, y: itemScale.y, z: itemScale.z };
         let quat = { x: 0, y: 0, z: 0, w: 1 };
         let mass = 0;
@@ -490,13 +589,13 @@ export default function IndexPage() {
         transform.setIdentity();
         transform.setOrigin(new Ammo.btVector3(pos.x, pos.y, pos.z));
         transform.setRotation(
-          new Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w)
+          new Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w),
         );
 
         let localInertia = new Ammo.btVector3(0, 0, 0);
         let motionState = new Ammo.btDefaultMotionState(transform);
         let colShape = new Ammo.btBoxShape(
-          new Ammo.btVector3(scale.x * 0.5, scale.y * 0.5, scale.z * 0.5)
+          new Ammo.btVector3(scale.x * 0.5, scale.y * 0.5, scale.z * 0.5),
         );
         colShape.setMargin(0.05);
         colShape.calculateLocalInertia(mass, localInertia);
@@ -504,16 +603,15 @@ export default function IndexPage() {
           mass,
           motionState,
           colShape,
-          localInertia
+          localInertia,
         );
         let body = new Ammo.btRigidBody(rbInfo);
         body.setActivationState(STATE.DISABLE_DEACTIVATION);
         body.setCollisionFlags(2);
         physicsWorld.addRigidBody(body);
-      }
+      };
 
       function renderFrame() {
-        // FPS stats module
         stats.begin();
 
         const elapsedTime = galaxyClock.getElapsedTime() + 150;
@@ -524,45 +622,75 @@ export default function IndexPage() {
 
         updatePhysics(deltaTime);
 
-
         renderer.render(scene, camera);
         stats.end();
 
         galaxyMaterial.uniforms.uTime.value = elapsedTime * 5;
-        //galaxyPoints.position.set(-50, -50, 0); 
-
-        // tells browser theres animation, update before the next repaint
         requestAnimationFrame(renderFrame);
-
-
       }
-
 
       const start = () => {
         createWorld(_3DContainer);
         createPhysicsWorld();
         createGridPlane();
         createBall();
+        createBeachBall();
 
         createWallX(87.5, 1.75, 0);
         createWallX(-87.5, 1.75, 0);
         createWallZ(0, 1.75, 87.5);
         createWallZ(0, 1.75, -87.5);
 
+        createBillboard(
+          -80,
+          2.5,
+          -70,
+          billboardTextures.terpSolutionsTexture,
+          URL.terpsolutions,
+          Math.PI * 0.22,
+        );
+
+        createBox(
+          12,
+          2,
+          -70,
+          4,
+          4,
+          1,
+          boxTexture.Github,
+          URL.gitHub,
+          0x000000,
+          true,
+        );
+        floatingLabel(11.875, 4.5, -70, 'Github');
+
+        createBox(
+          19,
+          2,
+          -70,
+          4,
+          4,
+          1,
+          boxTexture.PersonalBlog,
+          URL.PersonalBlog,
+          0x000000,
+          true,
+        );
+        floatingLabel(19.125, 6.5, -70, 'Peasonal\n    Blog');
+
         PysicleWords(11.2, 1, -20);
         loadNameText();
         loadWorkerText();
 
         addParticles();
-        // glowingParticles();
         generateGalaxy();
         setupEventHandlers();
         renderFrame();
-      }
+      };
 
       start();
-    })
-  }, [1])
+    });
+  }, [1]);
   return (
     <div
       style={{
@@ -570,7 +698,7 @@ export default function IndexPage() {
         widows: '100%',
       }}
       ref={_3DContainer}
-    >
-    </div>
+      onClick={launchClickPosition}
+    ></div>
   );
 }

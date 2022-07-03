@@ -1,22 +1,39 @@
 import React, { useEffect, useState } from 'react';
-import { Layout, Card, Avatar, Row, Col, Divider, Tooltip } from 'antd';
-import { UserOutlined, MessageOutlined, LikeOutlined, GlobalOutlined, GithubOutlined, WeiboCircleOutlined, createFromIconfontCN } from '@ant-design/icons';
+import {
+  Layout,
+  Card,
+  Avatar,
+  Row,
+  Col,
+  Divider,
+  Tooltip,
+  message,
+} from 'antd';
+import {
+  UserOutlined,
+  MessageOutlined,
+  LikeOutlined,
+  GlobalOutlined,
+  GithubOutlined,
+  WeiboCircleOutlined,
+  createFromIconfontCN,
+} from '@ant-design/icons';
 import MathJax from 'react-mathjax';
 // import Markdown from '@/components/BlogComponents/Markdown';
 import MarkdownIt from 'markdown-it';
-import hljs from "highlight.js"
+import hljs from 'highlight.js';
 // import Markdown from 'react-markdown';
 import ArticleAnchor from '@/components/BlogComponents/ArticleAnchor';
-import Comments from '@/components/BlogComponents/Comments'
+import Comments from '@/components/BlogComponents/Comments';
 
 import styles from './index.less';
 import './markdown.css';
 import { connect } from 'dva';
 
-import dayjs from "dayjs";
-import relativeTime from 'dayjs/plugin/relativeTime'
-dayjs.extend(relativeTime) // 使用插件
-dayjs.locale('zh-cn')
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime); // 使用插件
+dayjs.locale('zh-cn');
 
 const { Content } = Layout;
 
@@ -39,7 +56,7 @@ const Index: React.FC = (props: any) => {
     loading,
     comments,
     account,
-    loading2
+    loading2,
   } = props;
 
   const markdownRenderer = new MarkdownIt();
@@ -47,17 +64,26 @@ const Index: React.FC = (props: any) => {
   useEffect(() => {
     if (dispatch) {
       dispatch({ type: 'article/detail', payload: { articleId } });
-      dispatch({ type: 'article/isFavorite', payload: { articleId } });
-      dispatch({ type: 'article/comments',payload: { articleId } });
+      dispatch({ type: 'article/comments', payload: { articleId } });
+      if (account && account.id) {
+        dispatch({
+          type: 'article/isFavorite',
+          payload: { articleId, userId: account.id },
+        });
+      }
     }
   }, []);
 
   const handleFavorite = () => {
     if (dispatch) {
-      dispatch({
-        type: 'article/favorite',
-        payload: { articleId, author: detail.uid },
-      });
+      if (account && account.id) {
+        dispatch({
+          type: 'article/favorite',
+          payload: { articleId, userId: account.id },
+        });
+      } else {
+        message.warning('请先登录!');
+      }
     }
   };
 
@@ -94,15 +120,24 @@ const Index: React.FC = (props: any) => {
               </div>
 
               <h1>{detail.title}</h1>
-              { detail.markdown && (<div
-                className="markdown-body"
-                dangerouslySetInnerHTML={{__html:markdownRenderer.render(detail.markdown)}}
-                >
-                </div>) }
+              {detail.markdown && (
+                <div
+                  className="markdown-body"
+                  dangerouslySetInnerHTML={{
+                    __html: markdownRenderer.render(detail.markdown),
+                  }}
+                ></div>
+              )}
             </div>
           </Card>
           <Divider />
-          <Comments id={articleId} author={detail.uid} loading={loading2} comments={comments} account={account}/>
+          <Comments
+            id={articleId}
+            author={detail.uid}
+            loading={loading2}
+            comments={comments}
+            account={account}
+          />
         </div>
         <div className={styles.articleContainerSider}>
           <Card
@@ -117,7 +152,7 @@ const Index: React.FC = (props: any) => {
               )}
               <div className="pl-1m">
                 <h5>{detail.user && detail.user.nickname}</h5>
-                <small>{detail.user && detail.user.profession}</small>
+                {/* <small>{detail.user && detail.user.profession}</small> */}
               </div>
             </div>
             <Row
@@ -148,9 +183,7 @@ const Index: React.FC = (props: any) => {
             </Row>
           </Card>
           TODO：生成文章锚点
-          {detail && detail.anchor && (
-            <ArticleAnchor anchors={[]} />
-          )}
+          {detail && detail.anchor && <ArticleAnchor anchors={[]} />}
         </div>
         <div className={styles.articlePanel}>
           <div className={styles.articlePanelItem}>
@@ -182,12 +215,17 @@ const mapStateToProps = ({
   article: { detail, isFavorite, favoriteCount, comments },
   user: { account },
   loading,
-  loading2
+  loading2,
 }: {
-  article: { detail: object; isFavorite: any; favoriteCount: number;comments:any[] };
-  user: { account:object }
-  loading:any;
-  loading2:any;
+  article: {
+    detail: object;
+    isFavorite: any;
+    favoriteCount: number;
+    comments: any[];
+  };
+  user: { account: object };
+  loading: any;
+  loading2: any;
 }) => {
   return {
     detail,
@@ -196,7 +234,7 @@ const mapStateToProps = ({
     account,
     comments,
     loading: loading.effects['article/detail'],
-    loading2: loading.effects['article/comments']
+    loading2: loading.effects['article/comments'],
   };
 };
 

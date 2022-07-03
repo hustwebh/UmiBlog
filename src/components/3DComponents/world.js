@@ -1,10 +1,8 @@
-// use Three.js to set up graphics
 import * as THREE from 'three';
 import Stats from 'stats.js';
 import galaxyVertexShader from './vertex.js';
 import galaxyFragmentShader from './fragment.js';
 
-//threejs variable declaration
 export let clock,
   scene,
   camera,
@@ -16,38 +14,32 @@ export let clock,
   lensFlareObject,
   galaxyClock;
 
-//generic temporary transform to begin
-
 export let manager = new THREE.LoadingManager();
 
 export function createWorld(_3DContainer) {
   clock = new THREE.Clock();
   galaxyClock = new THREE.Clock();
 
-  // init new Three.js scene
   scene = new THREE.Scene();
   scene.background = new THREE.Color(0x000000);
 
   const axes = new THREE.AxesHelper(100);
   scene.add(axes);
 
-  // camera
   camera = new THREE.PerspectiveCamera(
     45,
     window.innerWidth / window.innerHeight,
     1,
-    5000
+    5000,
   );
   camera.position.set(0, 30, 70);
 
-  //Add hemisphere light
-  let hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.9);
+  let hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 1.9);
   hemiLight.color.setHSL(0.6, 0.6, 0.6);
   hemiLight.groundColor.setHSL(0.1, 1, 0.4);
   hemiLight.position.set(0, 30, 0);
   scene.add(hemiLight);
 
-  //Add directional light
   let dirLight = new THREE.DirectionalLight(0xffffff, 0.7);
   dirLight.color.setHSL(0.1, 1, 0.95);
   dirLight.position.set(-10, 100, 50);
@@ -68,14 +60,12 @@ export function createWorld(_3DContainer) {
 
   dirLight.shadow.camera.far = 15000;
 
-  //Setup the renderer
   renderer = new THREE.WebGLRenderer({ antialias: true });
-  //renderer.setClearColor(0xbfd1e5);
+
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
-  //renderer.shadowMap.type = THREE.BasicShadowMap;
-  _3DContainer.current.appendChild(renderer.domElement);
 
+  _3DContainer.current.appendChild(renderer.domElement);
   stats = new Stats();
   _3DContainer.current.appendChild(stats.dom);
 
@@ -89,18 +79,13 @@ export function addParticles() {
   const geometry = new THREE.BufferGeometry();
   const arr = new Array();
 
-
-  for (let i = 0; i < 3000; i++) {
+  for (let i = 0; i < 10000; i++) {
     const x = getRandomArbitrary(-1100, 1100);
-    const y = getRandomArbitrary(-1100, 1100);
+    const y = getRandomArbitrary(-2500, 2500);
     const z = getRandomArbitrary(-1100, -500);
-    arr.push(new THREE.Vector3(x, y, z))
+    arr.push(x, y, z);
   }
-  const vertices = new Float32Array(3*arr.length);
-  for(let i = 0; i < 9000; i++){
-    vertices[i] = arr[i];
-  }
-  geometry.setAttribute('vertices',new THREE.BufferAttribute(vertices,3));
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute(arr, 3));
 
   var material = new THREE.PointsMaterial({ size: 3 });
   particleSystemObject = new THREE.Points(geometry, material);
@@ -117,15 +102,15 @@ export let galaxyPoints = null;
 
 export const generateGalaxy = () => {
   const parameters = {
-    count:50000,
-    size:0.005,
-    radius:100,
-    branches:3,
-    spin:1,
-    randomnessPower:3,
-    insideColor:'#ff6030',
-    outsideColor:'#1b3984',
-    randomness:0.2,
+    count: 50000,
+    size: 0.005,
+    radius: 100,
+    branches: 3,
+    spin: 1,
+    randomnessPower: 3,
+    insideColor: '#ff6030',
+    outsideColor: '#1b3984',
+    randomness: 0.2,
   };
 
   let geometry = null;
@@ -172,9 +157,9 @@ export const generateGalaxy = () => {
       radius;
     const randomZ =
       Math.pow(Math.random(), parameters.randomnessPower) *
-      (Math.random() < 0.5 ? 1 : -1) *
-      parameters.randomness *
-      radius -
+        (Math.random() < 0.5 ? 1 : -1) *
+        parameters.randomness *
+        radius -
       50;
 
     positions[i3] = Math.cos(branchAngle) * radius;
@@ -200,7 +185,10 @@ export const generateGalaxy = () => {
   geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
   geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
   geometry.setAttribute('aScale', new THREE.BufferAttribute(scales, 1));
-  geometry.setAttribute('aRandomness', new THREE.BufferAttribute(randomness, 3));
+  geometry.setAttribute(
+    'aRandomness',
+    new THREE.BufferAttribute(randomness, 3),
+  );
 
   /**
    * Material
@@ -225,5 +213,4 @@ export const generateGalaxy = () => {
   galaxyPoints = new THREE.Points(geometry, galaxyMaterial);
   galaxyPoints.position.y = -50;
   scene.add(galaxyPoints);
-
 };
