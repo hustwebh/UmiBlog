@@ -34,7 +34,7 @@ const Index: React.FC = (props: any) => {
   } = props;
   const { category, tag } = state;
 
-  const [page, setPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
 
   //获取博客文章列表
   useEffect(
@@ -42,7 +42,7 @@ const Index: React.FC = (props: any) => {
       if (dispatch) {
         dispatch({
           type: 'article/articles',
-          payload: { page, pageSize: 5, keywords: '' },
+          payload: { currentPage, pageSize: 5, keywords: '' },
         });
       }
     },
@@ -59,11 +59,11 @@ const Index: React.FC = (props: any) => {
   }, []);
 
   const pageChange = (pageNum: number, pageSize = 5) => {
-    setPage(pageNum);
+    setCurrentPage(pageNum);
     if (dispatch) {
       dispatch({
         type: 'article/articles',
-        payload: { page: pageNum, pageSize, keywords: '' },
+        payload: { currentPage: pageNum, pageSize, keywords: '' },
       });
     }
   };
@@ -150,7 +150,7 @@ const Index: React.FC = (props: any) => {
           total={articleCount}
           showTotal={(articleCount) => `共有${articleCount}篇文章`}
           defaultPageSize={5}
-          defaultCurrent={page}
+          defaultCurrent={currentPage}
           onChange={pageChange}
         />
       </Row>
