@@ -9,12 +9,19 @@ export default defineConfig({
   routes: RoutesConfig,
   fastRefresh: {},
   proxy: {
-    api: {
+    '/api': {
       target: backstageUrl,
       changeOrigin: true,
       pathRewrite: {
         '^/api': '',
       },
     },
+  },
+  chainWebpack(config) {
+    config.module // 配置 file-loader
+      .rule('otf')
+      .test(/.otf$/)
+      .use('file-loader')
+      .loader('file-loader');
   },
 });

@@ -6,7 +6,7 @@ import { scene, manager } from './world';
 export function floatingLabel(x, y, z, inputMessage) {
   let text_loader = new FontLoader();
 
-  const fontUrl = './Roboto_Regular.json';
+  const fontUrl = '/font/Roboto_Regular.json';
   text_loader.load(fontUrl, function (font) {
     let xMid, text;
 

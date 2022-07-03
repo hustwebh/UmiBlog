@@ -1,16 +1,83 @@
+@font-face {
+  font-family: 'CHINA Font1';
+  src: url('/font/三极灵飞体.otf');
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.head {
+  animation: bgFadeIn 1s ease-in both;
+  max-height: 15%;
+  width: 100%;
+  position: relative;
+  text-align: center;
+}
+
+.head:before {
+  background: linear-gradient(rgba(0, 235, 235, 0.7), rgba(0, 235, 235, 0.7)),
+    url('https://images.unsplash.com/photo-1441716844725-09cedc13a4e7?q=80&fm=jpg&s=c895a1f219d174952415b9b7a0811e62');
+  background-color: #cccccc;
+  background-attachment: fixed;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  bottom: 0;
+  content: ' ';
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -1;
+}
+
+@keyframes bgFadeIn {
+  0% {
+    background-color: white;
+  }
+
+  100% {
+    background-color: rgba(255, 255, 255, 0);
+  }
+}
+
+.head h1 {
+  border-bottom: 2px solid #ffffff;
+  border-top: 2px solid #ffffff;
+  color: #ffffff;
+  font-family: 'Amatic SC', cursive;
+  font-size: 3.75rem;
+  margin: 0;
+}
+
+.head h3 {
+  color: #fff0a5;
+  font-family: 'CHINA Font1', cursive;
+  font-size: 2.75rem;
+  font-style: italic;
+  font-weight: 100;
+  margin: 0;
+}
+
 .withoutMarginTop {
-  width:100%;
-  border:none;
+  width: 75%;
+  border: none;
   // height:600px;
-  background-color:rgba(133, 133, 133, 0.16);
+  background-color: rgba(143, 143, 143, 0.096);
   // opacity: 0.5;
-  // margin-top:3%
+  margin-top: 3%;
 }
 .normal {
-  width:75%;
+  width: 75%;
   border-radius: 10px;
-  height:700px;
-  background-color:rgba(133, 133, 133, 0.16);
+  // height:700px;
+  background-color: rgba(143, 143, 143, 0.096);
   // opacity: 0.5;
-  margin-top:15%
+  margin-top: 3%;
 }

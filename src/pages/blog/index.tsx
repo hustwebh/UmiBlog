@@ -91,10 +91,9 @@ const Index: React.FC = (props: any) => {
           <div className={styles.sider}>
             <Card className={styles.siderBlocks}>
               <p>
-                我是张跃然
+                我是<span>张跃然</span>
                 <br />
-                目标是去大厂前端搬砖，详细发展方向未定 现在是普通大学牲一名
-                欢迎到访我的个人博客网站
+                现在是HUST在校大学牲一名,欢迎到访我的<span>个人博客网站</span>
               </p>
             </Card>
             <Card className={styles.siderBlocks}>

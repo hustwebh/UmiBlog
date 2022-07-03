@@ -69,19 +69,22 @@ const Content = (props: any) => {
 };
 
 const Index: React.FC = (props: any) => {
+  console.log(props);
+
   const {
     dispatch,
     title,
     drafts,
     account,
     loading,
+    markdown,
     match: {
       params: { key },
     },
   } = props;
 
   const [visible, setVisible] = useState(false);
-  const [value, setValue] = React.useState('');
+  const [value, setValue] = React.useState(markdown);
   const inputRef = useRef<InputRef>(null) || undefined;
   const category = useRef<InputRef>(null);
   const tags = useRef<InputRef>(null);
@@ -106,7 +109,7 @@ const Index: React.FC = (props: any) => {
       if (key !== 'new' && /^\d+$/.test(key)) {
         dispatch({ type: 'write/draft', payload: { id: key } });
       } else {
-        dispatch({ type: 'write/setMarkdown', payload: { markdown: null } });
+        dispatch({ type: 'write/setMarkdown', payload: { markdown: '' } });
         dispatch({ type: 'write/setTitle', payload: { title: null } });
       }
     }
@@ -139,25 +142,26 @@ const Index: React.FC = (props: any) => {
   };
 
   const onPublish = () => {
-    if (dispatch) {
-      if (tags?.current?.input && category?.current?.input) {
-        const articleTags = tags.current.input.attributes[3];
-        const articleCategory = category.current.input.attributes[3];
-        dispatch({
-          type: 'write/publish',
-          payload: {
-            markdown: mdEditor.current && mdEditor.current.getMdValue(),
-            title,
-            articleTags,
-            articleCategory,
-          },
-        });
-      }
+    // if (dispatch) {
+    if (tags?.current?.input && category?.current?.input) {
+      const articleTags = tags.current.input.value.split(',');
+      const articleCategory = category.current.input.value;
+      dispatch({
+        type: 'write/publish',
+        payload: {
+          markdown: mdEditor.current && mdEditor.current.getMdValue(),
+          id: key,
+          title,
+          articleTags,
+          articleCategory,
+        },
+      });
     }
+    // }
   };
 
   const writeNew = () => {
-    dispatch({ type: 'write/setMarkdown', payload: { markdown: null } });
+    dispatch({ type: 'write/setMarkdown', payload: { markdown: '' } });
     dispatch({ type: 'write/setTitle', payload: { title: null } });
     history.push('/write/new');
   };
@@ -397,5 +401,14 @@ const mapStateToProps = ({
     loading: loading.effects['write/updateDraft'],
   };
 };
+
+// dispatch,
+// title,
+// drafts,
+// account,
+// loading,
+// match: {
+//   params: { key },
+// },
 
 export default connect(mapStateToProps)(Index);

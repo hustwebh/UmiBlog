@@ -199,7 +199,7 @@ export default function IndexPage() {
 
       const loadNameText = () => {
         let text_loader = new FontLoader();
-        const fontUrl = './Roboto_Regular.json';
+        const fontUrl = '/font/Roboto_Regular.json';
         text_loader.load(fontUrl, function (font: any) {
           let xMid, text;
 
@@ -236,7 +236,7 @@ export default function IndexPage() {
       const loadWorkerText = () => {
         let text_loader = new FontLoader();
 
-        const fontUrl = './Roboto_Regular.json';
+        const fontUrl = '/font/Roboto_Regular.json';
         text_loader.load(fontUrl, function (font: any) {
           let xMid, text;
 
