@@ -32,8 +32,10 @@ export default {
   },
   effects: {
     *register({ payload }, { call, put }) {
-      const { code } = yield call(registerAccount, payload);
-      if (code === 200) {
+      console.log(payload);
+      const result = yield call(registerAccount, payload);
+      console.log(result);
+      if (result.code === 200) {
         message.success('注册成功');
         history.push({ isRegister: true });
         return true;
@@ -41,8 +43,6 @@ export default {
         message.warn('注册失败，请重新注册');
         return false;
       }
-      // history.push({ isRegister: true })
-      // return true;
     },
 
     *login({ payload }, { call, put }) {

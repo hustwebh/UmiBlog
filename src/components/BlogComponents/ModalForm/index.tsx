@@ -29,9 +29,15 @@ export default function Index(props: any) {
           }
         });
       } else {
+        console.log('values', values);
+
         dispatch({
           type: 'user/register',
-          payload: values,
+          payload: {
+            name: values.name,
+            password: values.password,
+            email: values.email,
+          },
         }).then((res: boolean) => {
           if (res) typeHandler('登录');
         });
@@ -77,26 +83,33 @@ export default function Index(props: any) {
             </a>
           </Form.Item>
         ) : (
-          <Form.Item
-            name="repassword"
-            rules={[
-              { required: true, message: '请再次输入密码' },
-              ({ getFieldValue }) => ({
-                validator(rule, value) {
-                  if (!value || getFieldValue('password') === value) {
-                    return Promise.resolve();
-                  }
-                  return Promise.reject('两次密码不一致');
-                },
-              }),
-            ]}
-          >
-            <Input.Password
-              prefix={<LockOutlined />}
-              type="password"
-              placeholder="请再次输入密码"
-            />
-          </Form.Item>
+          <>
+            <Form.Item
+              name="repassword"
+              rules={[
+                { required: true, message: '请再次输入密码' },
+                ({ getFieldValue }) => ({
+                  validator(rule, value) {
+                    if (!value || getFieldValue('password') === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject('两次密码不一致');
+                  },
+                }),
+              ]}
+            >
+              <Input.Password
+                prefix={<LockOutlined />}
+                type="password"
+                placeholder="请再次输入密码"
+              />
+            </Form.Item>
+            <Form.Item>
+              <Form.Item name="name">
+                <Input prefix={<MailOutlined />} placeholder="输入您的用户名" />
+              </Form.Item>
+            </Form.Item>
+          </>
         )}
         <Form.Item>
           <Button block type="primary" htmlType="submit">
