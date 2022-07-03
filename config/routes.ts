@@ -10,8 +10,8 @@ export default [
       {
         path: '/write/:key',
         component: '@/pages/write',
-      }
-    ]
+      },
+    ],
   },
   {
     path: '/drafts',
@@ -20,8 +20,8 @@ export default [
       {
         path: '/drafts',
         component: '@/pages/drafts',
-      }
-    ]
+      },
+    ],
   },
   {
     path: '/admin',
@@ -80,6 +80,10 @@ export default [
       {
         path: '/detail/:articleId',
         component: '@/pages/articleDetail/[index]',
+      },
+      {
+        path: '/getList',
+        component: '@/pages/getList',
       },
     ],
   },

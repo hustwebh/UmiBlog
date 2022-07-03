@@ -7,14 +7,17 @@ export async function getArticles(data) {
   });
 }
 
+//获取所有存在的文章分类
 export async function getAllClasses() {
   return request('/api/classes');
 }
 
+//获取所有的文章标签
 export async function getTags() {
   return request('/api/articles/tags');
 }
 
+//获取文章详情信息
 export async function getArticleDetail(params) {
   return request(`/api/detail?${stringify(params)}`);
 }
@@ -39,7 +42,7 @@ export async function getComments(params) {
 
 // 未登录添加评论
 export async function createNoLoginComment(data) {
-  return request('/api/toursit/comment', {
+  return request('/api/toursitAddComment', {
     method: 'POST',
     data,
   });
@@ -47,5 +50,19 @@ export async function createNoLoginComment(data) {
 
 // 添加评论
 export async function createComment(data) {
-  return request('/api/create/comment', { method: 'POST', data });
+  return request('/api/addComment', { method: 'POST', data });
+}
+
+export async function getListByTag(data) {
+  return request('/api/article/getByTag', {
+    method: 'GET',
+    data,
+  });
+}
+
+export async function getListByClass(data) {
+  return request('/api/article/getByClass', {
+    method: 'GET',
+    data,
+  });
 }

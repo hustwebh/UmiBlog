@@ -187,7 +187,7 @@ const Index: React.FC = (props: any) => {
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item key="3">
-        <Link to="/">回到首页</Link>
+        <Link to="/blog">回到首页</Link>
       </Menu.Item>
     </Menu>
   );

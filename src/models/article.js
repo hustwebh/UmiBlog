@@ -8,6 +8,8 @@ import {
   createNoLoginComment,
   createComment,
   updateFavorite,
+  getListByTag,
+  getListByClass,
 } from '@/service/article';
 
 import { message } from 'antd';
@@ -73,24 +75,26 @@ export default {
       // })
     },
     *classes({ payload }, { call, put }) {
-      const { code, data } = yield call(getAllClasses, payload);
-      if (code === 200) {
-        yield put({
-          type: 'handle',
-          payload: {
-            classesList: data,
-          },
-        });
-      }
-      // const data = [
-      //   { name: "yi", number: 1 }, { name: "yi", number: 1 }, { name: "yi", number: 1 }
-      // ]
-      // yield put({
-      //   type: 'handle',
-      //   payload: {
-      //     classesList: data
-      //   }
-      // })
+      // const { code, data } = yield call(getAllClasses, payload);
+      // if (code === 200) {
+      //   yield put({
+      //     type: 'handle',
+      //     payload: {
+      //       classesList: data,
+      //     },
+      //   });
+      // }
+      const data = [
+        { name: 'yi', number: 1 },
+        { name: 'yi', number: 1 },
+        { name: 'yi', number: 1 },
+      ];
+      yield put({
+        type: 'handle',
+        payload: {
+          classesList: data,
+        },
+      });
     },
     *detail({ payload }, { call, put }) {
       const { code, data } = yield call(getArticleDetail, payload);
@@ -191,6 +195,30 @@ export default {
         type: 'handle',
         payload: {
           isFavorite: data,
+        },
+      });
+    }
+  },
+  *getByClass({ payload }, { call, put }) {
+    const { code, data } = yield call(getListByClass, payload);
+    if (code === 200) {
+      yield put({
+        type: 'handle',
+        payload: {
+          articleList: data.articles,
+          articleCount: data.articleCount,
+        },
+      });
+    }
+  },
+  *getByTag({ payload }, { call, put }) {
+    const { code, data } = yield call(getListByTag, payload);
+    if (code === 200) {
+      yield put({
+        type: 'handle',
+        payload: {
+          articleList: data.articles,
+          articleCount: data.articleCount,
         },
       });
     }
