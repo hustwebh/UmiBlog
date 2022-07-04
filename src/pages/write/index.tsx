@@ -325,12 +325,12 @@ const Index: React.FC = (props: any) => {
                       title={
                         <a
                           onClick={() => {
-                            history.push(`/write/draft/${item.id}`);
+                            history.push(`/write/${item.id}`);
                             onClose();
                           }}
                         >
                           {item.title}
-                          {item.is_publish ? (
+                          {item.isPublish ? (
                             <Tag color="success" className="ml-10">
                               已发表
                             </Tag>
