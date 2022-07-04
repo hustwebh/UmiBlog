@@ -46,21 +46,11 @@ export default {
     },
 
     *login({ payload }, { call, put }) {
-      const response = yield call(loginAccount, payload);
-      if (response.code !== 200) {
+      const { code, data } = yield call(loginAccount, payload);
+      if (code !== 200) {
         message.error(response.message);
       } else {
         message.success('登录成功');
-        return true;
-      }
-      // history.push({ isRegister: true })
-      return true;
-    },
-
-    *account({ payload }, { call, put }) {
-      const { code, data } = yield call(getAccount, payload);
-      if (code === 200) {
-        storageHelper.set('user', data);
         yield put({
           type: 'handle',
           payload: {
@@ -70,22 +60,37 @@ export default {
         });
         return true;
       }
-      // const data = {
-      //   "email":"123@qq.com",
-      //   "id": 1,
-      //   "account_type":"ADMIN",
-      //   // "avatar":"123.jpg"
-      //  }
-      // storageHelper.set('user',data);
-      //   yield put({
-      //     type: 'handle',
-      //     payload: {
-      //       account: data,
-      //       avatar: data.avatar,
-      //     },
-      //   });
-      // return true
     },
+
+    // *account({ payload }, { call, put }) {
+    //   const { code, data } = yield call(getAccount, payload);
+    //   if (code === 200) {
+    //     storageHelper.set('user', data);
+    //     yield put({
+    //       type: 'handle',
+    //       payload: {
+    //         account: data,
+    //         avatar: data.avatar,
+    //       },
+    //     });
+    //     return true;
+    //   }
+    //   // const data = {
+    //   //   "email":"123@qq.com",
+    //   //   "id": 1,
+    //   //   "account_type":"ADMIN",
+    //   //   // "avatar":"123.jpg"
+    //   //  }
+    //   // storageHelper.set('user',data);
+    //   //   yield put({
+    //   //     type: 'handle',
+    //   //     payload: {
+    //   //       account: data,
+    //   //       avatar: data.avatar,
+    //   //     },
+    //   //   });
+    //   // return true
+    // },
 
     *logout({ payload }, { call, put }) {
       const { code } = yield call(logoutAccount, payload);

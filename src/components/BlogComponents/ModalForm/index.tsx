@@ -13,21 +13,22 @@ export default function Index(props: any) {
         dispatch({
           type: 'user/login',
           payload: values,
-        }).then((res: boolean) => {
-          if (res) {
-            //true
-            dispatch({
-              type: 'user/account',
-            }).then((res: boolean) => {
-              if (res || location.isRegister) {
-                handleCancel();
-              } else {
-                //清空表单
-                form.resetFields();
-              }
-            });
-          }
         });
+        // .then((res: boolean) => {
+        //   if (res) {
+        //     //true
+        //     dispatch({
+        //       type: 'user/account',
+        //     }).then((res: boolean) => {
+        //       if (res || location.isRegister) {
+        //         handleCancel();
+        //       } else {
+        //         //清空表单
+        //         form.resetFields();
+        //       }
+        //     });
+        //   }
+        // });
       } else {
         const { name = '', password = '', email = '' } = values;
 
