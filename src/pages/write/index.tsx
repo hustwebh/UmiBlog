@@ -69,8 +69,6 @@ const Content = (props: any) => {
 };
 
 const Index: React.FC = (props: any) => {
-  console.log(props);
-
   const {
     dispatch,
     title,
@@ -117,6 +115,10 @@ const Index: React.FC = (props: any) => {
       inputRef.current.focus();
     }
   }, [key]);
+
+  useEffect(() => {
+    setValue(markdown);
+  }, [markdown]);
 
   const onChangeTitle = (e: any) => {
     if (dispatch) {
