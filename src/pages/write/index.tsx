@@ -150,7 +150,7 @@ const Index: React.FC = (props: any) => {
         type: 'write/publish',
         payload: {
           markdown: mdEditor.current && mdEditor.current.getMdValue(),
-          id: key,
+          id: key === 'new' ? '' : key,
           title,
           articleTags,
           articleCategory,
