@@ -10,9 +10,14 @@ export default function Index(props: any) {
   const onFinish = (values: any) => {
     if (dispatch) {
       if (title === '登录') {
+        const { email = '', password = '', remember = false } = values;
         dispatch({
           type: 'user/login',
-          payload: values,
+          payload: {
+            email,
+            password,
+            remember,
+          },
         });
         // .then((res: boolean) => {
         //   if (res) {
