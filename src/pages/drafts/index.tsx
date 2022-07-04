@@ -1,29 +1,29 @@
-import React, { useEffect } from 'react'
-import { Card, List, Skeleton, Tag, Popconfirm,message } from 'antd'
-import { connect } from 'dva'
-import { Link } from 'umi'
-import HeaderMenu from '@/components/BlogComponents/HeaderMenu'
+import React, { useEffect } from 'react';
+import { Card, List, Skeleton, Tag, Popconfirm, message } from 'antd';
+import { connect } from 'dva';
+import { Link } from 'umi';
+import HeaderMenu from '@/components/BlogComponents/HeaderMenu';
 // import moment from 'moment'
 import dayjs from 'dayjs';
-import styles from './index.less'
+import styles from './index.less';
 
-const Draft = (props:any) => {
-  const { dispatch, drafts, loading, account, history } = props
+const Draft = (props: any) => {
+  const { dispatch, drafts, loading, account, history } = props;
   useEffect(() => {
     if (!account || !account.id) {
-      message.info("请先完成登录")
-      history.push('/blog')
+      message.info('请先完成登录');
+      history.push('/blog');
     }
     if (dispatch) {
-      dispatch({ type: 'write/drafts' })
+      dispatch({ type: 'write/drafts' });
     }
-  }, [])
+  }, []);
 
-  const deleteDraft = (id:number) => {
+  const deleteDraft = (id: number) => {
     if (dispatch) {
-      dispatch({ type: 'write/deleteDraft', payload: { id } })
+      dispatch({ type: 'write/deleteDraft', payload: { id } });
     }
-  }
+  };
   return (
     <>
       <HeaderMenu />
@@ -33,10 +33,10 @@ const Draft = (props:any) => {
             loading={loading}
             dataSource={drafts}
             itemLayout="horizontal"
-            renderItem={(item:any) => (
+            renderItem={(item: any) => (
               <List.Item
                 actions={[
-                  <Link key="draft-edit" to={`/write/draft/${item.id}`}>
+                  <Link key="draft-edit" to={`/write/${item.id}`}>
                     编辑
                   </Link>,
                   <Popconfirm
@@ -53,7 +53,7 @@ const Draft = (props:any) => {
                 <Skeleton avatar title={false} loading={item.loading} active>
                   <List.Item.Meta
                     title={
-                      <Link to={`/write/draft/${item.id}`}>
+                      <Link to={`/write/${item.id}`}>
                         <strong>{item.title}</strong>
                         {item.isPublish ? (
                           <Tag color="success" className="ml-10">
@@ -73,20 +73,25 @@ const Draft = (props:any) => {
         </Card>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default connect(({ write: { drafts }, user: { account }, loading }
-  :{
-    write:{
-      drafts:any[],
-    }
-    user:{
-      account:any,
-    },
-    loading:any,
+export default connect(
+  ({
+    write: { drafts },
+    user: { account },
+    loading,
+  }: {
+    write: {
+      drafts: any[];
+    };
+    user: {
+      account: any;
+    };
+    loading: any;
   }) => ({
-  drafts,
-  account,
-  loading: loading.effects['write/drafts'],
-}))(Draft)
+    drafts,
+    account,
+    loading: loading.effects['write/drafts'],
+  }),
+)(Draft);
