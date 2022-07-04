@@ -1,1 +1,1 @@
-export const backstageUrl = '192.168.43.51:3000';
+export const backstageUrl = 'http://127.0.0.1:3000';

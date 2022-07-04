@@ -7,7 +7,7 @@ export default function Index(props: any) {
   const [form] = Form.useForm();
   const { dispatch, title, typeHandler, handleCancel, location } = props;
 
-  const onFinish = (values: FormData) => {
+  const onFinish = (values: any) => {
     if (dispatch) {
       if (title === '登录') {
         dispatch({
@@ -29,14 +29,14 @@ export default function Index(props: any) {
           }
         });
       } else {
-        console.log('values', values);
+        const { name = '', password = '', email = '' } = values;
 
         dispatch({
           type: 'user/register',
           payload: {
-            name: values.name,
-            password: values.password,
-            email: values.email,
+            name,
+            password,
+            email,
           },
         }).then((res: boolean) => {
           if (res) typeHandler('登录');

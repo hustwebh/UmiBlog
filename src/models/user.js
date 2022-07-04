@@ -32,7 +32,7 @@ export default {
   },
   effects: {
     *register({ payload }, { call, put }) {
-      console.log(payload);
+      console.log('payload', payload);
       const result = yield call(registerAccount, payload);
       console.log(result);
       if (result.code === 200) {

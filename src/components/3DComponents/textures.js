@@ -32,6 +32,7 @@ let URL = {};
 URL.gitHub = 'https://github.com/hustwebh';
 URL.PersonalBlog = 'localhost:8000/blog';
 URL.email = 'https://mailto:arfloyd7@gmail.com';
+URL.terpsolutions = 'https://github.com/hustwebh/lkProject';
 
 export {
   billboardTextures,

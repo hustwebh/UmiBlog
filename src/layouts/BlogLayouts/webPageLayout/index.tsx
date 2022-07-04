@@ -8,8 +8,14 @@ export default function Index(props: any) {
   } = props;
   const isSpecial = pathname === '/tags' || pathname === '/classes';
   return (
-    <>
-      <HeadMenu {...props} />
+    <div>
+      <div className={styles.head}>
+        <HeadMenu {...props} />
+        <div className={styles.container}>
+          <h1>-Mr.Quit's Blog-</h1>
+          <h3>欢迎到访</h3>
+        </div>
+      </div>
       <div
         style={{
           display: 'flex',
@@ -18,12 +24,6 @@ export default function Index(props: any) {
           alignItems: 'center',
         }}
       >
-        <div className={styles.head}>
-          <div className={styles.container}>
-            <h1>-Do Work That Matters-</h1>
-            <h3>.....</h3>
-          </div>
-        </div>
         <ReactCanvasNest />
         {isSpecial ? (
           <div className={styles.withoutMarginTop}>{props.children}</div>
@@ -31,6 +31,6 @@ export default function Index(props: any) {
           <div className={styles.normal}>{props.children}</div>
         )}
       </div>
-    </>
+    </div>
   );
 }

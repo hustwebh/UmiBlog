@@ -1,11 +1,11 @@
-import React, { useState, useEffect, createContext } from 'react'
-import { Menu, Drawer, Button, Dropdown, Modal, Avatar } from 'antd'
+import React, { useState, useEffect, createContext } from 'react';
+import { Menu, Drawer, Button, Dropdown, Modal, Avatar } from 'antd';
 import type { MenuProps } from 'antd';
-import { connect } from 'dva'
+import { connect } from 'dva';
 import {
   MenuOutlined,
   HomeOutlined,
-  BookTwoTone,
+  CopyOutlined,
   SearchOutlined,
   UnorderedListOutlined,
   HighlightOutlined,
@@ -13,73 +13,70 @@ import {
   MessageOutlined,
   SmileOutlined,
   EnvironmentOutlined,
-  UserOutlined
-} from '@ant-design/icons'
-import { Link } from 'umi'
+  UserOutlined,
+} from '@ant-design/icons';
+import { Link } from 'umi';
 // import UserAvatar from '@/components/UserAvatar'
-import storageHelper from '@/utils/storage'
-import ModalForm from '../ModalForm'
+import storageHelper from '@/utils/storage';
+import ModalForm from '../ModalForm';
 
-import styles from './index.less'
+import styles from './index.less';
 
-
-const items: MenuProps["items"] = [
+const items: MenuProps['items'] = [
   {
     label: '文章',
     key: 'artical',
-    icon: <BookTwoTone />,
+    icon: <CopyOutlined />,
     children: [
       { label: '首页', key: 'blog', icon: <EnvironmentOutlined /> },
       { label: '分类', key: 'classes', icon: <UnorderedListOutlined /> },
-      { label: '标签', key: 'tags', icon: <TagsOutlined /> }
-    ]
+      { label: '标签', key: 'tags', icon: <TagsOutlined /> },
+    ],
   },
   {
     label: '搜索',
     key: 'search',
-    icon: <SearchOutlined />
+    icon: <SearchOutlined />,
   },
   {
-
     label: '友链',
     key: 'friends',
     icon: <SmileOutlined />,
-
   },
   {
     label: '关于',
     key: 'about',
-    icon: <HighlightOutlined />
-  }
-]
+    icon: <HighlightOutlined />,
+  },
+];
 
 const Index: React.FC = (props: any) => {
-  const { dispatch, account, history, location } = props
+  const { dispatch, account, history, location } = props;
 
-  const [menuVisible, setMenuVisible] = useState(false)
-  const [modalVisible, setModalVisible] = useState(false)
-  const [modalType, setModalType] = useState('')
+  const [menuVisible, setMenuVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalType, setModalType] = useState('');
 
   const showDrawer = () => {
-    setMenuVisible(true)
-  }
+    setMenuVisible(true);
+  };
   const onClose = () => {
-    setMenuVisible(false)
-  }
+    setMenuVisible(false);
+  };
   const logout = () => {
-    storageHelper.clear('user')
+    storageHelper.clear('user');
     if (dispatch) {
-      dispatch({ type: 'user/logout' })
+      dispatch({ type: 'user/logout' });
     }
-  }
-  const handleClick: MenuProps['onClick'] = e => {
-    history.push(`/${e.key}`)
-  }
+  };
+  const handleClick: MenuProps['onClick'] = (e) => {
+    history.push(`/${e.key}`);
+  };
 
   const userEvent = (type: string) => {
-    setModalVisible(true)
-    setModalType(type)
-  }
+    setModalVisible(true);
+    setModalType(type);
+  };
 
   const handleCancel = () => {
     setModalVisible(false);
@@ -87,7 +84,7 @@ const Index: React.FC = (props: any) => {
 
   const typeHandler = (type: string) => {
     setModalType(type);
-  }
+  };
 
   return (
     <>
@@ -95,26 +92,34 @@ const Index: React.FC = (props: any) => {
       <div className={styles.homeHeader}>
         <div className={styles.homeHeaderLeft}>
           <div className={styles.homeHeaderPc}>
-            <Link to="/" className={styles.brand} style={{ height: 64 }}>
-              <HomeOutlined />
-            </Link>
-            <Menu
-              mode="horizontal"
-              style={{ height: '64px', borderBottom: 'none', marginLeft: 40, minWidth: 552 }}
-              items={items}
-              onClick={handleClick}
-              builtinPlacements={{
-                bottomLeft: {
-                  points: ['tc', 'bc'],
-                  overflow: {
-                    adjuxtX: 1,
-                    adjuxtY: 1
+            <div>
+              <Link to="/" className={styles.brand} style={{ height: 60 }}>
+                <HomeOutlined />
+              </Link>
+            </div>
+            <div>
+              <Menu
+                mode="horizontal"
+                style={{
+                  height: '64px',
+                  borderBottom: 'none',
+                  marginLeft: 40,
+                  minWidth: 552,
+                }}
+                items={items}
+                onClick={handleClick}
+                builtinPlacements={{
+                  bottomLeft: {
+                    points: ['tc', 'bc'],
+                    overflow: {
+                      adjuxtX: 1,
+                      adjuxtY: 1,
+                    },
+                    offset: [0, 5],
                   },
-                  offset: [0, 5]
-                }
-              }}
-            >
-            </Menu>
+                }}
+              ></Menu>
+            </div>
           </div>
           <div className={styles.homeHeaderMobile}>
             <Button type="link" onClick={showDrawer}>
@@ -159,19 +164,36 @@ const Index: React.FC = (props: any) => {
             >
               <a
                 className="ant-dropdown-link"
-                onClick={e => e.preventDefault()}
+                onClick={(e) => e.preventDefault()}
               >
                 {/* <UserAvatar src={account.avatar} size="large" /> */}
-                {account.avatar
-                  ? (<Avatar size={props.size || 'default'} src={account.avatar} />)
-                  : (<Avatar size={props.size || 'default'} icon={<UserOutlined />} />)}
+                {account.avatar ? (
+                  <Avatar size={props.size || 'default'} src={account.avatar} />
+                ) : (
+                  <Avatar
+                    size={props.size || 'default'}
+                    icon={<UserOutlined />}
+                  />
+                )}
               </a>
             </Dropdown>
           ) : (
             <span>
-              <Button onClick={() => (userEvent('登录'))}>登录</Button>
+              <Button
+                onClick={() => userEvent('登录')}
+                type="dashed"
+                className={styles.linkBtn}
+              >
+                登录
+              </Button>
               <span className="pd-5"> </span>
-              <Button onClick={() => (userEvent('注册'))}>注册</Button>
+              <Button
+                onClick={() => userEvent('注册')}
+                type="dashed"
+                className={styles.linkBtn}
+              >
+                注册
+              </Button>
             </span>
           )}
         </div>
@@ -196,14 +218,10 @@ const Index: React.FC = (props: any) => {
           // selectedKeys={['artical']}
           mode="inline"
           items={items}
-        >
-        </Menu>
+        ></Menu>
       </Drawer>
 
-      <Modal
-        visible={modalVisible}
-        onCancel={handleCancel}
-        footer={null}>
+      <Modal visible={modalVisible} onCancel={handleCancel} footer={null}>
         <ModalForm
           title={modalType}
           dispatch={dispatch}
@@ -217,15 +235,16 @@ const Index: React.FC = (props: any) => {
   );
 };
 
-const mapStateToProps = ({ user: { account } }:
-  {
-    user: {
-      account: any;
-    }
-  }) => {
+const mapStateToProps = ({
+  user: { account },
+}: {
+  user: {
+    account: any;
+  };
+}) => {
   return {
     account,
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps)(Index);

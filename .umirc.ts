@@ -12,9 +12,9 @@ export default defineConfig({
     '/api': {
       target: backstageUrl,
       changeOrigin: true,
-      pathRewrite: {
-        '^/api': '',
-      },
+      // pathRewrite: {
+      //   '^/api': '',
+      // },
     },
   },
   chainWebpack(config) {
