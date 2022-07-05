@@ -21,7 +21,6 @@ const SearchBox = (props: any) => {
 };
 
 const Index: React.FC = (props: any) => {
-  console.log(props);
   const {
     dispatch,
     articleList,

@@ -229,15 +229,6 @@ export default {
         });
       }
     },
-    *comments({ payload }, { call, put }) {
-      const { code, data } = yield call(createComment, payload);
-      if (code === 200) {
-        yield put({
-          type: 'createCommentHandle',
-          payload: data,
-        });
-      }
-    },
     *favorite({ payload }, { call, put }) {
       const { code } = yield call(updateFavorite, payload);
       if (code === 200) {
