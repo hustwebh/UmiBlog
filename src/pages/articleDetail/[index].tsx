@@ -137,6 +137,7 @@ const Index: React.FC = (props: any) => {
             loading={loading2}
             comments={comments}
             account={account}
+            dispatch={dispatch}
           />
         </div>
         <div className={styles.articleContainerSider}>

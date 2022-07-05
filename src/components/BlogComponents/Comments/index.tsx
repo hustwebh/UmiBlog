@@ -28,7 +28,7 @@ const UserAvatar = (props: any) =>
   );
 
 export default function Comments(props: any) {
-  const { account, id, author, comments, loading } = props;
+  const { account, id, author, comments, loading, dispatch } = props;
   return (
     <Card title="评论" bordered={false} loading={loading}>
       <List
@@ -48,14 +48,20 @@ export default function Comments(props: any) {
         )}
       />
       <Divider />
-      {account && account.id ? (
+      {/* {account && account.id ? (
         <Comment
           avatar={<UserAvatar src={account.avatar} />}
           content={<LoginCommentForm id={id} author={author} />}
         />
       ) : (
         <NoLoginCommentForm id={id} author={author} />
-      )}
+      )} */}
+      <Comment
+        avatar={<UserAvatar src={account.avatar} />}
+        content={
+          <LoginCommentForm id={id} author={author} dispatch={dispatch} />
+        }
+      />
     </Card>
   );
 }

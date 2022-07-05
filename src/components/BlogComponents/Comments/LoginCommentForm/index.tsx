@@ -5,7 +5,7 @@ export default function LoginCommentForm(props: any) {
   const { id, author, dispatch } = props;
   const [form] = Form.useForm();
   const onFinish = (values: any) => {
-    console.log('FormData', ...values);
+    console.log('FormData', { ...values, articleId: id, author });
     if (dispatch) {
       dispatch({
         type: 'article/addComment',
