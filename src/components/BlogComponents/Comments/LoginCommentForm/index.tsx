@@ -4,7 +4,7 @@ import { Button, Input, Form } from 'antd';
 export default function LoginCommentForm(props: any) {
   const { id, author, dispatch } = props;
   const [form] = Form.useForm();
-  const onFinish = (values: FormData) => {
+  const onFinish = (values: any) => {
     console.log('FormData', ...values);
     if (dispatch) {
       dispatch({
