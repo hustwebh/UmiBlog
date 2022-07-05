@@ -29,7 +29,7 @@ const ClassesBtn = ({
 
 const Index: React.FC = (props: any) => {
   const { dispatch, classesList } = props;
-  console.log('classesList', classesList);
+  console.log(classesList);
 
   useEffect(() => {
     if (dispatch) {
@@ -72,15 +72,15 @@ const Index: React.FC = (props: any) => {
                     />
                   </>
                 );
-              return (
-                <ClassesBtn
-                  number={item.number}
-                  name={item.name}
-                  key={index}
-                  isLast={false}
-                />
-              );
             }
+            return (
+              <ClassesBtn
+                number={item.number}
+                name={item.name}
+                key={index}
+                isLast={false}
+              />
+            );
           })}
       </div>
     </div>

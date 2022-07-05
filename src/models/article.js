@@ -130,7 +130,14 @@ export default {
       // });
     },
     *classes({ payload }, { call, put }) {
-      const { code, data } = yield call(getAllClasses, payload);
+      // const { code, data } = yield call(getAllClasses, payload);
+      const { code, data } = {
+        code: 200,
+        data: [
+          { name: '222', number: 1 },
+          { name: 'aaa', number: 1 },
+        ],
+      };
       if (code === 200) {
         yield put({
           type: 'handle',
