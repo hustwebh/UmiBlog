@@ -29,31 +29,78 @@ export default {
   },
   effects: {
     *articles({ payload }, { call, put }) {
-      const { code, data } = yield call(getArticles, payload);
-      if (code === 200) {
-        yield put({
-          type: 'handle',
-          payload: {
-            articles: data.articles,
-            articleCount: data.count,
-          },
-        });
-      }
-      // const data = {
-      //   articles: [{ title: "title1", view: 10, favorite: 5, comment: 3, articleId: 1, createAt: "2022-6-24 2:55", tag: ["javaScript", "react"] },
-      //   { title: "title1", view: 10, favorite: 5, comment: 3, articleId: 1, createAt: "2022-6-24 2:55", tag: ["javaScript", "react", "javaScript", "react"] },
-      //   { title: "title1", view: 10, favorite: 5, comment: 3, articleId: 1, createAt: "2022-6-24 2:55", tag: ["javaScript", "react"] },
-      //   { title: "title1", view: 10, favorite: 5, comment: 3, articleId: 1, createAt: "2022-6-24 2:55", tag: ["javaScript", "react"] },
-      //   { title: "title1", view: 10, favorite: 5, comment: 3, articleId: 1, createAt: "2022-6-24 2:55", tag: ["javaScript", "react"] },],
-      //   articleCount: 10
+      // const { code, data } = yield call(getArticles, payload);
+      // if (code === 200) {
+      //   yield put({
+      //     type: 'handle',
+      //     payload: {
+      //       articles: data.articles,
+      //       articleCount: data.count,
+      //     },
+      //   });
       // }
-      // yield put({
-      //   type: 'handle',
-      //   payload: {
-      //     articles: data.articles,
-      //     articleCount: data.articleCount,
-      //   },
-      // })
+      const data = {
+        articles: [
+          {
+            title: 'title1',
+            view: 10,
+            favorite: 5,
+            comment: 3,
+            articleId: 1,
+            createAt: '2022-6-24 2:55',
+            tag: ['javaScript', 'react'],
+            category: 'haha',
+          },
+          {
+            title: 'title1',
+            view: 10,
+            favorite: 5,
+            comment: 3,
+            articleId: 1,
+            createAt: '2022-6-24 2:55',
+            tag: ['javaScript', 'react', 'javaScript', 'react'],
+            category: 'haha',
+          },
+          {
+            title: 'title1',
+            view: 10,
+            favorite: 5,
+            comment: 3,
+            articleId: 1,
+            createAt: '2022-6-24 2:55',
+            tag: ['javaScript', 'react'],
+            category: 'haha',
+          },
+          {
+            title: 'title1',
+            view: 10,
+            favorite: 5,
+            comment: 3,
+            articleId: 1,
+            createAt: '2022-6-24 2:55',
+            tag: ['javaScript', 'react'],
+            category: 'haha',
+          },
+          {
+            title: 'title1',
+            view: 10,
+            favorite: 5,
+            comment: 3,
+            articleId: 1,
+            createAt: '2022-6-24 2:55',
+            tag: ['javaScript', 'react'],
+            category: 'haha',
+          },
+        ],
+        articleCount: 10,
+      };
+      yield put({
+        type: 'handle',
+        payload: {
+          articles: data.articles,
+          articleCount: data.articleCount,
+        },
+      });
     },
     *tags({ payload }, { call, put }) {
       const { code, data } = yield call(getTags, payload);
@@ -187,41 +234,41 @@ export default {
         yield put({ type: 'changeFavorite' });
       }
     },
-  },
-  *isFavorite({ payload }, { call, put }) {
-    const { code, data } = yield call(getIsFavorite, payload);
-    if (code === 200) {
-      yield put({
-        type: 'handle',
-        payload: {
-          isFavorite: data,
-        },
-      });
-    }
-  },
-  *getByClass({ payload }, { call, put }) {
-    const { code, data } = yield call(getListByClass, payload);
-    if (code === 200) {
-      yield put({
-        type: 'handle',
-        payload: {
-          articleList: data.articles,
-          articleCount: data.articleCount,
-        },
-      });
-    }
-  },
-  *getByTag({ payload }, { call, put }) {
-    const { code, data } = yield call(getListByTag, payload);
-    if (code === 200) {
-      yield put({
-        type: 'handle',
-        payload: {
-          articleList: data.articles,
-          articleCount: data.articleCount,
-        },
-      });
-    }
+    *isFavorite({ payload }, { call, put }) {
+      const { code, data } = yield call(getIsFavorite, payload);
+      if (code === 200) {
+        yield put({
+          type: 'handle',
+          payload: {
+            isFavorite: data,
+          },
+        });
+      }
+    },
+    *getByClass({ payload }, { call, put }) {
+      const { code, data } = yield call(getListByClass, payload);
+      if (code === 200) {
+        yield put({
+          type: 'handle',
+          payload: {
+            articleList: data.articles,
+            articleCount: data.articleCount,
+          },
+        });
+      }
+    },
+    *getByTag({ payload }, { call, put }) {
+      const { code, data } = yield call(getListByTag, payload);
+      if (code === 200) {
+        yield put({
+          type: 'handle',
+          payload: {
+            articleList: data.articles,
+            articleCount: data.articleCount,
+          },
+        });
+      }
+    },
   },
 
   reducers: {

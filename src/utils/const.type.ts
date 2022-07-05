@@ -6,6 +6,7 @@ export interface ArticleBoxType {
   favorite: number;
   comment: number;
   imgs?: string[];
+  category: string;
   articleId: number;
   createAt: string;
   tag?: string[];

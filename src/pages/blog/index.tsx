@@ -87,7 +87,7 @@ const Index: React.FC = (props: any) => {
             return <ArticleBox {...item} key={index} showDetail={showDetail} />;
           })}
         </Col>
-        <Col span={5}>
+        <Col span={5} className={styles.sider}>
           <div className={styles.sider}>
             <Card className={styles.siderBlocks}>
               <p>

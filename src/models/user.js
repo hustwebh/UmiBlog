@@ -3,9 +3,9 @@ import { history } from 'umi';
 import {
   registerAccount,
   loginAccount,
-  getAccount,
+  // getAccount,
   logoutAccount,
-  modifyAccount,
+  // modifyAccount,
 } from '../service/user';
 import storageHelper from '@/utils/storage';
 

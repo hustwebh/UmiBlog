@@ -18,6 +18,7 @@ export default function Index(props: ArticleBoxType) {
     createAt,
     tag = [],
     view,
+    category,
     favorite,
     comment,
     articleId,
@@ -44,7 +45,7 @@ export default function Index(props: ArticleBoxType) {
           <div className={styles.articleContainer}>
             <h2>{title}</h2>
             <div className={styles.contentContainer}>
-              文章内容长文本文章w内容长文本文章内容长文本文章内容长文本文章内容长文本文章内容长文本文章内容长文本文章内容长文本文章内容长文本文章内容长文本文章内容长文本文章内容长文本文章内容长文本文章内容长文本文章内容长文本文章内容长文本文章内容长文本文章内容长文本文章内容长文本文章内容长文本文章内容长文本文章内容长文本文章内容长文本文章内容长文本文章内容长文本文章内容长文本
+              类别:<Tag color="blue">{category}</Tag>
             </div>
             <div className={styles.footTagsContainer}>
               <div className={styles.createTimeContainer}>{createAt}</div>
