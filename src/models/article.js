@@ -131,6 +131,7 @@ export default {
     },
     *classes({ payload }, { call, put }) {
       const { code, data } = yield call(getAllClasses, payload);
+      console.log(data);
       if (code === 200) {
         yield put({
           type: 'handle',
