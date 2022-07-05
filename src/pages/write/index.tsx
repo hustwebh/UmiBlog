@@ -152,14 +152,13 @@ const Index: React.FC = (props: any) => {
         type: 'write/publish',
         payload: {
           markdown: mdEditor.current && mdEditor.current.getMdValue(),
-          id: key === 'new' ? null : key,
+          id: key === 'new' ? null : parseInt(key),
           title,
           articleTags,
           articleCategory,
         },
       });
     }
-    // }
   };
 
   const writeNew = () => {
@@ -403,14 +402,5 @@ const mapStateToProps = ({
     loading: loading.effects['write/updateDraft'],
   };
 };
-
-// dispatch,
-// title,
-// drafts,
-// account,
-// loading,
-// match: {
-//   params: { key },
-// },
 
 export default connect(mapStateToProps)(Index);
