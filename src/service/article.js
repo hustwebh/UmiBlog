@@ -6,12 +6,12 @@ export async function getArticles(params) {
 
 //获取所有存在的文章分类
 export async function getAllClasses() {
-  return request('/api/classes');
+  return request('/api/article/classes');
 }
 
 //获取所有的文章标签
 export async function getTags() {
-  return request('/api/articles/tags');
+  return request('/api/article/tags');
 }
 
 //获取文章详情信息
