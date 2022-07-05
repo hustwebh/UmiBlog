@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Tooltip, List, Skeleton, Tag, Card } from 'antd';
 import { EyeOutlined, LikeOutlined, MessageOutlined } from '@ant-design/icons';
 import Link from 'umi';
+import dayjs from 'dayjs';
 import styles from './index.less';
 import type { ArticleBoxType } from '../../../utils/const.type';
 
@@ -51,7 +52,7 @@ export default function Index(props: ArticleBoxType) {
               </div>
               <div className={styles.createTimeContainer}>
                 <span>创建时间:</span>
-                <Tag color="blue">{createAt}</Tag>
+                <Tag color="blue">{dayjs(createAt).format('YYYY-MM-DD')}</Tag>
               </div>
             </div>
             <div className={styles.footTagsContainer}>
