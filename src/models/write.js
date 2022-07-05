@@ -96,7 +96,7 @@ export default {
           type: 'setMarkdown',
           payload: { markdown: '' },
         });
-        history.push('/');
+        history.push('/blog');
       }
     },
   },

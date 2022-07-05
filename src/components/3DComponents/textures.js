@@ -1,11 +1,11 @@
 //billboardTextures
-import terpSolutionsImg from '@/assets/terpSolutions.png';
+import hospitalAdminImg from '@/assets/hospitalAdmin.png';
 import woodTextureImg from '@/assets/woodTexture.jpg';
 import githubImg from '@/assets/githubLogo.png';
 import reactLogoImg from '@/assets/react.png';
 
 let billboardTextures = {};
-billboardTextures.terpSolutionsTexture = terpSolutionsImg;
+billboardTextures.terpSolutionsTexture = hospitalAdminImg;
 billboardTextures.bagHolderBetsTexture =
   '../src/jsm/Bagholdersbetsbillboard.png';
 billboardTextures.homeSweetHomeTexture =
