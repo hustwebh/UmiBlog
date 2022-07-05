@@ -103,31 +103,31 @@ export default {
       // });
     },
     *tags({ payload }, { call, put }) {
-      // const { code, data } = yield call(getTags, payload);
-      // if (code === 200) {
-      //   yield put({
-      //     type: 'handle',
-      //     payload: {
-      //       tags: data,
-      //     },
-      //   });
-      // }
+      const { code, data } = yield call(getTags, payload);
+      if (code === 200) {
+        yield put({
+          type: 'handle',
+          payload: {
+            tags: data,
+          },
+        });
+      }
 
-      const data = [
-        'javaSc',
-        'react',
-        'pt',
-        'ript',
-        'javaScript',
-        'javaScript',
-        'javaScript',
-      ];
-      yield put({
-        type: 'handle',
-        payload: {
-          tags: data,
-        },
-      });
+      // const data = [
+      //   'javaSc',
+      //   'react',
+      //   'pt',
+      //   'ript',
+      //   'javaScript',
+      //   'javaScript',
+      //   'javaScript',
+      // ];
+      // yield put({
+      //   type: 'handle',
+      //   payload: {
+      //     tags: data,
+      //   },
+      // });
     },
     *classes({ payload }, { call, put }) {
       const { code, data } = yield call(getAllClasses, payload);
