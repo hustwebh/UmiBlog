@@ -103,45 +103,53 @@ export default {
       // });
     },
     *tags({ payload }, { call, put }) {
-      const { code, data } = yield call(getTags, payload);
-      if (code === 200) {
-        yield put({
-          type: 'handle',
-          payload: {
-            tags: data,
-          },
-        });
-      }
-
-      // const data = ["javaScript", "react"];
-      // yield put({
-      //   type: 'handle',
-      //   payload: {
-      //     tags: data,
-      //   },
-      // })
-    },
-    *classes({ payload }, { call, put }) {
-      // const { code, data } = yield call(getAllClasses, payload);
+      // const { code, data } = yield call(getTags, payload);
       // if (code === 200) {
       //   yield put({
       //     type: 'handle',
       //     payload: {
-      //       classesList: data,
+      //       tags: data,
       //     },
       //   });
       // }
+
       const data = [
-        { name: 'yi', number: 1 },
-        { name: 'yi', number: 1 },
-        { name: 'yi', number: 1 },
+        'javaSc',
+        'react',
+        'pt',
+        'ript',
+        'javaScript',
+        'javaScript',
+        'javaScript',
       ];
       yield put({
         type: 'handle',
         payload: {
-          classesList: data,
+          tags: data,
         },
       });
+    },
+    *classes({ payload }, { call, put }) {
+      const { code, data } = yield call(getAllClasses, payload);
+      if (code === 200) {
+        yield put({
+          type: 'handle',
+          payload: {
+            classesList: data,
+          },
+        });
+      }
+      // const data = [
+      //   { name: 'yi', number: 1 },
+      //   { name: 'yi', number: 1 },
+      //   { name: 'yi', number: 1 },
+      // ];
+      // yield put({
+      //   type: 'handle',
+      //   payload: {
+      //     classesList: data,
+      //   },
+      // });
     },
     *detail({ payload }, { call, put }) {
       const { code, data } = yield call(getArticleDetail, payload);

@@ -82,66 +82,74 @@ const Index: React.FC = (props: any) => {
         }}
         justify="space-evenly"
       >
-        <Col span={17}>
+        <Col span={16}>
           {articles.map((item: ArticleBoxType, index: number) => {
             return <ArticleBox {...item} key={index} showDetail={showDetail} />;
           })}
         </Col>
-        <Col span={5} className={styles.sider}>
-          <div>
-            <Card className={styles.siderBlocks}>
-              <p>
-                我是<span>张跃然</span>
-                <br />
-                现在是HUST在校大学牲一名,欢迎到访我的<span>个人博客网站</span>
-              </p>
-            </Card>
-            <Card className={styles.siderBlocks}>
-              <div className={styles.iconBtn}>
-                {accountList.map((item, index) => {
-                  const { icon, link = undefined, content = undefined } = item;
-                  return (
-                    <div key={index}>
-                      {link ? (
-                        <Button
-                          style={{ minWidth: 50, minHeight: 40 }}
-                          onClick={() => {
-                            window.location.replace(link);
-                          }}
-                        >
-                          {icon}
-                        </Button>
-                      ) : (
-                        <Popover content={content} trigger="hover">
-                          <Button style={{ minWidth: 50, minHeight: 40 }}>
-                            {icon}
-                          </Button>
-                        </Popover>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </Card>
-            {/* <Card loading={loading}>
+        <Col span={6} className={styles.sider}>
+          <Card className={styles.siderBlocks}>
+            <p>
+              我是<span>张跃然</span>
+              <br />
+              现在是HUST在校大学牲一名,欢迎到访我的<span>个人博客网站</span>
+            </p>
+          </Card>
+          <Card
+            className={styles.siderBlocks}
+            bodyStyle={{
+              width: '100%',
+              justifyContent: 'center',
+              alignItems: 'center',
+              display: 'flex',
+            }}
+          >
+            {/* <div className={styles.iconBtn}> */}
+            {accountList.map((item, index) => {
+              const { icon, link = undefined, content = undefined } = item;
+              return (
+                <div key={index} style={{ display: 'inline' }}>
+                  {link ? (
+                    <Button
+                      style={{ width: 50, height: 40 }}
+                      onClick={() => {
+                        window.location.replace(link);
+                      }}
+                    >
+                      {icon}
+                    </Button>
+                  ) : (
+                    <Popover content={content} trigger="hover">
+                      <Button style={{ width: 50, height: 40 }}>{icon}</Button>
+                    </Popover>
+                  )}
+                </div>
+              );
+            })}
+            {/* </div> */}
+          </Card>
+          {/* <Card loading={loading}>
             <div className={s.notice}>{data?.data[0].notice}</div>
           </Card> */}
-            <Card title="标签集合" className={styles.siderBlocks}>
-              <div style={{ display: 'flex' }}>
-                {tags && tags.length ? (
-                  tags.map((item: string, index: number) => {
-                    return (
-                      <div key={index} className={styles.tagBox}>
-                        {item}
-                      </div>
-                    );
-                  })
-                ) : (
-                  <span>标签加载中...</span>
-                )}
-              </div>
-            </Card>
-          </div>
+          <Card
+            title="标签集合"
+            className={styles.siderBlocks}
+            bodyStyle={{ display: 'flex', width: '100%', flexWrap: 'wrap' }}
+          >
+            {/* <div> */}
+            {tags && tags.length ? (
+              tags.map((item: string, index: number) => {
+                return (
+                  <div key={index} className={styles.tagBox}>
+                    {item}
+                  </div>
+                );
+              })
+            ) : (
+              <span>标签加载中...</span>
+            )}
+            {/* </div> */}
+          </Card>
         </Col>
       </Row>
       <Row>
