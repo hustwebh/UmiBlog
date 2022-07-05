@@ -131,7 +131,6 @@ export default {
     },
     *classes({ payload }, { call, put }) {
       const { code, data } = yield call(getAllClasses, payload);
-      console.log(data);
       if (code === 200) {
         yield put({
           type: 'handle',
@@ -140,17 +139,6 @@ export default {
           },
         });
       }
-      // const data = [
-      //   { name: 'yi', number: 1 },
-      //   { name: 'yi', number: 1 },
-      //   { name: 'yi', number: 1 },
-      // ];
-      // yield put({
-      //   type: 'handle',
-      //   payload: {
-      //     classesList: data,
-      //   },
-      // });
     },
     *detail({ payload }, { call, put }) {
       const { code, data } = yield call(getArticleDetail, payload);

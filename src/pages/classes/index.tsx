@@ -28,7 +28,9 @@ const ClassesBtn = ({
 };
 
 const Index: React.FC = (props: any) => {
-  const { dispatch, classesList, history } = props;
+  const { dispatch, classesList } = props;
+  console.log('classesList', classesList);
+
   useEffect(() => {
     if (dispatch) {
       dispatch({
