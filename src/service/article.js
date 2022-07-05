@@ -30,13 +30,15 @@ export async function updateFavorite(data) {
 }
 
 // 是否已点赞
-export async function getIsFavorite(params) {
-  return request(`/api/article/isFavorite?${stringify(params)}`);
+export async function getIsFavorite({ articleId, userId }) {
+  return request(
+    `/api/article/isFavorite?articleId=${articleId}&userId=${userId}`,
+  );
 }
 
 // 获取用户评论
-export async function getComments(params) {
-  return request(`/api/article/comments?${stringify(params)}`);
+export async function getComments({ articleId }) {
+  return request(`/api/article/comments?articleId=${articleId}`);
 }
 
 // 未登录添加评论
@@ -52,16 +54,14 @@ export async function createComment(data) {
   return request('/api/article/addComment', { method: 'POST', data });
 }
 
-export async function getListByTag(data) {
-  return request('/api/article/getByTag', {
-    method: 'GET',
-    data,
-  });
+export async function getListByTag({ currentPage, pageSize, tag }) {
+  return request(
+    `/api/article/getByTag?currentPage=${currentPage}&pageSize=${pageSize}&tag=${tag}`,
+  );
 }
 
-export async function getListByClass(data) {
-  return request('/api/article/getByClass', {
-    method: 'GET',
-    data,
-  });
+export async function getListByClass({ currentPage, pageSize, class1 }) {
+  return request(
+    `/api/article/getByClass?currentPage=${currentPage}&pageSize=${pageSize}&class1=${class1}`,
+  );
 }

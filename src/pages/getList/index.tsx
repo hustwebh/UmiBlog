@@ -38,7 +38,7 @@ const Index: React.FC = (props: any) => {
           payload: {
             currentPage,
             pageSize: 5,
-            class: query.category,
+            class1: query.category,
           },
         });
       }
