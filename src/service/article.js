@@ -1,7 +1,9 @@
 import request from '@/utils/request';
 
-export async function getArticles(params) {
-  return request(`/api/article/articles?${stringify(params)}`);
+export async function getArticles({ currentPage, pageSize, keywords }) {
+  return request(
+    `/api/article/articles?currentPage=${currentPage}&pageSize=${pageSize}&keywords=${keywords}`,
+  );
 }
 
 //获取所有存在的文章分类
@@ -15,8 +17,8 @@ export async function getTags() {
 }
 
 //获取文章详情信息
-export async function getArticleDetail(params) {
-  return request(`/api/detail?${stringify(params)}`);
+export async function getArticleDetail({ articleId }) {
+  return request(`/api/detail?articleId=${articleId}`);
 }
 
 // 文章点赞
