@@ -18,12 +18,12 @@ export async function getTags() {
 
 //获取文章详情信息
 export async function getArticleDetail({ articleId }) {
-  return request(`/api/detail?articleId=${articleId}`);
+  return request(`/api/article/detail?articleId=${articleId}`);
 }
 
 // 文章点赞
 export async function updateFavorite(data) {
-  return request('/api/update/favorite', {
+  return request('/api/article/favorite', {
     method: 'POST',
     data,
   });
@@ -31,17 +31,17 @@ export async function updateFavorite(data) {
 
 // 是否已点赞
 export async function getIsFavorite(params) {
-  return request(`/api/isFavorite?${stringify(params)}`);
+  return request(`/api/article/isFavorite?${stringify(params)}`);
 }
 
 // 获取用户评论
 export async function getComments(params) {
-  return request(`/api/comments?${stringify(params)}`);
+  return request(`/api/article/comments?${stringify(params)}`);
 }
 
 // 未登录添加评论
 export async function createNoLoginComment(data) {
-  return request('/api/toursitAddComment', {
+  return request('/api/article/toursitAddComment', {
     method: 'POST',
     data,
   });
@@ -49,7 +49,7 @@ export async function createNoLoginComment(data) {
 
 // 添加评论
 export async function createComment(data) {
-  return request('/api/addComment', { method: 'POST', data });
+  return request('/api/article/addComment', { method: 'POST', data });
 }
 
 export async function getListByTag(data) {
