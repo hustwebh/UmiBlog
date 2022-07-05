@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import {
   Card,
   Table,
@@ -9,41 +9,41 @@ import {
   Input,
   Popconfirm,
   Select,
-} from 'antd'
-import { connect } from 'dva'
-import moment from 'moment'
-import { v4 as uuidv4 } from 'uuid'
-import { PlusOutlined } from '@ant-design/icons'
+} from 'antd';
+import { connect } from 'dva';
+import moment from 'moment';
+import { v4 as uuidv4 } from 'uuid';
+import { PlusOutlined } from '@ant-design/icons';
 
-const { Option } = Select
+const { Option } = Select;
 
-const Tag = (props:any) => {
-  const { dispatch, categories, tags, loading } = props
-  const [visible, setVisible] = useState(false)
-  const [form] = Form.useForm()
+const Tag = (props: any) => {
+  const { dispatch, categories, tags, loading } = props;
+  const [visible, setVisible] = useState(false);
+  const [form] = Form.useForm();
   useEffect(() => {
     if (dispatch) {
-      dispatch({ type: 'admin/categories' })
-      dispatch({ type: 'admin/tags' })
+      dispatch({ type: 'admin/categories' });
+      dispatch({ type: 'admin/tags' });
     }
-  }, [])
+  }, []);
   const handleCancel = () => {
-    setVisible(false)
-  }
+    setVisible(false);
+  };
   const showModal = () => {
-    setVisible(true)
-  }
-  const onSubmit = (values:string) => {
+    setVisible(true);
+  };
+  const onSubmit = (values: string) => {
     if (dispatch) {
-      dispatch({ type: 'admin/createTag', payload: values })
+      dispatch({ type: 'admin/createTag', payload: values });
     }
-    form.resetFields()
-  }
-  const deleteTag = (id:number) => {
+    form.resetFields();
+  };
+  const deleteTag = (id: number) => {
     if (dispatch) {
-      dispatch({ type: 'admin/deleteTag', payload: { id } })
+      dispatch({ type: 'admin/deleteTag', payload: { id } });
     }
-  }
+  };
 
   const columns = [
     {
@@ -56,21 +56,16 @@ const Tag = (props:any) => {
       dataIndex: 'name',
       key: 'name',
     },
-    // {
-    //   title: '英文名称',
-    //   dataIndex: 'en_name',
-    //   key: 'en_name',
-    // },
     {
       title: '创建时间',
       dataIndex: 'createdAt',
-      render(date:string) {
-        return <span>{moment(date).format('YYYY-MM-DD')}</span>
+      render(date: string) {
+        return <span>{moment(date).format('YYYY-MM-DD')}</span>;
       },
     },
     {
       title: '操作',
-      render(tag:any) {
+      render(tag: any) {
         return (
           <Popconfirm
             title="确定要删除吗？"
@@ -82,10 +77,10 @@ const Tag = (props:any) => {
               删除
             </Button>
           </Popconfirm>
-        )
+        );
       },
     },
-  ]
+  ];
   return (
     <>
       <Space style={{ marginBottom: 16 }}>
@@ -123,18 +118,6 @@ const Tag = (props:any) => {
           >
             <Input placeholder="输入标签名" />
           </Form.Item>
-          <Form.Item
-            name="en_name"
-            label="标签英文名"
-            rules={[
-              {
-                required: true,
-                message: '标签英文名不能为空',
-              },
-            ]}
-          >
-            <Input placeholder="输入标签英文名" />
-          </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">
               保存
@@ -143,17 +126,22 @@ const Tag = (props:any) => {
         </Form>
       </Modal>
     </>
-  )
-}
+  );
+};
 
-export default connect(({ admin: { categories, tags }, loading }:{
-  admin:{
-    categories:any[],
-    tags:string[]
-  },
-  loading:any
-}) => ({
-  tags,
-  categories,
-  loading: loading.effects['admin/tags'],
-}))(Tag)
+export default connect(
+  ({
+    admin: { categories, tags },
+    loading,
+  }: {
+    admin: {
+      categories: any[];
+      tags: string[];
+    };
+    loading: any;
+  }) => ({
+    tags,
+    categories,
+    loading: loading.effects['admin/tags'],
+  }),
+)(Tag);

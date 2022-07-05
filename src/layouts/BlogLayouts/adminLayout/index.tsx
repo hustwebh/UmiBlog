@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react'
-import { Link } from 'umi'
-import { connect } from 'dva'
-import ProLayout from '@ant-design/pro-layout'
-import {message} from 'antd'
+import React, { useEffect } from 'react';
+import { Link } from 'umi';
+import { connect } from 'dva';
+import ProLayout from '@ant-design/pro-layout';
+import { message } from 'antd';
 import {
   FileTextOutlined,
   TagsOutlined,
   CommentOutlined,
   ClusterOutlined,
-} from '@ant-design/icons'
+} from '@ant-design/icons';
 
 const routes = {
   routes: [
@@ -37,21 +37,21 @@ const routes = {
       path: '/admin/comments',
     },
   ],
-}
+};
 
-const Admin = (props:any) => {
-  const { account, history } = props
+const Admin = (props: any) => {
+  const { account, history } = props;
   useEffect(() => {
-    if (!account || !account.id) {
-      message.info("请先完成登录")
-      history.push('/blog')
-    }
-    if (account.account_type !== 'ADMIN') {
-      history.push('/404')
-    }
-  }, [])
+    // if (!account || !account.id) {
+    //   message.info("请先完成登录")
+    //   history.push('/blog')
+    // }
+    // if (account.account_type !== 'ADMIN') {
+    //   history.push('/404')
+    // }
+  }, []);
   return (
-    <div style={{height:'100vh'}}>
+    <div style={{ height: '100vh' }}>
       <ProLayout
         title="后台管理中心"
         logo={null}
@@ -67,24 +67,29 @@ const Admin = (props:any) => {
             menuItemProps.children ||
             !menuItemProps.path
           ) {
-            return defaultDom
+            return defaultDom;
           }
 
-          return <Link to={menuItemProps.path}>{defaultDom}</Link>
+          return <Link to={menuItemProps.path}>{defaultDom}</Link>;
         }}
       >
         {props.children}
       </ProLayout>
     </div>
-  )
-}
+  );
+};
 
-export default connect(({ user: { account }, loading }:{
-  user:{
-    account:any
-  },
-  loading:any
-}) => ({
-  account,
-  loading,
-}))(Admin)
+export default connect(
+  ({
+    user: { account },
+    loading,
+  }: {
+    user: {
+      account: any;
+    };
+    loading: any;
+  }) => ({
+    account,
+    loading,
+  }),
+)(Admin);

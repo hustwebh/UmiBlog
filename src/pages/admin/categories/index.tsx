@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import {
   Card,
   Table,
@@ -8,39 +8,39 @@ import {
   Input,
   Form,
   Popconfirm,
-} from 'antd'
-import { connect } from 'dva'
-import dayjs from 'dayjs'
-import { PlusOutlined } from '@ant-design/icons'
-import { v4 as uuidv4 } from 'uuid'
+} from 'antd';
+import { connect } from 'dva';
+import dayjs from 'dayjs';
+import { PlusOutlined } from '@ant-design/icons';
+import { v4 as uuidv4 } from 'uuid';
 
-const Category = (props:any) => {
-  const { dispatch, categories, loading } = props
-  const [visible, setVisible] = useState(false)
-  const [form] = Form.useForm()
+const Category = (props: any) => {
+  const { dispatch, categories, loading } = props;
+  const [visible, setVisible] = useState(false);
+  const [form] = Form.useForm();
   useEffect(() => {
     if (dispatch) {
-      dispatch({ type: 'admin/categories' })
+      dispatch({ type: 'admin/categories' });
     }
-  }, [])
-  const addCategory = () => {}
+  }, []);
+  const addCategory = () => {};
   const handleCancel = () => {
-    setVisible(false)
-  }
+    setVisible(false);
+  };
   const showModal = () => {
-    setVisible(true)
-  }
-  const onSubmit = (values:any) => {
+    setVisible(true);
+  };
+  const onSubmit = (values: any) => {
     if (dispatch) {
-      dispatch({ type: 'admin/createCategory', payload: values })
+      dispatch({ type: 'admin/createCategory', payload: values });
     }
-    form.resetFields()
-  }
-  const deleteCategory = (id:number) => {
+    form.resetFields();
+  };
+  const deleteCategory = (id: number) => {
     if (dispatch) {
-      dispatch({ type: 'admin/deleteCategory', payload: { id } })
+      dispatch({ type: 'admin/deleteCategory', payload: { id } });
     }
-  }
+  };
   const columns = [
     {
       title: 'ID',
@@ -60,13 +60,13 @@ const Category = (props:any) => {
     {
       title: '创建时间',
       dataIndex: 'createdAt',
-      render(date:string) {
-        return <span>{dayjs(date).format('YYYY-MM-DD')}</span>
+      render(date: string) {
+        return <span>{dayjs(date).format('YYYY-MM-DD')}</span>;
       },
     },
     {
       title: '操作',
-      render(category:any) {
+      render(category: any) {
         return (
           <Popconfirm
             title="确定要删除吗？"
@@ -78,10 +78,10 @@ const Category = (props:any) => {
               删除
             </Button>
           </Popconfirm>
-        )
+        );
       },
     },
-  ]
+  ];
 
   return (
     <>
@@ -123,18 +123,6 @@ const Category = (props:any) => {
           >
             <Input placeholder="输入分类名" />
           </Form.Item>
-          <Form.Item
-            name="en_name"
-            label="分类英文名"
-            rules={[
-              {
-                required: true,
-                message: '分类英文名不能为空',
-              },
-            ]}
-          >
-            <Input placeholder="输入分类英文名" />
-          </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">
               保存
@@ -143,15 +131,20 @@ const Category = (props:any) => {
         </Form>
       </Modal>
     </>
-  )
-}
+  );
+};
 
-export default connect(({ admin: { categories }, loading }:{
-  admin:{
-    categories:any[]
-  },
-  loading:any
-}) => ({
-  categories,
-  loading: loading.effects['admin/categories'],
-}))(Category)
+export default connect(
+  ({
+    admin: { categories },
+    loading,
+  }: {
+    admin: {
+      categories: any[];
+    };
+    loading: any;
+  }) => ({
+    categories,
+    loading: loading.effects['admin/categories'],
+  }),
+)(Category);

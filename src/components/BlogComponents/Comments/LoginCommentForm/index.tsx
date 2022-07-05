@@ -1,19 +1,19 @@
-import React, { useState } from 'react'
-import { Button, Input, Form } from 'antd'
+import React, { useState } from 'react';
+import { Button, Input, Form } from 'antd';
 
-
-export default function LoginCommentForm(props:any) {
-  const { id, author, dispatch } = props
-  const [form] = Form.useForm()
-  const onFinish = (values:FormData) => {
+export default function LoginCommentForm(props: any) {
+  const { id, author, dispatch } = props;
+  const [form] = Form.useForm();
+  const onFinish = (values: FormData) => {
+    console.log('FormData', ...values);
     if (dispatch) {
       dispatch({
         type: 'article/addComment',
-        payload: { ...values, article_id: id, author },
-      })
+        payload: { ...values, articleId: id, author },
+      });
     }
-    form.resetFields()
-  }
+    form.resetFields();
+  };
   return (
     <>
       <Form form={form} onFinish={onFinish}>
@@ -35,5 +35,5 @@ export default function LoginCommentForm(props:any) {
         </Form.Item>
       </Form>
     </>
-  )
+  );
 }

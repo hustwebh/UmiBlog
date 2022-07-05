@@ -219,7 +219,9 @@ export default {
     },
 
     *addComment({ payload }, { call, put }) {
+      console.log('addComment', payload);
       const { code, data } = yield call(createComment, payload);
+      console.log('returnData', data);
       if (code === 200) {
         yield put({
           type: 'createCommentHandle',
