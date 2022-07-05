@@ -1,10 +1,7 @@
 import request from '@/utils/request';
 
-export async function getArticles(data) {
-  return request(`/api/article/articles`, {
-    method: 'GET',
-    data,
-  });
+export async function getArticles(params) {
+  return request(`/api/article/articles?${stringify(params)}`);
 }
 
 //获取所有存在的文章分类

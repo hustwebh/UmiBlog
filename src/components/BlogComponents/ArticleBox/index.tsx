@@ -45,10 +45,16 @@ export default function Index(props: ArticleBoxType) {
           <div className={styles.articleContainer}>
             <h2>{title}</h2>
             <div className={styles.contentContainer}>
-              类别:<Tag color="blue">{category}</Tag>
+              <div className={styles.createTimeContainer}>
+                <span>类别:</span>
+                <Tag color="blue">{category}</Tag>
+              </div>
+              <div className={styles.createTimeContainer}>
+                <span>创建时间:</span>
+                <Tag color="blue">{createAt}</Tag>
+              </div>
             </div>
             <div className={styles.footTagsContainer}>
-              <div className={styles.createTimeContainer}>{createAt}</div>
               <div className={styles.TagsContainer}>
                 {tag.length &&
                   tag.map((item, index) => {

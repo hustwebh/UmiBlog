@@ -88,7 +88,7 @@ const Index: React.FC = (props: any) => {
           })}
         </Col>
         <Col span={5} className={styles.sider}>
-          <div className={styles.sider}>
+          <div>
             <Card className={styles.siderBlocks}>
               <p>
                 我是<span>张跃然</span>

@@ -21,9 +21,10 @@
       font-size: 30px;
     }
     .contentContainer {
-      table-layout: fixed;
-      word-break: break-all;
-      overflow: hidden;
+      min-height: 40px;
+      display: flex;
+      align-items: flex-start;
+      // justify-content: center;
     }
     .footTagsContainer {
       display: flex;
@@ -47,14 +48,15 @@
 @media (max-width: 991px) {
   .container {
     .articleContainer {
+      .contentContainer {
+        .createTimeContainer {
+          span {
+            color: red;
+          }
+        }
+      }
       .footTagsContainer {
         display: none;
-        .createTimeContainer,
-        .TagsContainer,
-        .iconContainer {
-          display: none;
-          flex-wrap: nowrap;
-        }
       }
     }
   }

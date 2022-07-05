@@ -29,78 +29,78 @@ export default {
   },
   effects: {
     *articles({ payload }, { call, put }) {
-      // const { code, data } = yield call(getArticles, payload);
-      // if (code === 200) {
-      //   yield put({
-      //     type: 'handle',
-      //     payload: {
-      //       articles: data.articles,
-      //       articleCount: data.count,
+      const { code, data } = yield call(getArticles, payload);
+      if (code === 200) {
+        yield put({
+          type: 'handle',
+          payload: {
+            articles: data.articles,
+            articleCount: data.count,
+          },
+        });
+      }
+      // data = {
+      //   articles: [
+      //     {
+      //       title: 'title1',
+      //       view: 10,
+      //       favorite: 5,
+      //       comment: 3,
+      //       articleId: 1,
+      //       createAt: '2022-6-24 2:55',
+      //       tag: ['javaScript', 'react'],
+      //       category: 'haha',
       //     },
-      //   });
-      // }
-      const data = {
-        articles: [
-          {
-            title: 'title1',
-            view: 10,
-            favorite: 5,
-            comment: 3,
-            articleId: 1,
-            createAt: '2022-6-24 2:55',
-            tag: ['javaScript', 'react'],
-            category: 'haha',
-          },
-          {
-            title: 'title1',
-            view: 10,
-            favorite: 5,
-            comment: 3,
-            articleId: 1,
-            createAt: '2022-6-24 2:55',
-            tag: ['javaScript', 'react', 'javaScript', 'react'],
-            category: 'haha',
-          },
-          {
-            title: 'title1',
-            view: 10,
-            favorite: 5,
-            comment: 3,
-            articleId: 1,
-            createAt: '2022-6-24 2:55',
-            tag: ['javaScript', 'react'],
-            category: 'haha',
-          },
-          {
-            title: 'title1',
-            view: 10,
-            favorite: 5,
-            comment: 3,
-            articleId: 1,
-            createAt: '2022-6-24 2:55',
-            tag: ['javaScript', 'react'],
-            category: 'haha',
-          },
-          {
-            title: 'title1',
-            view: 10,
-            favorite: 5,
-            comment: 3,
-            articleId: 1,
-            createAt: '2022-6-24 2:55',
-            tag: ['javaScript', 'react'],
-            category: 'haha',
-          },
-        ],
-        articleCount: 10,
-      };
-      yield put({
-        type: 'handle',
-        payload: {
-          articles: data.articles,
-          articleCount: data.articleCount,
-        },
-      });
+      //     {
+      //       title: 'title1',
+      //       view: 10,
+      //       favorite: 5,
+      //       comment: 3,
+      //       articleId: 1,
+      //       createAt: '2022-6-24 2:55',
+      //       tag: ['javaScript', 'react', 'javaScript', 'react'],
+      //       category: 'haha',
+      //     },
+      //     {
+      //       title: 'title1',
+      //       view: 10,
+      //       favorite: 5,
+      //       comment: 3,
+      //       articleId: 1,
+      //       createAt: '2022-6-24 2:55',
+      //       tag: ['javaScript', 'react'],
+      //       category: 'haha',
+      //     },
+      //     {
+      //       title: 'title1',
+      //       view: 10,
+      //       favorite: 5,
+      //       comment: 3,
+      //       articleId: 1,
+      //       createAt: '2022-6-24 2:55',
+      //       tag: ['javaScript', 'react'],
+      //       category: 'haha',
+      //     },
+      //     {
+      //       title: 'title1',
+      //       view: 10,
+      //       favorite: 5,
+      //       comment: 3,
+      //       articleId: 1,
+      //       createAt: '2022-6-24 2:55',
+      //       tag: ['javaScript', 'react'],
+      //       category: 'haha',
+      //     },
+      //   ],
+      //   articleCount: 10,
+      // };
+      // yield put({
+      //   type: 'handle',
+      //   payload: {
+      //     articles: data.articles,
+      //     articleCount: data.articleCount,
+      //   },
+      // });
     },
     *tags({ payload }, { call, put }) {
       const { code, data } = yield call(getTags, payload);
