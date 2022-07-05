@@ -28,12 +28,11 @@ const Index: React.FC = (props: any) => {
     history,
     location: { query },
   } = props;
-  console.log(query);
 
   const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
     if (dispatch) {
-      if (query.categroy) {
+      if (query.category) {
         dispatch({
           type: 'article/getByClass',
           payload: {

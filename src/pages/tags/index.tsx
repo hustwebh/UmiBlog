@@ -9,7 +9,7 @@ const ClassesBtn = ({ name }: { name: string | null }) => {
     <div
       className={styles.tagsBtn}
       onClick={() => {
-        history.push(`/getList?category=${name}`);
+        history.push(`/getList?tag=${name}`);
       }}
     >
       {name}
