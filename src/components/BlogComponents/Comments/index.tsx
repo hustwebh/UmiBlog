@@ -51,7 +51,9 @@ export default function Comments(props: any) {
       {account && account.id ? (
         <Comment
           avatar={<UserAvatar src={account.avatar} />}
-          content={<LoginCommentForm id={id} author={author} />}
+          content={
+            <LoginCommentForm id={id} author={author} dispatch={dispatch} />
+          }
         />
       ) : (
         <NoLoginCommentForm id={id} author={author} />
