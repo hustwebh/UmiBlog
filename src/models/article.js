@@ -214,7 +214,12 @@ export default {
     },
     *getByClass({ payload }, { call, put }) {
       const { code, data } = yield call(getListByClass, payload);
+      // const {code,data}={code:200,data:{
+      //   articles:[{title:"title1",createAt:"2011-1-3",articleId:1}],
+      //   articleCount:1
+      // }}
       if (code === 200) {
+        console.log('getByClass', data);
         yield put({
           type: 'handle',
           payload: {
@@ -256,6 +261,7 @@ export default {
       };
     },
     handle(state, { payload }) {
+      // console.log("payload",payload);
       return { ...state, ...payload };
     },
     createCommentHandle(state, { payload }) {

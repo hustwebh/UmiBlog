@@ -23,11 +23,12 @@ const SearchBox = (props: any) => {
 const Index: React.FC = (props: any) => {
   const {
     dispatch,
-    articleList,
+    articleList = [],
     articleCount,
     history,
     location: { query },
   } = props;
+  // console.log("props",props);
 
   const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
@@ -54,6 +55,7 @@ const Index: React.FC = (props: any) => {
       }
     }
   }, []);
+  console.log('articleList', articleList);
 
   const showDetail = (articleId: number) => {
     history.push(`/detail/${articleId}`);
