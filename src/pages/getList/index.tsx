@@ -23,12 +23,11 @@ const SearchBox = (props: any) => {
 const Index: React.FC = (props: any) => {
   const {
     dispatch,
-    articleList = [],
+    articleList,
     articleCount,
     history,
     location: { query },
   } = props;
-  // console.log("props",props);
 
   const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {

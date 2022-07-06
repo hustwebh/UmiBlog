@@ -261,7 +261,7 @@ export default {
       };
     },
     handle(state, { payload }) {
-      // console.log("payload",payload);
+      console.log('payload', payload);
       return { ...state, ...payload };
     },
     createCommentHandle(state, { payload }) {
