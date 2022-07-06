@@ -9,7 +9,7 @@ export default function LoginCommentForm(props: any) {
     if (dispatch) {
       dispatch({
         type: 'article/addComment',
-        payload: { ...values, articleId: id, author },
+        payload: { ...values, articleId: parseInt(id), author },
       });
     }
     form.resetFields();
