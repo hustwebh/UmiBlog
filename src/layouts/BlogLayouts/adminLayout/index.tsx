@@ -1,14 +1,13 @@
-import React, { useEffect } from 'react';
-import { Link } from 'umi';
-import { connect } from 'dva';
-import ProLayout from '@ant-design/pro-layout';
-import { message } from 'antd';
 import {
+  ClusterOutlined,
+  CommentOutlined,
   FileTextOutlined,
   TagsOutlined,
-  CommentOutlined,
-  ClusterOutlined,
 } from '@ant-design/icons';
+import ProLayout from '@ant-design/pro-layout';
+import { Link, Outlet } from '@umijs/max';
+import { connect } from 'dva';
+import { useEffect } from 'react';
 
 const routes = {
   routes: [
@@ -40,7 +39,7 @@ const routes = {
 };
 
 const Admin = (props: any) => {
-  const { account, history } = props;
+  // const { account, history } = props;
   useEffect(() => {
     // if (!account || !account.id) {
     //   message.info("请先完成登录")
@@ -73,7 +72,8 @@ const Admin = (props: any) => {
           return <Link to={menuItemProps.path}>{defaultDom}</Link>;
         }}
       >
-        {props.children}
+        {/* {props.children} */}
+        <Outlet />
       </ProLayout>
     </div>
   );
@@ -84,9 +84,7 @@ export default connect(
     user: { account },
     loading,
   }: {
-    user: {
-      account: any;
-    };
+    user: { account: any };
     loading: any;
   }) => ({
     account,

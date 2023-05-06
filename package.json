@@ -1,9 +1,9 @@
 {
   "private": true,
   "scripts": {
-    "start": "umi dev",
-    "build": "umi build",
-    "postinstall": "umi generate tmp",
+    "start": "max dev",
+    "build": "max build",
+    "postinstall": "max setup",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
     "test": "umi-test",
     "test:coverage": "umi-test --coverage"
@@ -22,27 +22,27 @@
   "dependencies": {
     "@ant-design/pro-layout": "^6.5.0",
     "@types/markdown-it": "^12.2.3",
+    "@umijs/max": "^4.0.67",
     "ammojs-typed": "^1.0.6",
     "classnames": "^2.3.1",
     "crypto-js": "^4.1.1",
     "dva": "^2.4.1",
     "markdown-it": "^13.0.1",
-    "react": "17.x",
+    "qs": "^6.11.1",
+    "react": "^17.0.2",
     "react-canvas-nest": "^1.1.1",
-    "react-dom": "17.x",
+    "react-dom": "^17.0.2",
     "react-markdown-editor-lite": "^1.3.2",
     "react-mathjax": "^1.0.1",
     "react-syntax-highlighter": "^15.5.0",
     "stats.js": "^0.17.0",
-    "three": "^0.142.0",
-    "umi": "^3.5.26"
+    "three": "^0.142.0"
   },
   "devDependencies": {
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/react-mathjax": "^1.0.1",
     "@types/three": "^0.141.0",
-    "@umijs/preset-react": "1.x",
     "@umijs/test": "^3.5.26",
     "file-loader": "^6.2.0",
     "lint-staged": "^10.0.7",

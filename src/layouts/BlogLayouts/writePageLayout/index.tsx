@@ -1,11 +1,9 @@
-import React from 'react';
-import styles from './index.less';
+import { Outlet } from '@umijs/max';
 
 export default function Index(props: any) {
   const {
     location: { pathname },
-  } = props;
-
+  } = window;
   return (
     <>
       <div
@@ -13,7 +11,7 @@ export default function Index(props: any) {
           height: '100vh',
         }}
       >
-        {props.children}
+        <Outlet />
       </div>
     </>
   );

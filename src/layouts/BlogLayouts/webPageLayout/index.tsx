@@ -1,11 +1,15 @@
 import HeadMenu from '@/components/BlogComponents/HeaderMenu';
-import styles from './index.less';
+import { Outlet } from '@umijs/max';
 import ReactCanvasNest from 'react-canvas-nest';
+import styles from './index.less';
 
 export default function Index(props: any) {
+  // const {
+  //   location: { pathname },
+  // } = props;
   const {
     location: { pathname },
-  } = props;
+  } = window;
   const isSpecial = pathname === '/tags' || pathname === '/classes';
   return (
     <div>
@@ -26,9 +30,13 @@ export default function Index(props: any) {
       >
         <ReactCanvasNest />
         {isSpecial ? (
-          <div className={styles.withoutMarginTop}>{props.children}</div>
+          <div className={styles.withoutMarginTop}>
+            <Outlet />
+          </div>
         ) : (
-          <div className={styles.normal}>{props.children}</div>
+          <div className={styles.normal}>
+            <Outlet />
+          </div>
         )}
       </div>
     </div>

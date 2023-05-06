@@ -1,22 +1,21 @@
-import styles from './index.less';
-import * as THREE from 'three';
-import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
-import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
-import { useEffect, useRef } from 'react';
 import Ammo from 'ammojs-typed';
+import { useEffect, useRef } from 'react';
+import * as THREE from 'three';
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 
 import {
+  addParticles,
+  camera,
+  clock,
   createWorld,
+  galaxyClock,
+  galaxyMaterial,
+  generateGalaxy,
+  manager,
+  renderer,
   scene,
   stats,
-  clock,
-  galaxyClock,
-  manager,
-  addParticles,
-  generateGalaxy,
-  renderer,
-  camera,
-  galaxyMaterial,
 } from '@/components/3DComponents/world.js';
 
 import {
@@ -27,20 +26,19 @@ import {
 } from '@/components/3DComponents/textures.js';
 
 import {
-  setupEventHandlers,
   moveDirection,
+  setupEventHandlers,
 } from '@/components/3DComponents/eventHandler.js';
 
 import { floatingLabel } from '@/components/3DComponents/surfaces.js';
 
 import {
-  rotateCamera,
   launchClickPosition,
-  launchHover,
+  rotateCamera,
 } from '@/components/3DComponents/utils.js';
 
-import earthImg from '@/assets/earth.jpg';
 import BeachBallImg from '@/assets/BeachBallColor.jpg';
+import earthImg from '@/assets/earth.jpg';
 
 // export let cursorHoverObjects: any = [];
 
@@ -687,7 +685,6 @@ export default function IndexPage() {
         setupEventHandlers();
         renderFrame();
       };
-
       start();
     });
   }, [1]);
