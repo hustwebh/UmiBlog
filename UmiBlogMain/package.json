@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "start": "max dev",
+    "start": "PORT=8080 max dev",
     "build": "max build",
     "postinstall": "max setup",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",

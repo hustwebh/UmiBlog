@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Card, Button, Popover, Pagination } from 'antd';
 import { GithubOutlined, QqOutlined, WechatOutlined } from '@ant-design/icons';
-import { connect } from 'dva';
+import { connect,useLocation } from '@umijs/max';
 import styles from './index.less';
 import ArticleBox from '../../components/BlogComponents/ArticleBox';
 import type { ArticleBoxType } from '../../utils/const.type';
@@ -30,9 +30,10 @@ const Index: React.FC = (props: any) => {
     tags,
     loading,
     history,
-    location: { state = {} },
+    // location: { state = {} },
   } = props;
-  const { category, tag } = state;
+  const location = useLocation();
+  // const { category, tag } = location.state || {};
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -45,9 +46,7 @@ const Index: React.FC = (props: any) => {
           payload: { currentPage, pageSize: 5, keywords: '' },
         });
       }
-    },
-    tag ? [tag] : [],
-  );
+    });
 
   //获取博客标签列表
   useEffect(() => {

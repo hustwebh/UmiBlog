@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .out {
+            width: 300px;
+            height: 300px;
+            background-color: red;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .in {
+            width: 200px;
+            display: inline;
+            overflow: hidden;
+        }
+
+        .in::after {
+            content: '...';
+            position: relative;
+            right: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        let areaArray = [
+            {
+                name: '江苏',
+                id: 1,
+            },
+            {
+                name: '南京',
+                id: 11,
+                pid: 1,
+            },
+            {
+                name: '玄武区',
+                id: 111,
+                pid: 11,
+            },
+            {
+                name: '上海',
+                id: 2,
+            },
+            {
+                name: '徐汇区',
+                id: 22,
+                pid: 2,
+            },
+        ];
+
+        const areaTree = [
+            [
+                {
+                    name: '江苏',
+                    id: 1,
+                    children: [
+                        {
+                            name: '南京',
+                            id: 11,
+                            children: [
+                                {
+                                    name: '玄武区',
+                                    id: 111,
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ],
+            [
+                {
+                    name: '上海',
+                    id: 2,
+                    children: [
+                        {
+                            name: '徐汇区',
+                            id: 22,
+                        },
+                    ],
+                },
+            ],
+        ];
+        function arrToTree(items) {
+            const result = [];   // 存放结果集
+            const itemMap = {};  // 
+
+            // 先转成map存储
+            for (const item of items) {
+                itemMap[item.id] = { ...item, children: [] }
+            }
+
+            for (const item of items) {
+                const id = item.id;
+                const pid = item.pid;
+                const treeItem = itemMap[id];
+                if (!pid) {
+                    result.push(treeItem);
+                } else {
+                    if (!itemMap[pid]) {
+                        itemMap[pid] = {
+                            children: [],
+                        }
+                    }
+                    itemMap[pid].children.push(treeItem)
+                }
+
+            }
+            return result;
+        }
+        console.log(arrToTree(areaArray))
+    </script>
+    <script>
+        const deepGet = (obj, keyPaths) => {
+            let res;
+            let temp = obj;
+            let pathArr = keyPaths.split(".");
+            // console.log(temp,pathArr)
+            for (let key of pathArr) {
+                // console.log('temp[key]',temp[key])
+                if (temp[key]) {
+                    temp = temp[key]
+                    res = temp;
+                } else {
+                    res = undefined
+                    break;
+                }
+            }
+
+            return res;
+        };
+        // const deepDelete = (obj, keyPaths) => {
+        //     // todo
+        // };
+        const testObj = {
+            a: {
+                b: [
+                    1,
+                    {
+                        c: "123",
+                        d: "to delete",
+                    },
+                    3,
+                ],
+            },
+        };
+
+        console.log(deepGet(testObj, 'a.b.1.c'))
+        console.log(deepGet(testObj, 'a.b.2.c'));
+    </script>
+</body>
+
+</html>

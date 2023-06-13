@@ -9,7 +9,6 @@ export default defineConfig({
   dva: {},
   monorepoRedirect: { peerDeps: true },
   locale: {
-    // default zh-CN
     default: 'zh-CN',
     antd: true,
     // default true, when it is true, will use `navigator.language` overwrite default
@@ -21,11 +20,14 @@ export default defineConfig({
       changeOrigin: true,
     },
   },
-  // chainWebpack(config) {
-  //   config.module // 配置 file-loader
-  //     .rule('otf')
-  //     .test(/.otf$/)
-  //     .use('file-loader')
-  //     .loader('file-loader');
-  // },
+  // qiankun:{
+  //   master:{
+  //     apps:[
+  //       {
+  //         name:'threeDimensional',
+  //         localhost:'//localhost:8080'
+  //       }
+  //     ]
+  //   }
+  // }
 });
