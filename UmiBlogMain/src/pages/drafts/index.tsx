@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Card, List, Skeleton, Tag, Popconfirm, message } from 'antd';
 import { connect } from 'dva';
 import { Link } from 'umi';
-import HeaderMenu from '@/components/BlogComponents/HeaderMenu';
+import HeaderMenu from '@/components/HeaderMenu';
 // import moment from 'moment'
 import dayjs from 'dayjs';
 import styles from './index.less';
@@ -57,12 +57,12 @@ const Draft = (props: any) => {
                         <strong>{item.title}</strong>
                         {item.isPublish ? (
                           <Tag color="success" className="ml-10">
-                            已发表
+                            已发衄1�7
                           </Tag>
                         ) : null}
                       </Link>
                     }
-                    description={`上次修改于${dayjs(item.updatedAt).format(
+                    description={`上次修改亄1�7${dayjs(item.updatedAt).format(
                       'YYYY[年]MM[月]DD[日] HH:mm',
                     )}`}
                   />

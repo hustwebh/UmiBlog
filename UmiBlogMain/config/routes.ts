@@ -1,7 +1,13 @@
 export default [
   {
     path: '/',
-    component: '@/pages',
+    exact: true,
+    // component: '@/pages',
+    redirect: '/welcome/', 
+  },
+  {
+    path: '/welcome/*',
+    microApp: 'threeDimensional',
   },
   {
     path: '/write',

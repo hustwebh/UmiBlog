@@ -3,7 +3,7 @@ import { Row, Col, Card, Button, Popover, Pagination } from 'antd';
 import { GithubOutlined, QqOutlined, WechatOutlined } from '@ant-design/icons';
 import { connect,useLocation } from '@umijs/max';
 import styles from './index.less';
-import ArticleBox from '../../components/BlogComponents/ArticleBox';
+import ArticleBox from '../../components/ArticleBox';
 import type { ArticleBoxType } from '../../utils/const.type';
 
 const accountList = [
@@ -11,13 +11,13 @@ const accountList = [
   {
     icon: <QqOutlined />,
     content: (
-      <img src={'QQ二维码'} style={{ width: '120px', height: '120px' }} />
+      <img src={'QQ二维砄1�7'} style={{ width: '120px', height: '120px' }} />
     ),
   },
   {
     icon: <WechatOutlined />,
     content: (
-      <img src={'微信二维码'} style={{ width: '120px', height: '120px' }} />
+      <img src={'微信二维砄1�7'} style={{ width: '120px', height: '120px' }} />
     ),
   },
 ];
@@ -89,9 +89,9 @@ const Index: React.FC = (props: any) => {
         <Col span={6} className={styles.sider}>
           <Card className={styles.siderBlocks}>
             <p>
-              我是<span>张跃然</span>
+              我是<span>张跃焄1�7</span>
               <br />
-              现在是HUST在校大学牲一名,欢迎到访我的<span>个人博客网站</span>
+              现在是HUST在校大学牲一各1�7,欢迎到访我的<span>个人博客网站</span>
             </p>
           </Card>
           <Card
@@ -145,7 +145,7 @@ const Index: React.FC = (props: any) => {
                 );
               })
             ) : (
-              <span>标签加载中...</span>
+              <span>标签加载丄1�7...</span>
             )}
             {/* </div> */}
           </Card>

@@ -98,13 +98,11 @@ import "D:/UmiBlog/UmiBlogMain/node_modules/core-js/modules/esnext.map.update.js
 import "D:/UmiBlog/UmiBlogMain/node_modules/core-js/modules/esnext.map.update-or-insert.js";
 import "D:/UmiBlog/UmiBlogMain/node_modules/core-js/modules/esnext.map.upsert.js";
 import "D:/UmiBlog/UmiBlogMain/node_modules/core-js/modules/esnext.math.clamp.js";
-import "D:/UmiBlog/UmiBlogMain/node_modules/core-js/modules/esnext.math.deg-per-rad.js";
 import "D:/UmiBlog/UmiBlogMain/node_modules/core-js/modules/esnext.math.degrees.js";
 import "D:/UmiBlog/UmiBlogMain/node_modules/core-js/modules/esnext.math.fscale.js";
 import "D:/UmiBlog/UmiBlogMain/node_modules/core-js/modules/esnext.math.iaddh.js";
 import "D:/UmiBlog/UmiBlogMain/node_modules/core-js/modules/esnext.math.imulh.js";
 import "D:/UmiBlog/UmiBlogMain/node_modules/core-js/modules/esnext.math.isubh.js";
-import "D:/UmiBlog/UmiBlogMain/node_modules/core-js/modules/esnext.math.rad-per-deg.js";
 import "D:/UmiBlog/UmiBlogMain/node_modules/core-js/modules/esnext.math.radians.js";
 import "D:/UmiBlog/UmiBlogMain/node_modules/core-js/modules/esnext.math.scale.js";
 import "D:/UmiBlog/UmiBlogMain/node_modules/core-js/modules/esnext.math.seeded-prng.js";

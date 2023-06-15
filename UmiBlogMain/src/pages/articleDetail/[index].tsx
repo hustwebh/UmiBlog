@@ -19,12 +19,12 @@ import {
   createFromIconfontCN,
 } from '@ant-design/icons';
 import MathJax from 'react-mathjax';
-// import Markdown from '@/components/BlogComponents/Markdown';
+// import Markdown from '@/components/Markdown';
 import MarkdownIt from 'markdown-it';
 import hljs from 'highlight.js';
 // import Markdown from 'react-markdown';
-import ArticleAnchor from '@/components/BlogComponents/ArticleAnchor';
-import Comments from '@/components/BlogComponents/Comments';
+import ArticleAnchor from '@/components/ArticleAnchor';
+import Comments from '@/components/Comments';
 
 import styles from './index.less';
 import './markdown.css';
@@ -142,7 +142,7 @@ const Index: React.FC = (props: any) => {
         </div>
         <div className={styles.articleContainerSider}>
           <Card
-            title="关于作者"
+            title="关于作��1�7"
             bordered={false}
             size="small"
             loading={loading}
@@ -183,7 +183,7 @@ const Index: React.FC = (props: any) => {
               </Col>
             </Row>
           </Card>
-          TODO：生成文章锚点
+          TODO：生成文章锚炄1�7
           {detail && detail.anchor && <ArticleAnchor anchors={[]} />}
         </div>
         <div className={styles.articlePanel}>

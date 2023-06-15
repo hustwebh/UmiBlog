@@ -20,14 +20,18 @@ export default defineConfig({
       changeOrigin: true,
     },
   },
-  // qiankun:{
-  //   master:{
-  //     apps:[
-  //       {
-  //         name:'threeDimensional',
-  //         localhost:'//localhost:8080'
-  //       }
-  //     ]
-  //   }
-  // }
+  qiankun:{
+    master:{
+      apps:[
+        {
+          name:'threeDimensional',
+          entry:'//localhost:8001'
+        },
+        {
+          name:'websiteAdmin',
+          entry:'//localhost:8002'
+        }
+      ]
+    }
+  }
 });

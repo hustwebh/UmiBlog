@@ -50,7 +50,7 @@ async function render() {
         routes,
         routeComponents,
         pluginManager,
-        rootElement: contextOpts.rootElement || document.getElementById('root'),
+        rootElement: contextOpts.rootElement || document.getElementById('root-master'),
         publicPath,
         runtimePublicPath,
         history,

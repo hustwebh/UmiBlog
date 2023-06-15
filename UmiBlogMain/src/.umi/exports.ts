@@ -14,6 +14,7 @@ export { TestBrowser } from './testBrowser';
 // plugins
 export { connect, useDispatch, useStore, useSelector, getDvaApp } from 'D:/UmiBlog/UmiBlogMain/src/.umi/plugin-dva';
 export { addLocale, setLocale, getLocale, getIntl, useIntl, injectIntl, formatMessage, FormattedMessage, getAllLocales, FormattedDate, FormattedDateParts, FormattedDisplayName, FormattedHTMLMessage, FormattedList, FormattedNumber, FormattedNumberParts, FormattedPlural, FormattedRelativeTime, FormattedTime, FormattedTimeParts, IntlProvider, RawIntlProvider, SelectLang } from 'D:/UmiBlog/UmiBlogMain/src/.umi/plugin-locale';
+export { MicroApp, MicroAppWithMemoHistory } from 'D:/UmiBlog/UmiBlogMain/src/.umi/plugin-qiankun-master';
 export { useRequest, UseRequestProvider, request, getRequestInstance } from 'D:/UmiBlog/UmiBlogMain/src/.umi/plugin-request';
 // plugins types.d.ts
 export * from 'D:/UmiBlog/UmiBlogMain/src/.umi/plugin-dva/types.d';

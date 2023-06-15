@@ -4,30 +4,36 @@
 import React from 'react';
 
 export async function getRoutes() {
-  const routes = {"1":{"path":"/","id":"1"},"2":{"path":"/write","id":"2"},"3":{"path":"/write/:key","parentId":"2","id":"3"},"4":{"path":"/drafts","id":"4"},"5":{"path":"/drafts","parentId":"4","id":"5"},"6":{"path":"/admin","id":"6"},"7":{"path":"/admin","redirect":"/admin/categories","parentId":"6","id":"7"},"8":{"path":"/admin/categories","parentId":"6","id":"8"},"9":{"path":"/admin/tags","parentId":"6","id":"9"},"10":{"path":"/admin/articles","parentId":"6","id":"10"},"11":{"path":"/admin/comments","parentId":"6","id":"11"},"12":{"path":"/","id":"12"},"13":{"path":"/blog","parentId":"12","id":"13"},"14":{"path":"/search","parentId":"12","id":"14"},"15":{"path":"/classes","parentId":"12","id":"15"},"16":{"path":"/tags","parentId":"12","id":"16"},"17":{"path":"/friends","parentId":"12","id":"17"},"18":{"path":"/about","parentId":"12","id":"18"},"19":{"path":"/detail/:articleId","parentId":"12","id":"19"},"20":{"path":"/getList","parentId":"12","id":"20"}} as const;
+  const routes = {"1":{"path":"/","exact":true,"redirect":"/welcome/","id":"1"},"2":{"path":"/welcome/*","microApp":"threeDimensional","id":"2"},"3":{"path":"/write","id":"3"},"4":{"path":"/write/:key","parentId":"3","id":"4"},"5":{"path":"/drafts","id":"5"},"6":{"path":"/drafts","parentId":"5","id":"6"},"7":{"path":"/admin","id":"7"},"8":{"path":"/admin","redirect":"/admin/categories","parentId":"7","id":"8"},"9":{"path":"/admin/categories","parentId":"7","id":"9"},"10":{"path":"/admin/tags","parentId":"7","id":"10"},"11":{"path":"/admin/articles","parentId":"7","id":"11"},"12":{"path":"/admin/comments","parentId":"7","id":"12"},"13":{"path":"/","id":"13"},"14":{"path":"/blog","parentId":"13","id":"14"},"15":{"path":"/search","parentId":"13","id":"15"},"16":{"path":"/classes","parentId":"13","id":"16"},"17":{"path":"/tags","parentId":"13","id":"17"},"18":{"path":"/friends","parentId":"13","id":"18"},"19":{"path":"/about","parentId":"13","id":"19"},"20":{"path":"/detail/:articleId","parentId":"13","id":"20"},"21":{"path":"/getList","parentId":"13","id":"21"}} as const;
   return {
     routes,
     routeComponents: {
-'1': React.lazy(() => import(/* webpackChunkName: "p__index" */'@/pages/index.tsx')),
-'2': React.lazy(() => import(/* webpackChunkName: "layouts__BlogLayouts__writePageLayout__index" */'@/layouts/BlogLayouts/writePageLayout/index.tsx')),
-'3': React.lazy(() => import(/* webpackChunkName: "p__write__index" */'@/pages/write/index.tsx')),
-'4': React.lazy(() => import(/* webpackChunkName: "layouts__BlogLayouts__writePageLayout__index" */'@/layouts/BlogLayouts/writePageLayout/index.tsx')),
-'5': React.lazy(() => import(/* webpackChunkName: "p__drafts__index" */'@/pages/drafts/index.tsx')),
-'6': React.lazy(() => import(/* webpackChunkName: "layouts__BlogLayouts__adminLayout__index" */'@/layouts/BlogLayouts/adminLayout/index.tsx')),
-'7': React.lazy(() => import( './EmptyRoute')),
-'8': React.lazy(() => import(/* webpackChunkName: "p__admin__categories__index" */'@/pages/admin/categories/index.tsx')),
-'9': React.lazy(() => import(/* webpackChunkName: "p__admin__tags__index" */'@/pages/admin/tags/index.tsx')),
-'10': React.lazy(() => import(/* webpackChunkName: "p__admin__articles__index" */'@/pages/admin/articles/index.tsx')),
-'11': React.lazy(() => import(/* webpackChunkName: "p__admin__comments__index" */'@/pages/admin/comments/index.tsx')),
-'12': React.lazy(() => import(/* webpackChunkName: "layouts__BlogLayouts__webPageLayout__index" */'@/layouts/BlogLayouts/webPageLayout/index.tsx')),
-'13': React.lazy(() => import(/* webpackChunkName: "p__blog__index" */'@/pages/blog/index.tsx')),
-'14': React.lazy(() => import(/* webpackChunkName: "p__search__index" */'@/pages/search/index.tsx')),
-'15': React.lazy(() => import(/* webpackChunkName: "p__classes__index" */'@/pages/classes/index.tsx')),
-'16': React.lazy(() => import(/* webpackChunkName: "p__tags__index" */'@/pages/tags/index.tsx')),
-'17': React.lazy(() => import(/* webpackChunkName: "p__friends__index" */'@/pages/friends/index.tsx')),
-'18': React.lazy(() => import(/* webpackChunkName: "p__about__index" */'@/pages/about/index.tsx')),
-'19': React.lazy(() => import(/* webpackChunkName: "p__articleDetail__index" */'@/pages/articleDetail/[index].tsx')),
-'20': React.lazy(() => import(/* webpackChunkName: "p__getList__index" */'@/pages/getList/index.tsx')),
+'1': React.lazy(() => import( './EmptyRoute')),
+'2': React.lazy(
+              () => Promise.resolve((async () => {
+          const { getMicroAppRouteComponent } = await import('@@/plugin-qiankun-master/getMicroAppRouteComponent');
+          return getMicroAppRouteComponent({ appName: 'threeDimensional', base: '/', routePath: '/welcome/*', masterHistoryType: 'browser', routeProps: {} })
+        })()).then(e => e?.default ? e : ({ default: e }))
+            ),
+'3': React.lazy(() => import(/* webpackChunkName: "layouts__BlogLayouts__writePageLayout__index" */'@/layouts/BlogLayouts/writePageLayout/index.tsx')),
+'4': React.lazy(() => import(/* webpackChunkName: "p__write__index" */'@/pages/write/index.tsx')),
+'5': React.lazy(() => import(/* webpackChunkName: "layouts__BlogLayouts__writePageLayout__index" */'@/layouts/BlogLayouts/writePageLayout/index.tsx')),
+'6': React.lazy(() => import(/* webpackChunkName: "p__drafts__index" */'@/pages/drafts/index.tsx')),
+'7': React.lazy(() => import(/* webpackChunkName: "layouts__BlogLayouts__adminLayout__index" */'@/layouts/BlogLayouts/adminLayout/index.tsx')),
+'8': React.lazy(() => import( './EmptyRoute')),
+'9': React.lazy(() => import(/* webpackChunkName: "p__admin__categories__index" */'@/pages/admin/categories/index.tsx')),
+'10': React.lazy(() => import(/* webpackChunkName: "p__admin__tags__index" */'@/pages/admin/tags/index.tsx')),
+'11': React.lazy(() => import(/* webpackChunkName: "p__admin__articles__index" */'@/pages/admin/articles/index.tsx')),
+'12': React.lazy(() => import(/* webpackChunkName: "p__admin__comments__index" */'@/pages/admin/comments/index.tsx')),
+'13': React.lazy(() => import(/* webpackChunkName: "layouts__BlogLayouts__webPageLayout__index" */'@/layouts/BlogLayouts/webPageLayout/index.tsx')),
+'14': React.lazy(() => import(/* webpackChunkName: "p__blog__index" */'@/pages/blog/index.tsx')),
+'15': React.lazy(() => import(/* webpackChunkName: "p__search__index" */'@/pages/search/index.tsx')),
+'16': React.lazy(() => import(/* webpackChunkName: "p__classes__index" */'@/pages/classes/index.tsx')),
+'17': React.lazy(() => import(/* webpackChunkName: "p__tags__index" */'@/pages/tags/index.tsx')),
+'18': React.lazy(() => import(/* webpackChunkName: "p__friends__index" */'@/pages/friends/index.tsx')),
+'19': React.lazy(() => import(/* webpackChunkName: "p__about__index" */'@/pages/about/index.tsx')),
+'20': React.lazy(() => import(/* webpackChunkName: "p__articleDetail__index" */'@/pages/articleDetail/[index].tsx')),
+'21': React.lazy(() => import(/* webpackChunkName: "p__getList__index" */'@/pages/getList/index.tsx')),
 },
   };
 }

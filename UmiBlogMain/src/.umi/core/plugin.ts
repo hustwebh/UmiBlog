@@ -5,6 +5,7 @@ import * as Plugin_0 from 'D:/UmiBlog/UmiBlogMain/src/app.js';
 import * as Plugin_1 from '@@/core/helmet.ts';
 import * as Plugin_2 from 'D:/UmiBlog/UmiBlogMain/src/.umi/plugin-dva/runtime.tsx';
 import * as Plugin_3 from 'D:/UmiBlog/UmiBlogMain/src/.umi/plugin-locale/runtime.tsx';
+import * as Plugin_4 from 'D:/UmiBlog/UmiBlogMain/src/.umi/plugin-qiankun-master/masterRuntimePlugin.tsx';
 import { PluginManager } from 'umi';
 
 function __defaultExport (obj) {
@@ -31,11 +32,15 @@ export function getPlugins() {
       apply: Plugin_3,
       path: process.env.NODE_ENV === 'production' ? void 0 : 'D:/UmiBlog/UmiBlogMain/src/.umi/plugin-locale/runtime.tsx',
     },
+    {
+      apply: Plugin_4,
+      path: process.env.NODE_ENV === 'production' ? void 0 : 'D:/UmiBlog/UmiBlogMain/src/.umi/plugin-qiankun-master/masterRuntimePlugin.tsx',
+    },
   ];
 }
 
 export function getValidKeys() {
-  return ['patchRoutes','patchClientRoutes','modifyContextOpts','modifyClientRenderOpts','rootContainer','innerProvider','i18nProvider','accessProvider','dataflowProvider','outerProvider','render','onRouteChange','dva','locale','qiankun','request',];
+  return ['patchRoutes','patchClientRoutes','modifyContextOpts','modifyClientRenderOpts','rootContainer','innerProvider','i18nProvider','accessProvider','dataflowProvider','outerProvider','render','onRouteChange','dva','locale','qiankun','useQiankunStateForSlave','request',];
 }
 
 let pluginManager = null;

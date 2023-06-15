@@ -1,4 +1,4 @@
-import HeadMenu from '@/components/BlogComponents/HeaderMenu';
+import HeadMenu from '@/components/HeaderMenu';
 import { Outlet } from '@umijs/max';
 import ReactCanvasNest from 'react-canvas-nest';
 import styles from './index.less';
