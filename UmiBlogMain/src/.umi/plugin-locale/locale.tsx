@@ -4,8 +4,8 @@
 import React from 'react';
 import { ConfigProvider } from 'antd';
 
-import moment from 'D:/UmiBlog/UmiBlogMain/node_modules/moment';
-import 'D:/UmiBlog/UmiBlogMain/node_modules/moment/locale/zh-cn';
+import moment from '/Users/didi/UmiBlog/UmiBlogMain/node_modules/moment';
+import '/Users/didi/UmiBlog/UmiBlogMain/node_modules/moment/locale/zh-cn';
 import { RawIntlProvider, getLocale, getDirection , setIntl, getIntl, localeInfo, event, LANG_CHANGE_EVENT } from './localeExports';
 
 import antd_es_locale_zh_CN from 'antd/es/locale/zh_CN';

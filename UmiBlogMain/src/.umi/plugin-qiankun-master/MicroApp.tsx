@@ -4,16 +4,16 @@
 // @ts-nocheck
 /* eslint-disable */
 const useModel = null;;
-import concat from 'D:/UmiBlog/UmiBlogMain/node_modules/lodash/concat';
-import mergeWith from 'D:/UmiBlog/UmiBlogMain/node_modules/lodash/mergeWith';
-import isEqual from 'D:/UmiBlog/UmiBlogMain/node_modules/lodash/isEqual';
-import noop from 'D:/UmiBlog/UmiBlogMain/node_modules/lodash/noop';
+import concat from '/Users/didi/UmiBlog/UmiBlogMain/node_modules/lodash/concat';
+import mergeWith from '/Users/didi/UmiBlog/UmiBlogMain/node_modules/lodash/mergeWith';
+import isEqual from '/Users/didi/UmiBlog/UmiBlogMain/node_modules/lodash/isEqual';
+import noop from '/Users/didi/UmiBlog/UmiBlogMain/node_modules/lodash/noop';
 import {
   FrameworkConfiguration,
   loadMicroApp,
   MicroApp as MicroAppTypeDefinition,
   prefetchApps,
-} from 'D:/UmiBlog/UmiBlogMain/node_modules/qiankun';
+} from '/Users/didi/UmiBlog/UmiBlogMain/node_modules/qiankun';
 import React, {
   forwardRef,
   Ref,

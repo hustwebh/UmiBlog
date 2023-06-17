@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "start": "max dev",
+    "start": "cross-env PORT=8000 max dev",
     "build": "max build",
     "postinstall": "max setup",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
@@ -24,6 +24,7 @@
     "@types/markdown-it": "^12.2.3",
     "@umijs/max": "^4.0.67",
     "classnames": "^2.3.1",
+    "cross-env": "^7.0.3",
     "crypto-js": "^4.1.1",
     "dva": "^2.4.1",
     "markdown-it": "^13.0.1",

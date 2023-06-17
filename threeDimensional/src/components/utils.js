@@ -92,10 +92,14 @@ export function launchClickPosition(event) {
   if (intersectedObjects.length) {
     // pick the first object. It's the closest one
     const pickedObject = intersectedObjects[0].object;
-    if (intersectedObjects[0].object.userData.URL)
-      window.open(intersectedObjects[0].object.userData.URL);
-    else {
-      return;
+    if (intersectedObjects[0].object.userData.URL) {
+      // window.open(intersectedObjects[0].object.userData.URL);
+      console.log(intersectedObjects[0].object.userData.URL)
+      let newWindow = window.open(' ', '_blank')
+      newWindow.location.href = intersectedObjects[0].object.userData.URL
     }
+  }
+  else {
+    return;
   }
 }

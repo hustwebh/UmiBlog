@@ -5,7 +5,7 @@
 /* eslint-disable */
 
 import { getPluginManager } from '@@/core/plugin';
-import { prefetchApps } from 'D:/UmiBlog/UmiBlogMain/node_modules/qiankun';
+import { prefetchApps } from '/Users/didi/UmiBlog/UmiBlogMain/node_modules/qiankun';
 import { ApplyPluginsType } from 'umi';
 import { insertRoute, noop, patchMicroAppRoute } from './common';
 import { getMicroAppRouteComponent } from './getMicroAppRouteComponent';

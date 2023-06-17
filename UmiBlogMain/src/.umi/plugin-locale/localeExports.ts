@@ -5,11 +5,11 @@ import {
   createIntl,
   IntlShape,
   MessageDescriptor,
-} from 'D:/UmiBlog/UmiBlogMain/node_modules/react-intl';
+} from '/Users/didi/UmiBlog/UmiBlogMain/node_modules/react-intl';
 import { getPluginManager } from '../core/plugin';
-import EventEmitter from 'D:/UmiBlog/UmiBlogMain/node_modules/event-emitter';
+import EventEmitter from '/Users/didi/UmiBlog/UmiBlogMain/node_modules/event-emitter';
 // @ts-ignore
-import warning from 'D:/UmiBlog/UmiBlogMain/node_modules/warning';
+import warning from '/Users/didi/UmiBlog/UmiBlogMain/node_modules/warning';
 
 export {
   createIntl,
@@ -34,7 +34,7 @@ export {
   defineMessages,
   injectIntl,
   useIntl,
-} from 'D:/UmiBlog/UmiBlogMain/node_modules/react-intl';
+} from '/Users/didi/UmiBlog/UmiBlogMain/node_modules/react-intl';
 
 let g_intl: IntlShape;
 
@@ -71,8 +71,8 @@ export const addLocale = (
     ? Object.assign({}, localeInfo[name].messages, messages)
     : messages;
 
-
-  const { momentLocale, antd } = extraLocales || {};
+  // 用户只是追加 messages 时，extraLocales 可选
+  const { momentLocale = localeInfo[name]?.momentLocale, antd = localeInfo[name]?.antd } = extraLocales || {};
   const locale = name.split('-')?.join('-')
   localeInfo[name] = {
     messages: mergeMessages,

@@ -30,7 +30,7 @@ SVG.reactLogo = '../src/jsm/react-svg.svg';
 //URLs
 let URL = {};
 URL.gitHub = 'https://github.com/hustwebh';
-URL.PersonalBlog = 'localhost:8000/blog';
+URL.PersonalBlog = 'http://localhost:8000/blog';
 URL.email = 'https://mailto:arfloyd7@gmail.com';
 URL.terpsolutions = 'https://github.com/hustwebh/lkProject';
 

@@ -27,7 +27,7 @@
         "src/.umi/*"
       ],
       "@umijs/max": [
-        "D:\\UmiBlog\\UmiBlogMain\\node_modules\\umi"
+        "/Users/didi/UmiBlog/UmiBlogMain/node_modules/umi"
       ],
       "@umijs/max/typings": [
         "src/.umi/typings"

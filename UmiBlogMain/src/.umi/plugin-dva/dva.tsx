@@ -4,7 +4,7 @@
 // It's faked dva
 // aliased to @umijs/plugins/templates/dva
 import { create, Provider } from 'dva';
-import createLoading from 'D:/UmiBlog/UmiBlogMain/node_modules/dva-loading/dist/index.js';
+import createLoading from '/Users/didi/UmiBlog/UmiBlogMain/node_modules/dva-loading/dist/index.js';
 
 import React, { useRef } from 'react';
 import { history, ApplyPluginsType, useAppData } from 'umi';

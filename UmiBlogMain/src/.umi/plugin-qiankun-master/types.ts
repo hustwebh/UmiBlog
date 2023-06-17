@@ -3,7 +3,7 @@
 // DO NOT CHANGE IT MANUALLY!
 // @ts-nocheck
 /* eslint-disable */
-import { FrameworkConfiguration, FrameworkLifeCycles } from 'D:/UmiBlog/UmiBlogMain/node_modules/qiankun';
+import { FrameworkConfiguration, FrameworkLifeCycles } from '/Users/didi/UmiBlog/UmiBlogMain/node_modules/qiankun';
 
 type BaseIConfig = any;
 
