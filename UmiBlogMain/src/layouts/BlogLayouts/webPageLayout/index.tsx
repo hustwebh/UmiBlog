@@ -3,18 +3,15 @@ import { Outlet } from '@umijs/max';
 import ReactCanvasNest from 'react-canvas-nest';
 import styles from './index.less';
 
-export default function Index(props: any) {
-  // const {
-  //   location: { pathname },
-  // } = props;
+export default function Index() {
   const {
     location: { pathname },
   } = window;
   const isSpecial = pathname === '/tags' || pathname === '/classes';
   return (
-    <div>
+    <div style={{height:'100%'}}>
       <div className={styles.head}>
-        <HeadMenu {...props} />
+        <HeadMenu />
         <div className={styles.container}>
           <h1>-Mr.Quit's Blog-</h1>
           <h3>欢迎到访</h3>
