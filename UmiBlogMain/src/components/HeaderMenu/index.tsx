@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext } from 'react';
-import { Menu, Drawer, Button, Dropdown, Modal, Avatar } from 'antd';
+import { Menu, Drawer, Button, Dropdown, Modal, Avatar,Divider } from 'antd';
 import type { MenuProps } from 'antd';
 import { connect } from 'dva';
 import {
@@ -15,7 +15,7 @@ import {
   EnvironmentOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { Link } from 'umi';
+import { Link, history, useDispatch } from '@umijs/max';
 // import UserAvatar from '@/components/UserAvatar'
 import storageHelper from '@/utils/storage';
 import ModalForm from '../ModalForm';
@@ -50,9 +50,21 @@ const items: MenuProps['items'] = [
   },
 ];
 
-const Index: React.FC = (props: any) => {
-  const { dispatch, account, history, location } = props;
+const dropdownItems: MenuProps['items'] = [
+  {
+    label: "写文章",
+    key: "/write/new"
+  },
+  {
+    label: "草稿箱",
+    key: "/write/new"
+  },
+]
 
+const Index: React.FC = (props: any) => {
+  const { account, location } = props;
+
+  const dispatch = useDispatch;
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState('');
@@ -87,9 +99,12 @@ const Index: React.FC = (props: any) => {
     setModalType(type);
   };
 
+  const dropDownItemClick: MenuProps['onClick'] = ({ key }) => {
+    history.push(key)
+  };
+
   return (
     <>
-      {/* // <ReachableContext.Provider value={}> */}
       <div className={styles.homeHeader}>
         <div className={styles.homeHeaderLeft}>
           <div className={styles.homeHeaderPc}>
@@ -132,35 +147,21 @@ const Index: React.FC = (props: any) => {
         <div className={styles.homeHeaderRight}>
           {account && account.email && account.id ? (
             <Dropdown
-              overlay={
-                <Menu>
-                  <Menu.Item key="write-article-key">
-                    <Link to="/write/new">写文竄1�7</Link>
-                  </Menu.Item>
-                  <Menu.Item key="drafts-key">
-                    <Link to="/drafts">草稿箄1�7</Link>
-                  </Menu.Item>
-                  <Menu.Divider />
-                  {/* <Menu.Item key="write-course-key">
-                    <Link to="/write/course">写教稄1�7</Link>
-                  </Menu.Item> */}
-                  {/* <Menu.Divider /> */}
-                  {account.account_type === 'ADMIN' ? (
-                    <Menu.Item key="manager-center-key">
+              menu={{ dropdownItems, dropDownItemClick }}
+              dropdownRender={(menu) => (
+                <div>
+                  {React.cloneElement(menu as React.ReactElement)}
+                  <Divider />
+                  {account.account_type === 'ADMIN' &&
+                    (<Menu.Item key="manager-center-key">
                       <Link to="/admin">管理中心</Link>
-                    </Menu.Item>
-                  ) : (
-                    ''
-                  )}
-                  <Menu.Item key="user-center-key">
-                    <Link to="/account">个人中心</Link>
-                  </Menu.Item>
-                  <Menu.Divider />
+                    </Menu.Item>)}
+                  <Divider />
                   <Menu.Item key="logout-key" onClick={logout}>
-                    逢�凄1�7
+                    退出登录
                   </Menu.Item>
-                </Menu>
-              }
+                </div>
+              )}
               trigger={['click']}
             >
               <a
@@ -170,7 +171,7 @@ const Index: React.FC = (props: any) => {
                 {account.avatar ? (
                   <Avatar src={account.avatar} />
                 ) : (
-                  <Avatar icon={<UserOutlined />}/>
+                  <Avatar icon={<UserOutlined />} />
                 )}
               </a>
             </Dropdown>
@@ -201,7 +202,7 @@ const Index: React.FC = (props: any) => {
             <Link to="/" className="brand mr-10">
               <HomeOutlined />
             </Link>
-            <span>导航栄1�7</span>
+            <span>导航栏</span>
           </>
         }
         placement="left"
