@@ -1,53 +1,51 @@
 import React, { useEffect } from 'react';
 import { Button, Row, Form, Input, Checkbox } from 'antd';
+import { useDispatch } from '@umijs/max';
 import { MailOutlined, LockOutlined } from '@ant-design/icons';
-import { connect } from 'dva';
 
 export default function Index(props: any) {
   const [form] = Form.useForm();
-  const { dispatch, title, typeHandler, handleCancel, location } = props;
-
+  const { title, typeHandler } = props;
+  const dispatch = useDispatch();
   const onFinish = (values: any) => {
-    if (dispatch) {
-      if (title === '登录') {
-        const { email = '', password = '', remember = false } = values;
-        dispatch({
-          type: 'user/login',
-          payload: {
-            email,
-            password,
-            remember,
-          },
-        });
-        // .then((res: boolean) => {
-        //   if (res) {
-        //     //true
-        //     dispatch({
-        //       type: 'user/account',
-        //     }).then((res: boolean) => {
-        //       if (res || location.isRegister) {
-        //         handleCancel();
-        //       } else {
-        //         //清空表单
-        //         form.resetFields();
-        //       }
-        //     });
-        //   }
-        // });
-      } else {
-        const { name = '', password = '', email = '' } = values;
+    if (title === '登录') {
+      const { email = '', password = '', remember = false } = values;
+      dispatch({
+        type: 'user/login',
+        payload: {
+          email,
+          password,
+          remember,
+        },
+      });
+      // .then((res: boolean) => {
+      //   if (res) {
+      //     //true
+      //     dispatch({
+      //       type: 'user/account',
+      //     }).then((res: boolean) => {
+      //       if (res || location.isRegister) {
+      //         handleCancel();
+      //       } else {
+      //         //清空表单
+      //         form.resetFields();
+      //       }
+      //     });
+      //   }
+      // });
+    } else {
+      const { name = '', password = '', email = '' } = values;
 
-        dispatch({
-          type: 'user/register',
-          payload: {
-            name,
-            password,
-            email,
-          },
-        }).then((res: boolean) => {
-          if (res) typeHandler('登录');
-        });
-      }
+      dispatch({
+        type: 'user/register',
+        payload: {
+          name,
+          password,
+          email,
+        },
+      }).then((res: boolean) => {
+        if (res) typeHandler('登录');
+      });
     }
   };
   return (
@@ -81,7 +79,7 @@ export default function Index(props: any) {
         </Form.Item>
         {title === '登录' ? (
           <Form.Item>
-            <Form.Item name="remember" valuePropName="checked" noStyle>
+            <Form.Item name="remember" valuePropName="checked" initialValue={false} noStyle>
               <Checkbox checked>自动登录</Checkbox>
             </Form.Item>
             <a className="fr" href="#">
@@ -124,7 +122,7 @@ export default function Index(props: any) {
         </Form.Item>
         {/* <Link to="/register">注册账户</Link> */}
         {title === '登录' ? (
-          <Button type="link" onClick={() => typeHandler('注册')}>
+          <Button type="link"  onClick={() => typeHandler('注册')}>
             注册用户
           </Button>
         ) : (

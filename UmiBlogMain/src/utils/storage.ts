@@ -21,7 +21,6 @@ const storageHelper = {
     }
   },
   set: (key:any, value:any) => {
-    // localStorage.setItem(key, encrypt(value))
     localStorage.setItem(key, encrypt(value).toString())
   },
   clear: (key:any) => {

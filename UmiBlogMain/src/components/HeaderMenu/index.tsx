@@ -53,15 +53,15 @@ const items: MenuProps['items'] = [
 const Index: React.FC = (props: any) => {
   const { dispatch, account, history, location } = props;
 
-  const [menuVisible, setMenuVisible] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState('');
 
   const showDrawer = () => {
-    setMenuVisible(true);
+    setMenuOpen(true);
   };
   const onClose = () => {
-    setMenuVisible(false);
+    setMenuOpen(false);
   };
   const logout = () => {
     storageHelper.clear('user');
@@ -74,15 +74,16 @@ const Index: React.FC = (props: any) => {
   };
 
   const userEvent = (type: string) => {
-    setModalVisible(true);
+    setModalOpen(true);
     setModalType(type);
   };
 
   const handleCancel = () => {
-    setModalVisible(false);
+    setModalOpen(false);
   };
 
   const typeHandler = (type: string) => {
+    console.log('type', type)
     setModalType(type);
   };
 
@@ -125,7 +126,7 @@ const Index: React.FC = (props: any) => {
             <Button type="link" onClick={showDrawer}>
               <MenuOutlined />
             </Button>
-            <span>用户各1�7</span>
+            <span>用户各1�7</span>
           </div>
         </div>
         <div className={styles.homeHeaderRight}>
@@ -134,14 +135,14 @@ const Index: React.FC = (props: any) => {
               overlay={
                 <Menu>
                   <Menu.Item key="write-article-key">
-                    <Link to="/write/new">写文竄1�7</Link>
+                    <Link to="/write/new">写文竄1�7</Link>
                   </Menu.Item>
                   <Menu.Item key="drafts-key">
-                    <Link to="/drafts">草稿箄1�7</Link>
+                    <Link to="/drafts">草稿箄1�7</Link>
                   </Menu.Item>
                   <Menu.Divider />
                   {/* <Menu.Item key="write-course-key">
-                    <Link to="/write/course">写教稄1�7</Link>
+                    <Link to="/write/course">写教稄1�7</Link>
                   </Menu.Item> */}
                   {/* <Menu.Divider /> */}
                   {account.account_type === 'ADMIN' ? (
@@ -156,7 +157,7 @@ const Index: React.FC = (props: any) => {
                   </Menu.Item>
                   <Menu.Divider />
                   <Menu.Item key="logout-key" onClick={logout}>
-                    逢�凄1�7
+                    逢�凄1�7
                   </Menu.Item>
                 </Menu>
               }
@@ -166,14 +167,10 @@ const Index: React.FC = (props: any) => {
                 className="ant-dropdown-link"
                 onClick={(e) => e.preventDefault()}
               >
-                {/* <UserAvatar src={account.avatar} size="large" /> */}
                 {account.avatar ? (
-                  <Avatar size={props.size || 'default'} src={account.avatar} />
+                  <Avatar src={account.avatar} />
                 ) : (
-                  <Avatar
-                    size={props.size || 'default'}
-                    icon={<UserOutlined />}
-                  />
+                  <Avatar icon={<UserOutlined />}/>
                 )}
               </a>
             </Dropdown>
@@ -204,13 +201,13 @@ const Index: React.FC = (props: any) => {
             <Link to="/" className="brand mr-10">
               <HomeOutlined />
             </Link>
-            <span>导航栄1�7</span>
+            <span>导航栄1�7</span>
           </>
         }
         placement="left"
         closable
         onClose={onClose}
-        visible={menuVisible}
+        open={menuOpen}
         bodyStyle={{ padding: 0 }}
       >
         <Menu
@@ -221,10 +218,9 @@ const Index: React.FC = (props: any) => {
         ></Menu>
       </Drawer>
 
-      <Modal visible={modalVisible} onCancel={handleCancel} footer={null}>
+      <Modal open={modalOpen} onCancel={handleCancel} footer={null}>
         <ModalForm
           title={modalType}
-          dispatch={dispatch}
           typeHandler={typeHandler}
           handleCancel={handleCancel}
           location={location}
