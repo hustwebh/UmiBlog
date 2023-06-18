@@ -7,15 +7,15 @@ import type { IRuntimeConfig as Plugin2 } from 'D:/UmiBlog/UmiBlogAdmin/src/.umi
 import type { IRuntimeConfig as Plugin3 } from 'D:/UmiBlog/UmiBlogAdmin/src/.umi/plugin-qiankun-slave/runtimeConfig.d'
 import type { IRuntimeConfig as Plugin4 } from 'D:/UmiBlog/UmiBlogAdmin/src/.umi/plugin-request/runtimeConfig.d'
 interface IDefaultRuntimeConfig {
-  onRouteChange?: (props: { routes: any, clientRoutes: any, location: any, action: any, isFirst: boolean }) => void;
-  patchRoutes?: (props: { routes: any }) => void;
-  patchClientRoutes?: (props: { routes: any }) => void;
-  render?: (oldRender: () => void) => void;
-  rootContainer?: (lastRootContainer: JSX.Element, args?: any) => void;
-  [key: string]: any;
+  onRouteChange?: (props: { routes: any, clientRoutes: any, location: any, action: any, isFirst: boolean }) => void
+  patchRoutes?: (props: { routes: any }) => void
+  patchClientRoutes?: (props: { routes: any }) => void
+  render?: (oldRender: () => void) => void
+  rootContainer?: (lastRootContainer: JSX.Element, args?: any) => void
+  [key: string]: any
 }
 export type RuntimeConfig = IDefaultRuntimeConfig & Plugin0 & Plugin1 & Plugin2 & Plugin3 & Plugin4
 
 export function defineApp(config: RuntimeConfig): RuntimeConfig {
-  return config;
+  return config
 }

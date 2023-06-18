@@ -1,7 +1,7 @@
-import React, { useState, useEffect, createContext } from 'react';
-import { Menu, Drawer, Button, Dropdown, Modal, Avatar,Divider } from 'antd';
-import type { MenuProps } from 'antd';
-import { connect } from 'dva';
+import React, { useState, useEffect, createContext } from 'react'
+import { Menu, Drawer, Button, Dropdown, Modal, Avatar, Divider } from 'antd'
+import type { MenuProps } from 'antd'
+import { connect } from 'dva'
 import {
   MenuOutlined,
   HomeOutlined,
@@ -14,15 +14,15 @@ import {
   SmileOutlined,
   EnvironmentOutlined,
   UserOutlined,
-} from '@ant-design/icons';
-import { Link, history, useDispatch } from '@umijs/max';
+} from '@ant-design/icons'
+import { Link, history, useDispatch } from '@umijs/max'
 // import UserAvatar from '@/components/UserAvatar'
-import storageHelper from '@/utils/storage';
-import ModalForm from '../ModalForm';
+import storageHelper from '@/utils/storage'
+import ModalForm from '../ModalForm'
 
-import styles from './index.less';
+import styles from './index.less'
 
-const items: MenuProps['items'] = [
+const topMenuItems: MenuProps['items'] = [
   {
     label: '文章',
     key: 'artical',
@@ -48,60 +48,79 @@ const items: MenuProps['items'] = [
     key: 'about',
     icon: <HighlightOutlined />,
   },
-];
-
-const dropdownItems: MenuProps['items'] = [
-  {
-    label: "写文章",
-    key: "/write/new"
-  },
-  {
-    label: "草稿箱",
-    key: "/write/new"
-  },
 ]
 
 const Index: React.FC = (props: any) => {
-  const { account, location } = props;
+  const { account, location } = props
+  const dispatch = useDispatch()
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [modalType, setModalType] = useState('')
 
-  const dispatch = useDispatch;
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalType, setModalType] = useState('');
-
+  useEffect(() => {
+    setModalOpen(false)
+  }, [account])
   const showDrawer = () => {
-    setMenuOpen(true);
-  };
+    setMenuOpen(true)
+  }
   const onClose = () => {
-    setMenuOpen(false);
-  };
+    setMenuOpen(false)
+  }
   const logout = () => {
-    storageHelper.clear('user');
-    if (dispatch) {
-      dispatch({ type: 'user/logout' });
-    }
-  };
+    dispatch({ type: 'user/logout' })
+  }
   const handleClick: MenuProps['onClick'] = (e) => {
-    history.push(`/${e.key}`);
-  };
+    history.push(`/${e.key}`)
+  }
 
   const userEvent = (type: string) => {
-    setModalOpen(true);
-    setModalType(type);
-  };
+    setModalOpen(true)
+    setModalType(type)
+  }
 
   const handleCancel = () => {
-    setModalOpen(false);
-  };
+    setModalOpen(false)
+  }
 
   const typeHandler = (type: string) => {
-    console.log('type', type)
-    setModalType(type);
-  };
+    setModalType(type)
+  }
 
-  const dropDownItemClick: MenuProps['onClick'] = ({ key }) => {
-    history.push(key)
-  };
+  const items: MenuProps['items'] = [
+    {
+      label: (
+        <Link to='/write/new'>
+          写文章
+        </Link>
+      ),
+      key: "/write/new"
+    },
+    {
+      label: (
+        <Link to='/drafts'>
+          草稿箱
+        </Link>
+      ),
+      key: "/drafts"
+    },
+    {
+      label: (
+        account?.account_type === 'ADMIN' && <Link to="/admin">管理中心</Link>
+      ),
+      key: '/admin'
+    },
+    {
+      label: (
+        <div>
+          <Divider style={{ margin: 0, marginBottom: 10 }} />
+          <div onClick={logout}>
+            退出登录
+          </div>
+        </div>
+      ),
+      key: "logout"
+    },
+  ]
 
   return (
     <>
@@ -122,7 +141,7 @@ const Index: React.FC = (props: any) => {
                   marginLeft: 40,
                   minWidth: 552,
                 }}
-                items={items}
+                items={topMenuItems}
                 onClick={handleClick}
                 builtinPlacements={{
                   bottomLeft: {
@@ -145,35 +164,16 @@ const Index: React.FC = (props: any) => {
           </div>
         </div>
         <div className={styles.homeHeaderRight}>
-          {account && account.email && account.id ? (
+          {account && account.avatar ? (
             <Dropdown
-              menu={{ dropdownItems, dropDownItemClick }}
-              dropdownRender={(menu) => (
-                <div>
-                  {React.cloneElement(menu as React.ReactElement)}
-                  <Divider />
-                  {account.account_type === 'ADMIN' &&
-                    (<Menu.Item key="manager-center-key">
-                      <Link to="/admin">管理中心</Link>
-                    </Menu.Item>)}
-                  <Divider />
-                  <Menu.Item key="logout-key" onClick={logout}>
-                    退出登录
-                  </Menu.Item>
-                </div>
-              )}
               trigger={['click']}
+              menu={{ items }}
             >
-              <a
-                className="ant-dropdown-link"
-                onClick={(e) => e.preventDefault()}
-              >
-                {account.avatar ? (
-                  <Avatar src={account.avatar} />
-                ) : (
-                  <Avatar icon={<UserOutlined />} />
-                )}
-              </a>
+              {account.avatar ? (
+                <Avatar src={account.avatar} />
+              ) : (
+                <Avatar icon={<UserOutlined />} />
+              )}
             </Dropdown>
           ) : (
             <span>
@@ -229,19 +229,19 @@ const Index: React.FC = (props: any) => {
       </Modal>
       {/* </ReachableContext.Provider> */}
     </>
-  );
-};
+  )
+}
 
 const mapStateToProps = ({
   user: { account },
 }: {
   user: {
-    account: any;
-  };
+    account: any
+  }
 }) => {
   return {
     account,
-  };
-};
+  }
+}
 
-export default connect(mapStateToProps)(Index);
+export default connect(mapStateToProps)(Index)

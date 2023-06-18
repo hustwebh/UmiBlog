@@ -5,9 +5,9 @@
  * @Last Modified time: 2020-05-13 16:32:50
  */
 
-import React from 'react';
+import React from 'react'
 // import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import SyntaxHighlighter from 'react-syntax-highlighter';
+import SyntaxHighlighter from 'react-syntax-highlighter'
 
 import {
   docco,
@@ -18,11 +18,11 @@ import {
   arduinoLight,
   ascetic,
   github,
-} from 'react-syntax-highlighter/dist/esm/styles/hljs';
+} from 'react-syntax-highlighter/dist/esm/styles/hljs'
 
 const CodeTag = (props: any) => {
-  const { value, language } = props;
-  if (!value) return null;
+  const { value, language } = props
+  if (!value) return null
   return (
     <SyntaxHighlighter
       language={language}
@@ -31,7 +31,7 @@ const CodeTag = (props: any) => {
     >
       {value}
     </SyntaxHighlighter>
-  );
-};
+  )
+}
 
-export default CodeTag;
+export default CodeTag

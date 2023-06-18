@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import ReactDOMServer from 'react-dom/server';
-import { connect } from 'dva';
-import moment from 'moment';
+import React, { useState, useEffect, useRef } from 'react'
+import ReactDOMServer from 'react-dom/server'
+import { connect } from 'dva'
+import moment from 'moment'
 import {
   Input,
   Row,
@@ -17,34 +17,34 @@ import {
   Table,
   Avatar,
   message,
-} from 'antd';
-import type { InputRef } from 'antd';
+} from 'antd'
+import type { InputRef } from 'antd'
 import {
   CaretDownOutlined,
   PictureOutlined,
   QuestionCircleOutlined,
   UserOutlined,
-} from '@ant-design/icons';
-import { history, Link } from 'umi';
-import MathJax from 'react-mathjax';
+} from '@ant-design/icons'
+import { history, Link } from 'umi'
+import MathJax from 'react-mathjax'
 
-import Editor, { Plugins } from 'react-markdown-editor-lite';
-import MarkdownIt from 'markdown-it';
-import dayjs from 'dayjs';
-import hljs from 'highlight.js';
-import 'react-markdown-editor-lite/lib/index.css';
+import Editor, { Plugins } from 'react-markdown-editor-lite'
+import MarkdownIt from 'markdown-it'
+import dayjs from 'dayjs'
+import hljs from 'highlight.js'
+import 'react-markdown-editor-lite/lib/index.css'
 
-import styles from './index.less';
+import styles from './index.less'
 
 const UserAvatar = (props: any) =>
   props.src ? (
     <Avatar size={props.size || 'default'} src={props.src} />
   ) : (
     <Avatar size={props.size || 'default'} icon={<UserOutlined />} />
-  );
+  )
 
 const Content = (props: any) => {
-  const { tags, category, onPublish } = props;
+  const { tags, category, onPublish } = props
 
   return (
     <div>
@@ -65,8 +65,8 @@ const Content = (props: any) => {
         </Button>
       </div>
     </div>
-  );
-};
+  )
+}
 
 const Index: React.FC = (props: any) => {
   const {
@@ -79,75 +79,75 @@ const Index: React.FC = (props: any) => {
     match: {
       params: { key },
     },
-  } = props;
+  } = props
 
-  const [visible, setVisible] = useState(false);
-  const [value, setValue] = React.useState(markdown);
-  const inputRef = useRef<InputRef>(null) || undefined;
-  const category = useRef<InputRef>(null);
-  const tags = useRef<InputRef>(null);
+  const [visible, setVisible] = useState(false)
+  const [value, setValue] = React.useState(markdown)
+  const inputRef = useRef<InputRef>(null) || undefined
+  const category = useRef<InputRef>(null)
+  const tags = useRef<InputRef>(null)
   const mdParser = new MarkdownIt({
     html: true,
     linkify: true,
     typographer: true,
-  });
-  const mdEditor = useRef(null);
+  })
+  const mdEditor = useRef(null)
   Editor.use(Plugins.TabInsert, {
     tabMapValue: 1,
-  });
-  Editor.unuse(Plugins.FullScreen);
+  })
+  Editor.unuse(Plugins.FullScreen)
 
   useEffect(() => {
     if (!account || !account.id) {
-      message.info('请先登录');
-      history.push('/blog');
+      message.info('请先登录')
+      history.push('/blog')
     }
     if (dispatch) {
       // dispatch({ type: 'write/category' })
       if (key !== 'new' && /^\d+$/.test(key)) {
-        dispatch({ type: 'write/draft', payload: { id: key } });
+        dispatch({ type: 'write/draft', payload: { id: key } })
       } else {
-        dispatch({ type: 'write/setMarkdown', payload: { markdown: '' } });
-        dispatch({ type: 'write/setTitle', payload: { title: null } });
+        dispatch({ type: 'write/setMarkdown', payload: { markdown: '' } })
+        dispatch({ type: 'write/setTitle', payload: { title: null } })
       }
     }
     if (inputRef.current) {
-      inputRef.current.focus();
+      inputRef.current.focus()
     }
-  }, [key]);
+  }, [key])
 
   useEffect(() => {
-    setValue(markdown);
-  }, [markdown]);
+    setValue(markdown)
+  }, [markdown])
 
   const onChangeTitle = (e: any) => {
     if (dispatch) {
-      dispatch({ type: 'write/setTitle', payload: { title: e.target.value } });
+      dispatch({ type: 'write/setTitle', payload: { title: e.target.value } })
     }
-  };
+  }
 
   const saveDraft = () => {
     if (dispatch) {
-      const markdownCurrent = mdEditor.current && mdEditor.current.getMdValue();
+      const markdownCurrent = mdEditor.current && mdEditor.current.getMdValue()
       if (key !== 'new' && /^\d+$/.test(key)) {
         dispatch({
           type: 'write/updateDraft',
           payload: { markdown: markdownCurrent, title, id: key },
-        });
+        })
       } else {
         dispatch({
           type: 'write/saveDraft',
           payload: { markdown: markdownCurrent, title },
-        });
+        })
       }
     }
-  };
+  }
 
   const onPublish = () => {
     // if (dispatch) {
     if (tags?.current?.input && category?.current?.input) {
-      const articleTags = tags.current.input.value.split(',');
-      const articleCategory = category.current.input.value;
+      const articleTags = tags.current.input.value.split(',')
+      const articleCategory = category.current.input.value
       dispatch({
         type: 'write/publish',
         payload: {
@@ -157,30 +157,30 @@ const Index: React.FC = (props: any) => {
           articleTags,
           articleCategory,
         },
-      });
+      })
     }
-  };
+  }
 
   const writeNew = () => {
-    dispatch({ type: 'write/setMarkdown', payload: { markdown: '' } });
-    dispatch({ type: 'write/setTitle', payload: { title: null } });
-    history.push('/write/new');
-  };
+    dispatch({ type: 'write/setMarkdown', payload: { markdown: '' } })
+    dispatch({ type: 'write/setTitle', payload: { title: null } })
+    history.push('/write/new')
+  }
 
   const showDrawer = () => {
     if (dispatch) {
-      dispatch({ type: 'write/drafts' });
+      dispatch({ type: 'write/drafts' })
     }
-    setVisible(true);
-  };
+    setVisible(true)
+  }
 
   const onClose = () => {
-    setVisible(false);
-  };
+    setVisible(false)
+  }
 
   const handleEditorChange = ({ text }: { text: string }) => {
-    setValue(text);
-  };
+    setValue(text)
+  }
 
   const writeMenu = (
     <Menu className="mt-20">
@@ -195,7 +195,7 @@ const Index: React.FC = (props: any) => {
         <Link to="/blog">回到首页</Link>
       </Menu.Item>
     </Menu>
-  );
+  )
 
   const ShortCutKey = () => {
     const columns = [
@@ -214,7 +214,7 @@ const Index: React.FC = (props: any) => {
         dataIndex: 'keybord',
         key: 'keybord',
       },
-    ];
+    ]
     const dataSource = [
       {
         markdown: '**文本**',
@@ -246,7 +246,7 @@ const Index: React.FC = (props: any) => {
         explain: '行代码块',
         keybord: 'Ctrl / ⌘ + Alt + K',
       },
-    ];
+    ]
     return (
       <Table
         columns={columns}
@@ -254,8 +254,8 @@ const Index: React.FC = (props: any) => {
         pagination={false}
         size="small"
       />
-    );
-  };
+    )
+  }
 
   return (
     <>
@@ -326,8 +326,8 @@ const Index: React.FC = (props: any) => {
                       title={
                         <a
                           onClick={() => {
-                            history.push(`/write/${item.id}`);
-                            onClose();
+                            history.push(`/write/${item.id}`)
+                            onClose()
                           }}
                         >
                           {item.title}
@@ -362,8 +362,8 @@ const Index: React.FC = (props: any) => {
         />
       </Row>
     </>
-  );
-};
+  )
+}
 
 const mapStateToProps = ({
   write: {
@@ -379,16 +379,16 @@ const mapStateToProps = ({
   loading,
 }: {
   write: {
-    title: string;
-    markdown: string;
-    drafts: any[];
-    category: string;
-    tags: string[];
-    selectedCategory: any;
-    selectedTag: any;
-  };
-  user: { account: any };
-  loading: any;
+    title: string
+    markdown: string
+    drafts: any[]
+    category: string
+    tags: string[]
+    selectedCategory: any
+    selectedTag: any
+  }
+  user: { account: any }
+  loading: any
 }) => {
   return {
     category,
@@ -400,7 +400,7 @@ const mapStateToProps = ({
     selectedTag,
     account,
     loading: loading.effects['write/updateDraft'],
-  };
-};
+  }
+}
 
-export default connect(mapStateToProps)(Index);
+export default connect(mapStateToProps)(Index)

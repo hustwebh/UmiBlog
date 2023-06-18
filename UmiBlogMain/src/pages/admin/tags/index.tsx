@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import {
   Card,
   Table,
@@ -9,41 +9,41 @@ import {
   Input,
   Popconfirm,
   Select,
-} from 'antd';
-import { connect } from 'dva';
-import moment from 'moment';
-import { v4 as uuidv4 } from 'uuid';
-import { PlusOutlined } from '@ant-design/icons';
+} from 'antd'
+import { connect } from 'dva'
+import moment from 'moment'
+import { v4 as uuidv4 } from 'uuid'
+import { PlusOutlined } from '@ant-design/icons'
 
-const { Option } = Select;
+const { Option } = Select
 
 const Tag = (props: any) => {
-  const { dispatch, categories, tags, loading } = props;
-  const [visible, setVisible] = useState(false);
-  const [form] = Form.useForm();
+  const { dispatch, categories, tags, loading } = props
+  const [visible, setVisible] = useState(false)
+  const [form] = Form.useForm()
   useEffect(() => {
     if (dispatch) {
-      dispatch({ type: 'admin/categories' });
-      dispatch({ type: 'admin/tags' });
+      dispatch({ type: 'admin/categories' })
+      dispatch({ type: 'admin/tags' })
     }
-  }, []);
+  }, [])
   const handleCancel = () => {
-    setVisible(false);
-  };
+    setVisible(false)
+  }
   const showModal = () => {
-    setVisible(true);
-  };
+    setVisible(true)
+  }
   const onSubmit = (values: string) => {
     if (dispatch) {
-      dispatch({ type: 'admin/createTag', payload: values });
+      dispatch({ type: 'admin/createTag', payload: values })
     }
-    form.resetFields();
-  };
+    form.resetFields()
+  }
   const deleteTag = (id: number) => {
     if (dispatch) {
-      dispatch({ type: 'admin/deleteTag', payload: { id } });
+      dispatch({ type: 'admin/deleteTag', payload: { id } })
     }
-  };
+  }
 
   const columns = [
     {
@@ -60,7 +60,7 @@ const Tag = (props: any) => {
       title: '创建时间',
       dataIndex: 'createdAt',
       render(date: string) {
-        return <span>{moment(date).format('YYYY-MM-DD')}</span>;
+        return <span>{moment(date).format('YYYY-MM-DD')}</span>
       },
     },
     {
@@ -77,10 +77,10 @@ const Tag = (props: any) => {
               删除
             </Button>
           </Popconfirm>
-        );
+        )
       },
     },
-  ];
+  ]
   return (
     <>
       <Space style={{ marginBottom: 16 }}>
@@ -126,8 +126,8 @@ const Tag = (props: any) => {
         </Form>
       </Modal>
     </>
-  );
-};
+  )
+}
 
 export default connect(
   ({
@@ -135,13 +135,13 @@ export default connect(
     loading,
   }: {
     admin: {
-      categories: any[];
-      tags: string[];
-    };
-    loading: any;
+      categories: any[]
+      tags: string[]
+    }
+    loading: any
   }) => ({
     tags,
     categories,
     loading: loading.effects['admin/tags'],
   }),
-)(Tag);
+)(Tag)

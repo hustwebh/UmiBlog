@@ -1,29 +1,29 @@
-import React, { useEffect } from 'react';
-import { Card, List, Skeleton, Tag, Popconfirm, message } from 'antd';
-import { connect } from 'dva';
-import { Link } from 'umi';
-import HeaderMenu from '@/components/HeaderMenu';
+import React, { useEffect } from 'react'
+import { Card, List, Skeleton, Tag, Popconfirm, message } from 'antd'
+import { connect } from 'dva'
+import { Link } from 'umi'
+import HeaderMenu from '@/components/HeaderMenu'
 // import moment from 'moment'
-import dayjs from 'dayjs';
-import styles from './index.less';
+import dayjs from 'dayjs'
+import styles from './index.less'
 
 const Draft = (props: any) => {
-  const { dispatch, drafts, loading, account, history } = props;
+  const { dispatch, drafts, loading, account, history } = props
   useEffect(() => {
     if (!account || !account.id) {
-      message.info('请先完成登录');
-      history.push('/blog');
+      message.info('请先完成登录')
+      history.push('/blog')
     }
     if (dispatch) {
-      dispatch({ type: 'write/drafts' });
+      dispatch({ type: 'write/drafts' })
     }
-  }, []);
+  }, [])
 
   const deleteDraft = (id: number) => {
     if (dispatch) {
-      dispatch({ type: 'write/deleteDraft', payload: { id } });
+      dispatch({ type: 'write/deleteDraft', payload: { id } })
     }
-  };
+  }
   return (
     <>
       <HeaderMenu />
@@ -57,12 +57,12 @@ const Draft = (props: any) => {
                         <strong>{item.title}</strong>
                         {item.isPublish ? (
                           <Tag color="success" className="ml-10">
-                            已发衄1�7
+                            已发衄1�7
                           </Tag>
                         ) : null}
                       </Link>
                     }
-                    description={`上次修改亄1�7${dayjs(item.updatedAt).format(
+                    description={`上次修改亄1�7${dayjs(item.updatedAt).format(
                       'YYYY[年]MM[月]DD[日] HH:mm',
                     )}`}
                   />
@@ -73,8 +73,8 @@ const Draft = (props: any) => {
         </Card>
       </div>
     </>
-  );
-};
+  )
+}
 
 export default connect(
   ({
@@ -83,15 +83,15 @@ export default connect(
     loading,
   }: {
     write: {
-      drafts: any[];
-    };
+      drafts: any[]
+    }
     user: {
-      account: any;
-    };
-    loading: any;
+      account: any
+    }
+    loading: any
   }) => ({
     drafts,
     account,
     loading: loading.effects['write/drafts'],
   }),
-)(Draft);
+)(Draft)

@@ -1,5 +1,5 @@
 import { message } from 'antd';
-import { history } from 'umi';
+import { history } from '@umijs/max';
 import {
   registerAccount,
   loginAccount,
@@ -7,21 +7,14 @@ import {
   logoutAccount,
   // modifyAccount,
 } from '../service/user';
+import Cookies from 'js-cookie';
 import storageHelper from '@/utils/storage';
 
-const avatars = [
-  'https://immisso.oss-cn-hangzhou.aliyuncs.com/avatar/001.png',
-  'https://immisso.oss-cn-hangzhou.aliyuncs.com/avatar/002.png',
-  'https://immisso.oss-cn-hangzhou.aliyuncs.com/avatar/003.png',
-  'https://immisso.oss-cn-hangzhou.aliyuncs.com/avatar/004.png',
-];
-
 const initAccount = () => {
-  const user = storageHelper.get('user');
-  if (!user || user.exp * 1000 < new Date().getTime()) {
+  if (!Cookies.get("token")) {
     return {};
   }
-  return user;
+  return storageHelper.get('account');
 };
 
 export default {
@@ -58,6 +51,8 @@ export default {
             avatar: data.avatar,
           },
         });
+        Cookies.set("token",data.token,{ expires: 1 })
+        storageHelper.set('account',data)
         return true;
       }
     },
@@ -94,12 +89,11 @@ export default {
 
     *logout({ payload }, { call, put }) {
       const { code } = yield call(logoutAccount, payload);
+      storageHelper.clear('account')
+      Cookies.remove("token")
       if (code === 200) {
         yield put({
-          type: 'handle',
-          payload: {
-            account: {},
-          },
+          type: 'logoutHandler',
         });
         message.info('退出成功!');
         history.push('/blog');
@@ -126,5 +120,8 @@ export default {
     changeAvatar(state) {
       return { ...state, avatar: avatars[Math.floor(Math.random() * 4)] };
     },
+    logoutHandler(state) {
+      return {...state, account:{}}
+    }
   },
 };

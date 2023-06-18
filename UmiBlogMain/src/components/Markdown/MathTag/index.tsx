@@ -5,11 +5,11 @@
  * @Last Modified time: 2020-04-18 06:18:48
  */
 
-import React from 'react';
-import MathJax from 'react-mathjax';
+import React from 'react'
+import MathJax from 'react-mathjax'
 
 const MathTag = (props: any) => {
-  return <MathJax.Node formula={props.value} />;
-};
+  return <MathJax.Node formula={props.value} />
+}
 
-export default MathTag;
+export default MathTag

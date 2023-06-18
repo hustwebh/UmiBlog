@@ -10,9 +10,9 @@ import {
   updateFavorite,
   getListByTag,
   getListByClass,
-} from '@/service/article';
+} from '@/service/article'
 
-import { message } from 'antd';
+import { message } from 'antd'
 
 export default {
   namespace: 'article',
@@ -29,7 +29,7 @@ export default {
   },
   effects: {
     *articles({ payload }, { call, put }) {
-      const { code, data } = yield call(getArticles, payload);
+      const { code, data } = yield call(getArticles, payload)
       if (code === 200) {
         yield put({
           type: 'handle',
@@ -37,7 +37,7 @@ export default {
             articles: data.articles,
             articleCount: data.count,
           },
-        });
+        })
       }
       // const data = {
       //   articles: [
@@ -63,24 +63,24 @@ export default {
       //     },
       //   ],
       //   articleCount: 2,
-      // };
+      // }
       // yield put({
       //   type: 'handle',
       //   payload: {
       //     articles: data.articles,
       //     articleCount: data.articleCount,
       //   },
-      // });
+      // })
     },
     *tags({ payload }, { call, put }) {
-      const { code, data } = yield call(getTags, payload);
+      const { code, data } = yield call(getTags, payload)
       if (code === 200) {
         yield put({
           type: 'handle',
           payload: {
             tags: data,
           },
-        });
+        })
       }
 
       // const data = [
@@ -91,34 +91,34 @@ export default {
       //   'javaScript',
       //   'javaScript',
       //   'javaScript',
-      // ];
+      // ]
       // yield put({
       //   type: 'handle',
       //   payload: {
       //     tags: data,
       //   },
-      // });
+      // })
     },
     *classes({ payload }, { call, put }) {
-      const { code, data } = yield call(getAllClasses, payload);
+      const { code, data } = yield call(getAllClasses, payload)
       // const { code, data } = {
       //   code: 200,
       //   data: [
       //     { name: '222', number: 1 },
       //     { name: 'aaa', number: 1 },
       //   ],
-      // };
+      // }
       if (code === 200) {
         yield put({
           type: 'handle',
           payload: {
             classesList: data,
           },
-        });
+        })
       }
     },
     *detail({ payload }, { call, put }) {
-      const { code, data } = yield call(getArticleDetail, payload);
+      const { code, data } = yield call(getArticleDetail, payload)
       if (code === 200) {
         yield put({
           type: 'handle',
@@ -126,7 +126,7 @@ export default {
             detail: data,
             favoriteCount: data.favorite,
           },
-        });
+        })
       }
       // const data = {
       //   "view": 123,
@@ -157,14 +157,14 @@ export default {
       // })
     },
     *comments({ payload }, { call, put }) {
-      const { code, data } = yield call(getComments, payload);
+      const { code, data } = yield call(getComments, payload)
       if (code === 200) {
         yield put({
           type: 'handle',
           payload: {
             comments: data,
           },
-        });
+        })
       }
       // const data = {}
       // yield put({
@@ -175,62 +175,62 @@ export default {
       // })
     },
     *addNoLoginComment({ payload }, { call, put }) {
-      const { code, data } = yield call(createNoLoginComment, payload);
+      const { code, data } = yield call(createNoLoginComment, payload)
       if (code === 200) {
         yield put({
           type: 'createCommentHandle',
           payload: data,
-        });
+        })
       }
     },
 
     *addComment({ payload }, { call, put }) {
-      console.log('addComment', payload);
-      const { code, data } = yield call(createComment, payload);
-      console.log('returnData', data);
+      console.log('addComment', payload)
+      const { code, data } = yield call(createComment, payload)
+      console.log('returnData', data)
       if (code === 200) {
         yield put({
           type: 'createCommentHandle',
           payload: data,
-        });
+        })
       }
     },
     *favorite({ payload }, { call, put }) {
-      const { code } = yield call(updateFavorite, payload);
+      const { code } = yield call(updateFavorite, payload)
       if (code === 200) {
-        yield put({ type: 'changeFavorite' });
+        yield put({ type: 'changeFavorite' })
       }
     },
     *isFavorite({ payload }, { call, put }) {
-      const { code, data } = yield call(getIsFavorite, payload);
+      const { code, data } = yield call(getIsFavorite, payload)
       if (code === 200) {
         yield put({
           type: 'handle',
           payload: {
             isFavorite: data,
           },
-        });
+        })
       }
     },
     *getByClass({ payload }, { call, put }) {
-      const { code, data } = yield call(getListByClass, payload);
+      const { code, data } = yield call(getListByClass, payload)
       // const {code,data}={code:200,data:{
       //   articles:[{title:"title1",createAt:"2011-1-3",articleId:1}],
       //   articleCount:1
       // }}
       if (code === 200) {
-        console.log('getByClass', data);
+        console.log('getByClass', data)
         yield put({
           type: 'handle',
           payload: {
             articleList: data.articles,
             articleCount: data.articleCount,
           },
-        });
+        })
       }
     },
     *getByTag({ payload }, { call, put }) {
-      const { code, data } = yield call(getListByTag, payload);
+      const { code, data } = yield call(getListByTag, payload)
       if (code === 200) {
         yield put({
           type: 'handle',
@@ -238,37 +238,37 @@ export default {
             articleList: data.articles,
             articleCount: data.articleCount,
           },
-        });
+        })
       }
     },
   },
 
   reducers: {
     changeFavorite(state) {
-      console.log(state);
-      const type = state.isFavorite ? 'reduce' : 'plus';
-      let favoriteCount = state.favoriteCount;
+      console.log(state)
+      const type = state.isFavorite ? 'reduce' : 'plus'
+      let favoriteCount = state.favoriteCount
       if (type === 'plus') {
-        favoriteCount += 1;
+        favoriteCount += 1
       }
       if (type === 'reduce') {
-        favoriteCount -= 1;
+        favoriteCount -= 1
       }
       return {
         ...state,
         isFavorite: !state.isFavorite,
         favoriteCount,
-      };
+      }
     },
     handle(state, { payload }) {
-      console.log('payload', payload);
-      return { ...state, ...payload };
+      console.log('payload', payload)
+      return { ...state, ...payload }
     },
     createCommentHandle(state, { payload }) {
       return {
         ...state,
         comments: [payload, ...state.comments],
-      };
+      }
     },
   },
-};
+}

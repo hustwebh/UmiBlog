@@ -1,9 +1,9 @@
-import { Outlet } from '@umijs/max';
+import { Outlet } from '@umijs/max'
 
 export default function Index(props: any) {
   const {
     location: { pathname },
-  } = window;
+  } = window
   return (
     <>
       <div
@@ -14,5 +14,5 @@ export default function Index(props: any) {
         <Outlet />
       </div>
     </>
-  );
+  )
 }

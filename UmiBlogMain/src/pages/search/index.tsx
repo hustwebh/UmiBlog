@@ -1,35 +1,35 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { connect } from 'dva';
-import { Pagination, Input } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
-import type { InputRef } from 'antd';
-import styles from './index.less';
-import articles from '../admin/articles';
+import React, { useEffect, useState, useRef } from 'react'
+import { connect } from 'dva'
+import { Pagination, Input } from 'antd'
+import { SearchOutlined } from '@ant-design/icons'
+import type { InputRef } from 'antd'
+import styles from './index.less'
+import articles from '../admin/articles'
 
 const SearchBox = (props: any) => {
-  const { title, createAt, showDetail, articleId } = props;
+  const { title, createAt, showDetail, articleId } = props
   return (
     <>
       <div
         className={styles.articleBtn}
         onClick={() => {
-          showDetail(articleId);
+          showDetail(articleId)
         }}
       >
         <div style={{ marginLeft: 20, fontSize: 20 }}>{title}</div>
         <div style={{ marginRight: 20, fontSize: 20 }}>{createAt}</div>
       </div>
     </>
-  );
-};
+  )
+}
 
 const Index: React.FC = (props: any) => {
-  const { dispatch, articles, articleCount, history } = props;
+  const { dispatch, articles, articleCount, history } = props
 
-  const searchInput = useRef<InputRef>(null);
-  const [keywords, setKeywords] = useState<string>('');
+  const searchInput = useRef<InputRef>(null)
+  const [keywords, setKeywords] = useState<string>('')
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1)
   useEffect(() => {
     if (dispatch) {
       dispatch({
@@ -38,36 +38,36 @@ const Index: React.FC = (props: any) => {
           currentPage,
           pageSize: 5,
         },
-      });
+      })
     }
-  }, []);
+  }, [])
 
   const showDetail = (articleId: number) => {
-    history.push(`/detail/${articleId}`);
-  };
+    history.push(`/detail/${articleId}`)
+  }
 
   const pageChange = (pageNum: number, pageSize = 5) => {
-    setCurrentPage(pageNum);
+    setCurrentPage(pageNum)
     if (dispatch) {
       dispatch({
         type: 'article/articles',
         payload: { currentPage: pageNum, pageSize, keywords },
-      });
+      })
     }
-  };
+  }
 
   const inputChange = (e: any) => {
     if (searchInput.current?.input?.value) {
-      setKeywords(searchInput.current?.input?.value);
+      setKeywords(searchInput.current?.input?.value)
     }
-  };
+  }
 
   const searchByTitle = (e: any) => {
     dispatch({
       type: 'article/articles',
       payload: { currentPage, pageSize: 10, keywords },
-    });
-  };
+    })
+  }
 
   return (
     <div
@@ -104,7 +104,7 @@ const Index: React.FC = (props: any) => {
                 key={index}
                 showDetail={showDetail}
               />
-            );
+            )
           })}
         <Pagination
           style={{ marginBottom: 10 }}
@@ -116,19 +116,19 @@ const Index: React.FC = (props: any) => {
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
 const mapStateToProps = ({
   article: { articles, articleCount },
 }: {
   article: {
-    articles: any[];
-    articleCount: number;
-  };
+    articles: any[]
+    articleCount: number
+  }
 }) => ({
   articles,
   articleCount,
-});
+})
 
-export default connect(mapStateToProps)(Index);
+export default connect(mapStateToProps)(Index)

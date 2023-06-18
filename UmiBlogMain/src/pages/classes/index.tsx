@@ -1,43 +1,43 @@
-import React, { useEffect } from 'react';
-import styles from './index.less';
-import { history } from 'umi';
-// import { Card } from 'antd';
-import { connect } from 'dva';
+import React, { useEffect } from 'react'
+import styles from './index.less'
+import { history } from 'umi'
+// import { Card } from 'antd'
+import { connect } from 'dva'
 
 const ClassesBtn = ({
   name,
   number,
   isLast,
 }: {
-  name: string | null;
-  number: number | null;
-  isLast: boolean;
+  name: string | null
+  number: number | null
+  isLast: boolean
 }) => {
-  const containerClassName = isLast ? styles.LastClassBtn : styles.classBtn;
+  const containerClassName = isLast ? styles.LastClassBtn : styles.classBtn
   return (
     <div
       className={containerClassName}
       onClick={() => {
-        history.push(`/getList?category=${name}`);
+        history.push(`/getList?category=${name}`)
       }}
     >
       <div style={{ marginLeft: 20, fontSize: 20 }}>{name}</div>
       <div style={{ marginRight: 20, fontSize: 20 }}>{number}</div>
     </div>
-  );
-};
+  )
+}
 
 const Index: React.FC = (props: any) => {
-  const { dispatch, classesList } = props;
-  console.log(classesList);
+  const { dispatch, classesList } = props
+  console.log(classesList)
 
   useEffect(() => {
     if (dispatch) {
       dispatch({
         type: 'article/classes',
-      });
+      })
     }
-  }, []);
+  }, [])
 
   return (
     <div
@@ -54,7 +54,7 @@ const Index: React.FC = (props: any) => {
         {classesList &&
           classesList.map((item: any, index: number) => {
             if (classesList.length % 2) {
-              const isLast = index === classesList.length - 1;
+              const isLast = index === classesList.length - 1
               while (isLast)
                 return (
                   <>
@@ -71,7 +71,7 @@ const Index: React.FC = (props: any) => {
                       isLast={true}
                     />
                   </>
-                );
+                )
             }
             return (
               <ClassesBtn
@@ -80,21 +80,21 @@ const Index: React.FC = (props: any) => {
                 key={index}
                 isLast={false}
               />
-            );
+            )
           })}
       </div>
     </div>
-  );
-};
+  )
+}
 
 const mapStateToProps = ({
   article: { classesList },
 }: {
   article: {
-    classesList: object[];
-  };
+    classesList: object[]
+  }
 }) => ({
   classesList,
-});
+})
 
-export default connect(mapStateToProps)(Index);
+export default connect(mapStateToProps)(Index)

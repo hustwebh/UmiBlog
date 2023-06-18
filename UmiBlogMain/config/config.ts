@@ -1,6 +1,6 @@
-import { defineConfig } from 'umi';
-import { backstageUrl } from './const';
-import RoutesConfig from './routes';
+import { defineConfig } from 'umi'
+import { backstageUrl } from './const'
+import RoutesConfig from './routes'
 
 export default defineConfig({
   routes: RoutesConfig,
@@ -34,4 +34,4 @@ export default defineConfig({
       ]
     }
   }
-});
+})

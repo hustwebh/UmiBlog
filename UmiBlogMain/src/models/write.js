@@ -1,5 +1,5 @@
-import { message } from 'antd';
-import { history } from 'umi';
+import { message } from 'antd'
+import { history } from 'umi'
 import {
   getDraft,
   createDraft,
@@ -8,7 +8,7 @@ import {
   getCategories,
   createPublish,
   deleteDraft,
-} from '../service/write';
+} from '../service/write'
 
 export default {
   namespace: 'write',
@@ -23,15 +23,15 @@ export default {
   },
   effects: {
     *saveDraft({ payload, callback }, { call, put }) {
-      const { code, data } = yield call(createDraft, payload);
+      const { code, data } = yield call(createDraft, payload)
       if (code === 200) {
-        history.push(`/write/draft/${data.id}`);
-        message.success('保存草稿成功');
+        history.push(`/write/draft/${data.id}`)
+        message.success('保存草稿成功')
       }
     },
     //根据key获得草稿数据
     *draft({ payload }, { call, put }) {
-      const { code, data } = yield call(getDraft, payload);
+      const { code, data } = yield call(getDraft, payload)
       if (code === 200) {
         yield put({
           type: 'handle',
@@ -39,19 +39,19 @@ export default {
             markdown: data.markdown,
             title: data.title,
           },
-        });
+        })
       }
     },
 
     *drafts({ payload }, { call, put }) {
-      const { code, data } = yield call(getDrafts, payload);
+      const { code, data } = yield call(getDrafts, payload)
       if (code === 200) {
         yield put({
           type: 'handle',
           payload: {
             drafts: data,
           },
-        });
+        })
       }
     },
 
@@ -72,37 +72,37 @@ export default {
     // },
 
     *updateDraft({ payload }, { call, put }) {
-      const { code } = yield call(updateDraft, payload);
+      const { code } = yield call(updateDraft, payload)
       if (code === 200) {
-        message.success('保存草稿成功');
+        message.success('保存草稿成功')
       }
     },
 
     *deleteDraft({ payload }, { call, put }) {
-      const { code, data } = yield call(deleteDraft, payload);
+      const { code, data } = yield call(deleteDraft, payload)
       if (code === 200) {
         yield put({
           type: 'deleteDraftHandle',
           payload: data,
-        });
+        })
       }
     },
 
     *publish({ payload, callback }, { call, put }) {
-      const { code } = yield call(createPublish, payload);
+      const { code } = yield call(createPublish, payload)
       if (code === 200) {
-        message.success('发布文章成功');
+        message.success('发布文章成功')
         yield put({
           type: 'setMarkdown',
           payload: { markdown: '' },
-        });
-        history.push('/blog');
+        })
+        history.push('/blog')
       }
     },
   },
   reducers: {
     handle(state, { payload }) {
-      return { ...state, ...payload };
+      return { ...state, ...payload }
     },
 
     categoriesHandle(state, { payload }) {
@@ -111,21 +111,21 @@ export default {
         ...payload,
         selectedCategory: state.selectedCategory || payload.selectedCategory,
         selectedTag: state.selectedTag || payload.selectedTag,
-      };
+      }
     },
     deleteDraftHandle(state, { payload }) {
       return {
         ...state,
         drafts: [...state.drafts].filter((item) => item.id !== payload.id),
-      };
+      }
     },
 
     setSelecteCategory(state, { payload }) {
-      return { ...state, selectedCategory: payload.selectedCategory };
+      return { ...state, selectedCategory: payload.selectedCategory }
     },
 
     setSelecteTag(state, { payload }) {
-      return { ...state, selectedTag: payload.selectedTag };
+      return { ...state, selectedTag: payload.selectedTag }
     },
 
     setTags(state, { payload }) {
@@ -133,15 +133,15 @@ export default {
         ...state,
         tags: payload.tags,
         selectedTag: payload.tags.length > 0 ? payload.tags[0].id : null,
-      };
+      }
     },
 
     setMarkdown(state, { payload }) {
-      return { ...state, markdown: payload.markdown };
+      return { ...state, markdown: payload.markdown }
     },
 
     setTitle(state, { payload }) {
-      return { ...state, title: payload.title };
+      return { ...state, title: payload.title }
     },
   },
-};
+}

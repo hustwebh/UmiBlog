@@ -1,8 +1,8 @@
-import React from 'react';
-import { Anchor } from 'antd';
+import React from 'react'
+import { Anchor } from 'antd'
 
 const ArticleAnchor = (props: any) => {
-  const { anchors } = props;
+  const { anchors } = props
   const anchorRender = (data: any) => {
     return data.map((item: any) => {
       if (item.children) {
@@ -15,7 +15,7 @@ const ArticleAnchor = (props: any) => {
           >
             {anchorRender(item.children)}
           </Anchor.Link>
-        );
+        )
       }
       return (
         <Anchor.Link
@@ -24,16 +24,16 @@ const ArticleAnchor = (props: any) => {
           title={item.title}
           className={item.ismain ? 'bold' : ''}
         />
-      );
-    });
-  };
+      )
+    })
+  }
   return (
     <>
       <Anchor className="mt-10 ml-0 bn" showInkInFixed>
         {anchorRender(anchors)}
       </Anchor>
     </>
-  );
-};
+  )
+}
 
-export default ArticleAnchor;
+export default ArticleAnchor

@@ -1,8 +1,8 @@
-import React from 'react';
-import Zmage from 'react-zmage';
+import React from 'react'
+import Zmage from 'react-zmage'
 
 const ImageTag = (props: any) => {
-  const { src } = props;
+  const { src } = props
   return (
     <Zmage
       src={src}
@@ -12,7 +12,7 @@ const ImageTag = (props: any) => {
         zoom: false,
       }}
     />
-  );
-};
+  )
+}
 
-export default ImageTag;
+export default ImageTag

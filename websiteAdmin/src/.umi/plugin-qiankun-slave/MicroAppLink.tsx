@@ -3,7 +3,7 @@
 // DO NOT CHANGE IT MANUALLY!
 // @ts-nocheck
 /* eslint-disable */
-import { useModel } from '@@/plugin-model';
+import { useModel } from '@@/plugin-model'
 import React, {
   forwardRef,
   FC,
@@ -12,104 +12,104 @@ import React, {
   MouseEvent,
   HTMLAttributes,
   useCallback,
-} from 'react';
-import noop from 'D:/UmiBlog/UmiBlogAdmin/node_modules/lodash/noop';
-import find from 'D:/UmiBlog/UmiBlogAdmin/node_modules/lodash/find';
+} from 'react'
+import noop from 'D:/UmiBlog/UmiBlogAdmin/node_modules/lodash/noop'
+import find from 'D:/UmiBlog/UmiBlogAdmin/node_modules/lodash/find'
 import {
   qiankunStateFromMasterModelNamespace,
   defaultHistoryType,
-} from './constants';
+} from './constants'
 
-const COMPONENT_NAME = 'qiankun-microapp-link';
+const COMPONENT_NAME = 'qiankun-microapp-link'
 
 interface MicroAppLinkProps {
   // 应用名称
-  name?: string;
+  name?: string
 
   // 相对路由，不包含应用前缀，以为 `/` 开头
-  to: string;
+  to: string
 
   // 是否主应用下的路由，默认false
-  isMaster?: boolean;
+  isMaster?: boolean
 }
 
 const urlFactory =
   (base: string, routes: Record<string, any>[]) =>
   ({ name, to, isMaster }: MicroAppLinkProps) => {
     if (isMaster) {
-      return to;
+      return to
     }
 
     if (!to?.startsWith('/')) {
-      throw new Error(`[${COMPONENT_NAME}] props "to" should start with "/"`);
+      throw new Error(`[${COMPONENT_NAME}] props "to" should start with "/"`)
     }
 
-    const app = find(routes, ({ microApp }) => microApp === name);
+    const app = find(routes, ({ microApp }) => microApp === name)
     if (!app) {
-      console.error(`[${COMPONENT_NAME}] microapp "${name}" is not found`);
-      return to;
+      console.error(`[${COMPONENT_NAME}] microapp "${name}" is not found`)
+      return to
     }
 
     const prefix =
       base === '/'
         ? app.path.replace('/*', '')
-        : `${base}${app.path.replace('/*', '')}`;
-    return `${prefix}${to}`;
-  };
+        : `${base}${app.path.replace('/*', '')}`
+    return `${prefix}${to}`
+  }
 
 export const MicroAppLink: FC<
   MicroAppLinkProps & HTMLAttributes<HTMLAnchorElement>
 > = forwardRef((props, ref) => {
-  const { children, name, to, isMaster = false, ...anchorProps } = props;
+  const { children, name, to, isMaster = false, ...anchorProps } = props
   const stateFromMaster = (useModel || noop)(
     qiankunStateFromMasterModelNamespace,
-  );
-  const linkRef = useRef<HTMLAnchorElement>();
+  )
+  const linkRef = useRef<HTMLAnchorElement>()
 
   const {
     masterHistoryType,
     microAppRoutes,
     base,
     appNameKeyAlias = 'name',
-  } = stateFromMaster?.__globalRoutesInfo || {};
+  } = stateFromMaster?.__globalRoutesInfo || {}
   // ref: https://github.com/umijs/plugins/pull/866 基于 name 或 appNameKeyAlias 取到 appName 的逻辑
   const appName =
-    name && props[appNameKeyAlias] ? name : props[appNameKeyAlias] || name;
+    name && props[appNameKeyAlias] ? name : props[appNameKeyAlias] || name
 
-  const linkProps = { name: appName, to, isMaster };
-  const createHerf = urlFactory(base, microAppRoutes);
+  const linkProps = { name: appName, to, isMaster }
+  const createHerf = urlFactory(base, microAppRoutes)
 
   const linkUrl =
     masterHistoryType === 'browser'
       ? createHerf(linkProps)
-      : `#${createHerf(linkProps)}`;
+      : `#${createHerf(linkProps)}`
 
-  useImperativeHandle(ref, () => linkRef.current);
+  useImperativeHandle(ref, () => linkRef.current)
 
   const handleClick = useCallback(
     (e: MouseEvent<HTMLAnchorElement>) => {
       if (anchorProps.onClick) {
-        return anchorProps.onClick(e);
+        return anchorProps.onClick(e)
       }
 
       // hash路由 使用 a标签 默认行为
       if (masterHistoryType === 'hash') {
-        return;
+        return
       }
 
       if (masterHistoryType === 'browser') {
-        e?.stopPropagation();
-        e?.preventDefault();
-        return window.history.pushState({}, '', linkUrl);
+        e?.stopPropagation()
+        e?.preventDefault()
+        return window.history.pushState({}, '', linkUrl)
       }
 
       console.error(
         `[${COMPONENT_NAME}] not support "masterHistoryType = '${masterHistoryType}'"`,
-      );
-      return;
+      )
+      return
     },
     [anchorProps.onClick, masterHistoryType],
-  );
+  )
 
   return (
     <a
@@ -121,5 +121,5 @@ export const MicroAppLink: FC<
     >
       {children}
     </a>
-  );
-});
+  )
+})

@@ -1,31 +1,31 @@
-import React, { useEffect } from 'react';
-import styles from './index.less';
-import { history } from 'umi';
-// import { Card } from 'antd';
-import { connect } from 'dva';
+import React, { useEffect } from 'react'
+import styles from './index.less'
+import { history } from 'umi'
+// import { Card } from 'antd'
+import { connect } from 'dva'
 
 const ClassesBtn = ({ name }: { name: string | null }) => {
   return (
     <div
       className={styles.tagsBtn}
       onClick={() => {
-        history.push(`/getList?tag=${name}`);
+        history.push(`/getList?tag=${name}`)
       }}
     >
       {name}
     </div>
-  );
-};
+  )
+}
 
 const Index: React.FC = (props: any) => {
-  const { dispatch, tags } = props;
+  const { dispatch, tags } = props
   useEffect(() => {
     if (dispatch) {
       dispatch({
         type: 'article/tags',
-      });
+      })
     }
-  }, []);
+  }, [])
 
   return (
     <div
@@ -41,21 +41,21 @@ const Index: React.FC = (props: any) => {
       <div className={styles.container}>
         {tags &&
           tags.map((item: any, index: number) => {
-            return <ClassesBtn name={item} key={index} />;
+            return <ClassesBtn name={item} key={index} />
           })}
       </div>
     </div>
-  );
-};
+  )
+}
 
 const mapStateToProps = ({
   article: { tags },
 }: {
   article: {
-    tags: object[];
-  };
+    tags: object[]
+  }
 }) => ({
   tags,
-});
+})
 
-export default connect(mapStateToProps)(Index);
+export default connect(mapStateToProps)(Index)

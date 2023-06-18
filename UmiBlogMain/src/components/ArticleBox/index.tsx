@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { Tooltip, List, Skeleton, Tag, Card } from 'antd';
-import { EyeOutlined, LikeOutlined, MessageOutlined } from '@ant-design/icons';
-import Link from 'umi';
-import dayjs from 'dayjs';
-import styles from './index.less';
-import type { ArticleBoxType } from '../../utils/const.type';
+import React, { useState, useEffect } from 'react'
+import { Tooltip, List, Skeleton, Tag, Card } from 'antd'
+import { EyeOutlined, LikeOutlined, MessageOutlined } from '@ant-design/icons'
+import Link from 'umi'
+import dayjs from 'dayjs'
+import styles from './index.less'
+import type { ArticleBoxType } from '../../utils/const.type'
 
-const IconText = ({ icon, text }: { icon: any; text: number }) => (
+const IconText = ({ icon, text }: { icon: any,text: number }) => (
   <span style={{ marginLeft: 8 }}>
     {React.createElement(icon)}
     {text}
   </span>
-);
+)
 
 export default function Index(props: ArticleBoxType) {
   const {
@@ -24,7 +24,7 @@ export default function Index(props: ArticleBoxType) {
     comment,
     articleId,
     showDetail,
-  } = props;
+  } = props
 
   return (
     <>
@@ -32,7 +32,7 @@ export default function Index(props: ArticleBoxType) {
         className={styles.container}
         onClick={() => {
           // if(showDetail) {
-          showDetail(articleId);
+          showDetail(articleId)
           // }
         }}
       >
@@ -63,7 +63,7 @@ export default function Index(props: ArticleBoxType) {
                       <div key={index}>
                         <Tag>{item}</Tag>
                       </div>
-                    );
+                    )
                   })}
               </div>
               <div className={styles.iconContainer}>
@@ -76,5 +76,5 @@ export default function Index(props: ArticleBoxType) {
         </Skeleton>
       </div>
     </>
-  );
+  )
 }

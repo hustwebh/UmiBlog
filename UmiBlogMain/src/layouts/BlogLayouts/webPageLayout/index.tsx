@@ -1,13 +1,13 @@
-import HeadMenu from '@/components/HeaderMenu';
-import { Outlet } from '@umijs/max';
-import ReactCanvasNest from 'react-canvas-nest';
-import styles from './index.less';
+import HeadMenu from '@/components/HeaderMenu'
+import { Outlet } from '@umijs/max'
+import ReactCanvasNest from 'react-canvas-nest'
+import styles from './index.less'
 
 export default function Index() {
   const {
     location: { pathname },
-  } = window;
-  const isSpecial = pathname === '/tags' || pathname === '/classes';
+  } = window
+  const isSpecial = pathname === '/tags' || pathname === '/classes'
   return (
     <div style={{height:'100%'}}>
       <div className={styles.head}>
@@ -37,5 +37,5 @@ export default function Index() {
         )}
       </div>
     </div>
-  );
+  )
 }

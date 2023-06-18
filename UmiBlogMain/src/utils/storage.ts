@@ -1,4 +1,4 @@
-import CryptoJS from "crypto-js";
+import CryptoJS from "crypto-js"
 import ENCRYPT_KEY  from '../config/secret'
 
 const encrypt = (dataToStorage:any) => {

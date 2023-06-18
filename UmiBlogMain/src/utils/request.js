@@ -1,8 +1,13 @@
+import Cookies from 'js-cookie'
+
 // 运行时配置
 export default {
   // 统一的请求设定
-  timeout: 1000,
-  headers: { 'X-Requested-With': 'XMLHttpRequest' },
+  timeout: 3001,
+  headers: { 
+    'X-Requested-With': 'XMLHttpRequest',
+    'token': Cookies.get("tooken") || '',
+  },
 
   // 错误处理： umi@3 的错误处理方案。
   errorConfig: {
@@ -67,20 +72,11 @@ export default {
   requestInterceptors: [
     (config) => {
       // 拦截请求配置，进行个性化处理。
-      const url = config.url.concat('');
-      return { ...config, url };
-    },
+        console.log(config.url)
+        return { ...config, url};
+      }
   ],
 
   // 响应拦截器
-  responseInterceptors: [
-    (response) => {
-      // 拦截响应数据，进行个性化处理
-      //  const { data } = response;
-      //  if(!data.success){
-      //    message.error('请求失败！');
-      //  }
-      return response;
-    },
-  ],
+  responseInterceptors: [],
 };

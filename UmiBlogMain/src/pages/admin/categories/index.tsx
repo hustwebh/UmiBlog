@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import {
   Card,
   Table,
@@ -8,39 +8,39 @@ import {
   Input,
   Form,
   Popconfirm,
-} from 'antd';
-import { connect } from 'dva';
-import dayjs from 'dayjs';
-import { PlusOutlined } from '@ant-design/icons';
-import { v4 as uuidv4 } from 'uuid';
+} from 'antd'
+import { connect } from 'dva'
+import dayjs from 'dayjs'
+import { PlusOutlined } from '@ant-design/icons'
+import { v4 as uuidv4 } from 'uuid'
 
 const Category = (props: any) => {
-  const { dispatch, categories, loading } = props;
-  const [visible, setVisible] = useState(false);
-  const [form] = Form.useForm();
+  const { dispatch, categories, loading } = props
+  const [visible, setVisible] = useState(false)
+  const [form] = Form.useForm()
   useEffect(() => {
     if (dispatch) {
-      dispatch({ type: 'admin/categories' });
+      dispatch({ type: 'admin/categories' })
     }
-  }, []);
-  const addCategory = () => {};
+  }, [])
+  const addCategory = () => {}
   const handleCancel = () => {
-    setVisible(false);
-  };
+    setVisible(false)
+  }
   const showModal = () => {
-    setVisible(true);
-  };
+    setVisible(true)
+  }
   const onSubmit = (values: any) => {
     if (dispatch) {
-      dispatch({ type: 'admin/createCategory', payload: values });
+      dispatch({ type: 'admin/createCategory', payload: values })
     }
-    form.resetFields();
-  };
+    form.resetFields()
+  }
   const deleteCategory = (id: number) => {
     if (dispatch) {
-      dispatch({ type: 'admin/deleteCategory', payload: { id } });
+      dispatch({ type: 'admin/deleteCategory', payload: { id } })
     }
-  };
+  }
   const columns = [
     {
       title: 'ID',
@@ -61,7 +61,7 @@ const Category = (props: any) => {
       title: '创建时间',
       dataIndex: 'createdAt',
       render(date: string) {
-        return <span>{dayjs(date).format('YYYY-MM-DD')}</span>;
+        return <span>{dayjs(date).format('YYYY-MM-DD')}</span>
       },
     },
     {
@@ -78,10 +78,10 @@ const Category = (props: any) => {
               删除
             </Button>
           </Popconfirm>
-        );
+        )
       },
     },
-  ];
+  ]
 
   return (
     <>
@@ -131,8 +131,8 @@ const Category = (props: any) => {
         </Form>
       </Modal>
     </>
-  );
-};
+  )
+}
 
 export default connect(
   ({
@@ -140,11 +140,11 @@ export default connect(
     loading,
   }: {
     admin: {
-      categories: any[];
-    };
-    loading: any;
+      categories: any[]
+    }
+    loading: any
   }) => ({
     categories,
     loading: loading.effects['admin/categories'],
   }),
-)(Category);
+)(Category)

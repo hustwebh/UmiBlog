@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
-import { Button, Row, Form, Input, Checkbox } from 'antd';
-import { useDispatch } from '@umijs/max';
-import { MailOutlined, LockOutlined } from '@ant-design/icons';
+import React, { useEffect } from 'react'
+import { Button, Row, Form, Input, Checkbox } from 'antd'
+import { useDispatch } from '@umijs/max'
+import { MailOutlined, LockOutlined } from '@ant-design/icons'
 
 export default function Index(props: any) {
-  const [form] = Form.useForm();
-  const { title, typeHandler } = props;
-  const dispatch = useDispatch();
+  const [form] = Form.useForm()
+  const { title, typeHandler } = props
+  const dispatch = useDispatch()
   const onFinish = (values: any) => {
     if (title === '登录') {
-      const { email = '', password = '', remember = false } = values;
+      const { email = '', password = '', remember = false } = values
       dispatch({
         type: 'user/login',
         payload: {
@@ -17,7 +17,7 @@ export default function Index(props: any) {
           password,
           remember,
         },
-      });
+      })
       // .then((res: boolean) => {
       //   if (res) {
       //     //true
@@ -25,16 +25,16 @@ export default function Index(props: any) {
       //       type: 'user/account',
       //     }).then((res: boolean) => {
       //       if (res || location.isRegister) {
-      //         handleCancel();
+      //         handleCancel()
       //       } else {
       //         //清空表单
-      //         form.resetFields();
+      //         form.resetFields()
       //       }
-      //     });
+      //     })
       //   }
-      // });
+      // })
     } else {
-      const { name = '', password = '', email = '' } = values;
+      const { name = '', password = '', email = '' } = values
 
       dispatch({
         type: 'user/register',
@@ -44,10 +44,10 @@ export default function Index(props: any) {
           email,
         },
       }).then((res: boolean) => {
-        if (res) typeHandler('登录');
-      });
+        if (res) typeHandler('登录')
+      })
     }
-  };
+  }
   return (
     <>
       <h3 className="tc mt-10m">{`${title}`}</h3>
@@ -95,9 +95,9 @@ export default function Index(props: any) {
                 ({ getFieldValue }) => ({
                   validator(rule, value) {
                     if (!value || getFieldValue('password') === value) {
-                      return Promise.resolve();
+                      return Promise.resolve()
                     }
-                    return Promise.reject('两次密码不一致');
+                    return Promise.reject('两次密码不一致')
                   },
                 }),
               ]}
@@ -132,5 +132,5 @@ export default function Index(props: any) {
         )}
       </Form>
     </>
-  );
+  )
 }

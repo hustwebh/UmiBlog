@@ -1,4 +1,4 @@
-import { defineConfig } from 'umi';
+import { defineConfig } from 'umi'
 
 export default defineConfig({
   antd: {},
@@ -34,5 +34,5 @@ export default defineConfig({
     slave: {},
   },
   npmClient: 'yarn',
-});
+})
 

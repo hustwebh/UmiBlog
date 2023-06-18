@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import {
   Layout,
   Card,
@@ -8,7 +8,7 @@ import {
   Divider,
   Tooltip,
   message,
-} from 'antd';
+} from 'antd'
 import {
   UserOutlined,
   MessageOutlined,
@@ -17,32 +17,32 @@ import {
   GithubOutlined,
   WeiboCircleOutlined,
   createFromIconfontCN,
-} from '@ant-design/icons';
-import MathJax from 'react-mathjax';
-// import Markdown from '@/components/Markdown';
-import MarkdownIt from 'markdown-it';
-import hljs from 'highlight.js';
-// import Markdown from 'react-markdown';
-import ArticleAnchor from '@/components/ArticleAnchor';
-import Comments from '@/components/Comments';
+} from '@ant-design/icons'
+import MathJax from 'react-mathjax'
+// import Markdown from '@/components/Markdown'
+import MarkdownIt from 'markdown-it'
+import hljs from 'highlight.js'
+// import Markdown from 'react-markdown'
+import ArticleAnchor from '@/components/ArticleAnchor'
+import Comments from '@/components/Comments'
 
-import styles from './index.less';
-import './markdown.css';
-import { connect } from 'dva';
+import styles from './index.less'
+import './markdown.css'
+import { connect } from 'dva'
 
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-dayjs.extend(relativeTime); // 使用插件
-dayjs.locale('zh-cn');
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+dayjs.extend(relativeTime) // 使用插件
+dayjs.locale('zh-cn')
 
-const { Content } = Layout;
+const { Content } = Layout
 
 const UserAvatar = (props: any) =>
   props.src ? (
     <Avatar size={props.size || 'default'} src={props.src} />
   ) : (
     <Avatar size={props.size || 'default'} icon={<UserOutlined />} />
-  );
+  )
 
 const Index: React.FC = (props: any) => {
   const {
@@ -57,22 +57,22 @@ const Index: React.FC = (props: any) => {
     comments,
     account,
     loading2,
-  } = props;
+  } = props
 
-  const markdownRenderer = new MarkdownIt();
+  const markdownRenderer = new MarkdownIt()
 
   useEffect(() => {
     if (dispatch) {
-      dispatch({ type: 'article/detail', payload: { articleId } });
-      dispatch({ type: 'article/comments', payload: { articleId } });
+      dispatch({ type: 'article/detail', payload: { articleId } })
+      dispatch({ type: 'article/comments', payload: { articleId } })
       if (account && account.id) {
         dispatch({
           type: 'article/isFavorite',
           payload: { articleId, userId: account.id },
-        });
+        })
       }
     }
-  }, []);
+  }, [])
 
   const handleFavorite = () => {
     if (dispatch) {
@@ -80,12 +80,12 @@ const Index: React.FC = (props: any) => {
         dispatch({
           type: 'article/favorite',
           payload: { articleId, userId: account.id },
-        });
+        })
       } else {
-        message.warning('请先登录!');
+        message.warning('请先登录!')
       }
     }
-  };
+  }
 
   return (
     <Content className={styles.articleContainer}>
@@ -142,7 +142,7 @@ const Index: React.FC = (props: any) => {
         </div>
         <div className={styles.articleContainerSider}>
           <Card
-            title="关于作��1�7"
+            title="关于作��1�7"
             bordered={false}
             size="small"
             loading={loading}
@@ -183,7 +183,7 @@ const Index: React.FC = (props: any) => {
               </Col>
             </Row>
           </Card>
-          TODO：生成文章锚炄1�7
+          TODO：生成文章锚炄1�7
           {detail && detail.anchor && <ArticleAnchor anchors={[]} />}
         </div>
         <div className={styles.articlePanel}>
@@ -209,8 +209,8 @@ const Index: React.FC = (props: any) => {
         </div>
       </div>
     </Content>
-  );
-};
+  )
+}
 
 const mapStateToProps = ({
   article: { detail, isFavorite, favoriteCount, comments },
@@ -219,14 +219,14 @@ const mapStateToProps = ({
   loading2,
 }: {
   article: {
-    detail: object;
-    isFavorite: any;
-    favoriteCount: number;
-    comments: any[];
-  };
-  user: { account: object };
-  loading: any;
-  loading2: any;
+    detail: object
+    isFavorite: any
+    favoriteCount: number
+    comments: any[]
+  }
+  user: { account: object }
+  loading: any
+  loading2: any
 }) => {
   return {
     detail,
@@ -236,7 +236,7 @@ const mapStateToProps = ({
     comments,
     loading: loading.effects['article/detail'],
     loading2: loading.effects['article/comments'],
-  };
-};
+  }
+}
 
-export default connect(mapStateToProps)(Index);
+export default connect(mapStateToProps)(Index)

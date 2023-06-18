@@ -1,36 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import { Card, Table, Button, Tag, Popconfirm } from 'antd';
-import { connect } from 'dva';
-import { Link } from 'umi';
-import dayjs from 'dayjs';
-import { v4 as uuidv4 } from 'uuid';
+import React, { useEffect, useState } from 'react'
+import { Card, Table, Button, Tag, Popconfirm } from 'antd'
+import { connect } from 'dva'
+import { Link } from 'umi'
+import dayjs from 'dayjs'
+import { v4 as uuidv4 } from 'uuid'
 
 const Article = (props: any) => {
-  const { dispatch, articles, articleCount, loading } = props;
-  const [currentPage, setCurrentPage] = useState(1);
+  const { dispatch, articles, articleCount, loading } = props
+  const [currentPage, setCurrentPage] = useState(1)
   useEffect(() => {
     if (dispatch) {
       dispatch({
         type: 'admin/articles',
         payload: { currentPage, pageSize: 10 },
-      });
+      })
     }
-  }, []);
+  }, [])
 
   const pageChange = (pageNum: number) => {
-    setCurrentPage(pageNum);
+    setCurrentPage(pageNum)
     if (dispatch) {
       dispatch({
         type: 'admin/articles',
         payload: { currentPage: pageNum, pageSize: 10 },
-      });
+      })
     }
-  };
+  }
   const deleteArticle = (id: number) => {
     if (dispatch) {
-      dispatch({ type: 'admin/deleteArticle', payload: { id } });
+      dispatch({ type: 'admin/deleteArticle', payload: { id } })
     }
-  };
+  }
   const columns = [
     {
       title: 'ID',
@@ -42,14 +42,14 @@ const Article = (props: any) => {
       width: 150,
       ellipsis: true,
       render(article: any) {
-        return <Link to={`/detail/${article.id}`}>{article.title}</Link>;
+        return <Link to={`/detail/${article.id}`}>{article.title}</Link>
       },
     },
     {
       title: '分类',
       dataIndex: 'category',
       render(category: string) {
-        return <Tag color="warning">{category}</Tag>;
+        return <Tag color="warning">{category}</Tag>
       },
     },
     {
@@ -68,7 +68,7 @@ const Article = (props: any) => {
       title: '创建时间',
       dataIndex: 'createdAt',
       render(date: string) {
-        return <span>{dayjs(date).format('YYYY-MM-DD')}</span>;
+        return <span>{dayjs(date).format('YYYY-MM-DD')}</span>
       },
     },
     {
@@ -86,10 +86,10 @@ const Article = (props: any) => {
               删除
             </Button>
           </Popconfirm>
-        );
+        )
       },
     },
-  ];
+  ]
   return (
     <>
       <Card size="small">
@@ -107,8 +107,8 @@ const Article = (props: any) => {
         />
       </Card>
     </>
-  );
-};
+  )
+}
 
 export default connect(
   ({
@@ -116,13 +116,13 @@ export default connect(
     loading,
   }: {
     admin: {
-      articles: any[];
-      articleCount: number;
-    };
-    loading: any;
+      articles: any[]
+      articleCount: number
+    }
+    loading: any
   }) => ({
     articles,
     articleCount,
     loading: loading.effects['admin/articles'],
   }),
-)(Article);
+)(Article)

@@ -1,24 +1,24 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { connect } from 'dva';
-import { Pagination } from 'antd';
-import styles from './index.less';
+import React, { useEffect, useState, useRef } from 'react'
+import { connect } from 'dva'
+import { Pagination } from 'antd'
+import styles from './index.less'
 
 const SearchBox = (props: any) => {
-  const { title, createAt, showDetail, articleId } = props;
+  const { title, createAt, showDetail, articleId } = props
   return (
     <>
       <div
         className={styles.articleBtn}
         onClick={() => {
-          showDetail(articleId);
+          showDetail(articleId)
         }}
       >
         <div style={{ marginLeft: 20, fontSize: 20 }}>{title}</div>
         <div style={{ marginRight: 20, fontSize: 20 }}>{createAt}</div>
       </div>
     </>
-  );
-};
+  )
+}
 
 const Index: React.FC = (props: any) => {
   const {
@@ -27,9 +27,9 @@ const Index: React.FC = (props: any) => {
     articleCount,
     history,
     location: { query },
-  } = props;
+  } = props
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1)
   useEffect(() => {
     if (dispatch) {
       if (query.category) {
@@ -40,7 +40,7 @@ const Index: React.FC = (props: any) => {
             pageSize: 5,
             class1: query.category,
           },
-        });
+        })
       }
       if (query.tag) {
         dispatch({
@@ -50,25 +50,25 @@ const Index: React.FC = (props: any) => {
             pageSize: 5,
             tag: query.tag,
           },
-        });
+        })
       }
     }
-  }, []);
-  console.log('articleList', articleList);
+  }, [])
+  console.log('articleList', articleList)
 
   const showDetail = (articleId: number) => {
-    history.push(`/detail/${articleId}`);
-  };
+    history.push(`/detail/${articleId}`)
+  }
 
   const pageChange = (pageNum: number, pageSize = 5) => {
-    setCurrentPage(pageNum);
+    setCurrentPage(pageNum)
     if (dispatch) {
       dispatch({
         type: 'article/articles',
         payload: { currentPage: pageNum, pageSize },
-      });
+      })
     }
-  };
+  }
 
   return (
     <div
@@ -95,7 +95,7 @@ const Index: React.FC = (props: any) => {
                 key={index}
                 showDetail={showDetail}
               />
-            );
+            )
           })}
         <Pagination
           style={{ marginBottom: 10 }}
@@ -107,19 +107,19 @@ const Index: React.FC = (props: any) => {
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
 const mapStateToProps = ({
   article: { articleList, articleCount },
 }: {
   article: {
-    articleList: any;
-    articleCount: number;
-  };
+    articleList: any
+    articleCount: number
+  }
 }) => ({
   articleList,
   articleCount,
-});
+})
 
-export default connect(mapStateToProps)(Index);
+export default connect(mapStateToProps)(Index)
