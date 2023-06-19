@@ -11,7 +11,6 @@ export async function registerAccount(data) {
 
 // 登录
 export async function loginAccount(data) {
-  // console.log(request())
   return request('/api/user/login', {
     method: 'POST',
     data,

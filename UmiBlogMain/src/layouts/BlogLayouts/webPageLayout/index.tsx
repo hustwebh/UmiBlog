@@ -9,7 +9,8 @@ export default function Index() {
   } = window
   const isSpecial = pathname === '/tags' || pathname === '/classes'
   return (
-    <div style={{height:'100%'}}>
+    <div style={{height:'100vh'}}>
+      <ReactCanvasNest />
       <div className={styles.head}>
         <HeadMenu />
         <div className={styles.container}>
@@ -25,7 +26,6 @@ export default function Index() {
           alignItems: 'center',
         }}
       >
-        <ReactCanvasNest />
         {isSpecial ? (
           <div className={styles.withoutMarginTop}>
             <Outlet />

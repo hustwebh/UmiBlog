@@ -15,3 +15,4 @@ declare module '*.less' {
 }
 
 declare module '*.js'
+declare module 'js-cookie'
