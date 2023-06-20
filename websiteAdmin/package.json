@@ -3,19 +3,19 @@
   "private": true,
   "author": "zyr <3115988782@qq.com>",
   "scripts": {
-    "dev": "set PORT=8002 &&  max dev",
+    "start": "PORT=8002 &&  max dev",
     "build": "max build",
     "format": "prettier --cache --write .",
-    "prepare": "husky install",
     "postinstall": "max setup",
-    "setup": "max setup",
-    "start": "npm run dev"
+    "setup": "max setup"
   },
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
-    "@ant-design/pro-components": "^2.4.4",
+    "@ant-design/pro-components": "^2.6.2",
     "@umijs/max": "^4.0.70",
-    "antd": "^5.4.0"
+    "antd": "^5.4.0",
+    "cross-env": "^7.0.3",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.33",

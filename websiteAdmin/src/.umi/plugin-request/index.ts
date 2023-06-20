@@ -6,4 +6,4 @@ export {
   UseRequestProvider,
   request,
   getRequestInstance,
-} from './request'
+} from './request';

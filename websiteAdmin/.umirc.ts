@@ -20,14 +20,20 @@ export default defineConfig({
       component: './Home',
     },
     {
-      name: '权限演示',
-      path: '/access',
-      component: './Access',
+      path: '/admin/categories',
+      component: '@/pages/categories',
     },
     {
-      name: ' CRUD 示例',
-      path: '/table',
-      component: './Table',
+      path: '/admin/tags',
+      component: '@/pages/tags',
+    },
+    {
+      path: '/admin/articles',
+      component: '@/pages/articles',
+    },
+    {
+      path: '/admin/comments',
+      component: '@/pages/comments',
     },
   ],
   qiankun: {

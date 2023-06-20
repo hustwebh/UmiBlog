@@ -553,7 +553,7 @@ export default function IndexPage() {
       const updatePhysics = (deltaTime: any) => {
         physicsWorld.stepSimulation(deltaTime, 10)
 
-        for (let i = 0 i < rigidBodies.length i++) {
+        for (let i = 0; i < rigidBodies.length; i++) {
           let objThree: any = rigidBodies[i]
           let objAmmo = objThree.userData.physicsBody
           let ms = objAmmo.getMotionState()

@@ -9,4 +9,4 @@ export type {
   RequestError,
   ResponseInterceptor,
   RequestOptions,
-  Request } from './request'
+  Request } from './request';

@@ -79,7 +79,7 @@ export function addParticles() {
   const geometry = new THREE.BufferGeometry()
   const arr = new Array()
 
-  for (let i = 0 i < 10000 i++) {
+  for (let i = 0; i < 10000; i++) {
     const x = getRandomArbitrary(-1100, 1100)
     const y = getRandomArbitrary(-2500, 2500)
     const z = getRandomArbitrary(-1100, -500)
@@ -136,7 +136,7 @@ export const generateGalaxy = () => {
   const insideColor = new THREE.Color(parameters.insideColor)
   const outsideColor = new THREE.Color(parameters.outsideColor)
 
-  for (let i = 0 i < parameters.count i++) {
+  for (let i = 0; i < parameters.count; i++) {
     const i3 = i * 3
 
     // Position
@@ -157,9 +157,9 @@ export const generateGalaxy = () => {
       radius
     const randomZ =
       Math.pow(Math.random(), parameters.randomnessPower) *
-        (Math.random() < 0.5 ? 1 : -1) *
-        parameters.randomness *
-        radius -
+      (Math.random() < 0.5 ? 1 : -1) *
+      parameters.randomness *
+      radius -
       50
 
     positions[i3] = Math.cos(branchAngle) * radius
