@@ -12,12 +12,12 @@ export { history, createHistory } from './core/history';
 export { terminal } from './core/terminal';
 export { TestBrowser } from './testBrowser';
 // plugins
-export { Access, useAccess, useAccessMarkedRoutes } from '/Users/didi/UmiBlog/websiteAdmin/src/.umi/plugin-access';
-export { Provider, useModel } from '/Users/didi/UmiBlog/websiteAdmin/src/.umi/plugin-model';
+export { connect, useDispatch, useStore, useSelector, getDvaApp } from '/Users/didi/UmiBlog/websiteAdmin/src/.umi/plugin-dva';
+export { addLocale, setLocale, getLocale, getIntl, useIntl, injectIntl, formatMessage, FormattedMessage, getAllLocales, FormattedDate, FormattedDateParts, FormattedDisplayName, FormattedHTMLMessage, FormattedList, FormattedNumber, FormattedNumberParts, FormattedPlural, FormattedRelativeTime, FormattedTime, FormattedTimeParts, IntlProvider, RawIntlProvider, SelectLang } from '/Users/didi/UmiBlog/websiteAdmin/src/.umi/plugin-locale';
 export { connectMaster, MicroAppLink } from '/Users/didi/UmiBlog/websiteAdmin/src/.umi/plugin-qiankun-slave';
 export { useRequest, UseRequestProvider, request, getRequestInstance } from '/Users/didi/UmiBlog/websiteAdmin/src/.umi/plugin-request';
 // plugins types.d.ts
-export * from '/Users/didi/UmiBlog/websiteAdmin/src/.umi/plugin-access/types.d';
 export * from '/Users/didi/UmiBlog/websiteAdmin/src/.umi/plugin-antd/types.d';
+export * from '/Users/didi/UmiBlog/websiteAdmin/src/.umi/plugin-dva/types.d';
 export * from '/Users/didi/UmiBlog/websiteAdmin/src/.umi/plugin-layout/types.d';
 export * from '/Users/didi/UmiBlog/websiteAdmin/src/.umi/plugin-request/types.d';

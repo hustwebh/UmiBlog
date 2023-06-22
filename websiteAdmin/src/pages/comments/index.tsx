@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
 import { Card, Table, Button, Tag, Popconfirm } from 'antd'
-import { connect } from 'dva'
+import { connect } from '@umijs/max'
 import { Link } from 'umi'
 import dayjs from 'dayjs'
 import { v4 as uuidv4 } from 'uuid'
+import { PageContainer } from '@ant-design/pro-components'
 
-const Comment = (props:any) => {
+const Comment = (props: any) => {
   const { dispatch, comments, loading } = props
   useEffect(() => {
     if (dispatch) {
@@ -13,7 +14,7 @@ const Comment = (props:any) => {
     }
   }, [])
 
-  const deleteComment = (id:number) => {
+  const deleteComment = (id: number) => {
     if (dispatch) {
       dispatch({ type: 'admin/deleteComment', payload: { id } })
     }
@@ -28,7 +29,7 @@ const Comment = (props:any) => {
       title: '评论用户',
       dataIndex: 'user',
       ellipsis: true,
-      render(user:any) {
+      render(user: any) {
         return <span>{user.nickname}</span>
       },
     },
@@ -37,7 +38,7 @@ const Comment = (props:any) => {
       dataIndex: 'article',
       ellipsis: true,
       width: 150,
-      render(article:any) {
+      render(article: any) {
         return (
           <Link to={`/detail/${article.id}`}>
             {article.title}
@@ -53,7 +54,7 @@ const Comment = (props:any) => {
     {
       title: '状态',
       dataIndex: 'status',
-      render(status:number) {
+      render(status: number) {
         return status === 1 ? (
           <Tag color="success">可见</Tag>
         ) : (
@@ -64,14 +65,14 @@ const Comment = (props:any) => {
     {
       title: '创建时间',
       dataIndex: 'createdAt',
-      render(date:string) {
+      render(date: string) {
         return <span>{dayjs(date).format('YYYY-MM-DD')}</span>
       },
     },
     {
       title: '操作',
       dataIndex: 'id',
-      render(id:any) {
+      render(id: any) {
         return (
           <Popconfirm
             title="确定要删除吗？"
@@ -89,7 +90,7 @@ const Comment = (props:any) => {
   ]
 
   return (
-    <>
+    <PageContainer >
       <Card size="small">
         <Table
           columns={columns}
@@ -99,15 +100,15 @@ const Comment = (props:any) => {
           pagination={false}
         />
       </Card>
-    </>
+    </PageContainer>
   )
 }
 
-export default connect(({ admin: { comments }, loading }:{
-  admin:{
-    comments:any[],
+export default connect(({ admin: { comments }, loading }: {
+  admin: {
+    comments: any[],
   },
-  loading:any
+  loading: any
 }) => ({
   comments,
   loading: loading.effects['admin/comments'],

@@ -14,6 +14,7 @@ import { connect } from '@umijs/max'
 import moment from 'moment'
 import { v4 as uuidv4 } from 'uuid'
 import { PlusOutlined } from '@ant-design/icons'
+import { PageContainer } from '@ant-design/pro-components'
 
 const { Option } = Select
 
@@ -82,7 +83,7 @@ const Tag = (props: any) => {
     },
   ]
   return (
-    <>
+    <PageContainer>
       <Space style={{ marginBottom: 16 }}>
         <Button type="primary" icon={<PlusOutlined />} onClick={showModal}>
           添加标签
@@ -125,7 +126,7 @@ const Tag = (props: any) => {
           </Form.Item>
         </Form>
       </Modal>
-    </>
+    </PageContainer>
   )
 }
 

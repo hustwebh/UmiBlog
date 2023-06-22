@@ -2,9 +2,13 @@ import { defineConfig } from 'umi'
 
 export default defineConfig({
   antd: {},
-  access: {},
-  model: {},
-  initialState: {},
+  dva: {},
+  locale: {
+    default: 'zh-CN',
+    antd: true,
+    // default true, when it is true, will use `navigator.language` overwrite default
+    baseNavigator: true,
+  },
   request: {},
   layout: {
     title: '@umijs/max',
@@ -20,20 +24,24 @@ export default defineConfig({
       component: './Home',
     },
     {
-      path: '/admin/categories',
-      component: '@/pages/categories',
+      name: '分类',
+      path: '/categories',
+      component: './categories',
     },
     {
-      path: '/admin/tags',
-      component: '@/pages/tags',
+      name: '标签',
+      path: '/tags',
+      component: './tags',
     },
     {
-      path: '/admin/articles',
-      component: '@/pages/articles',
+      name: '文章',
+      path: '/articles',
+      component: './articles',
     },
     {
-      path: '/admin/comments',
-      component: '@/pages/comments',
+      name: '评论',
+      path: '/comments',
+      component: './comments',
     },
   ],
   qiankun: {

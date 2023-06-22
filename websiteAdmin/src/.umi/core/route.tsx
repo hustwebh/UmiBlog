@@ -4,7 +4,7 @@
 import React from 'react';
 
 export async function getRoutes() {
-  const routes = {"1":{"path":"/","redirect":"/home","parentId":"ant-design-pro-layout","id":"1"},"2":{"name":"首页","path":"/home","parentId":"ant-design-pro-layout","id":"2"},"3":{"path":"/admin/categories","parentId":"ant-design-pro-layout","id":"3"},"4":{"path":"/admin/tags","parentId":"ant-design-pro-layout","id":"4"},"5":{"path":"/admin/articles","parentId":"ant-design-pro-layout","id":"5"},"6":{"path":"/admin/comments","parentId":"ant-design-pro-layout","id":"6"},"ant-design-pro-layout":{"id":"ant-design-pro-layout","path":"/","isLayout":true}} as const;
+  const routes = {"1":{"path":"/","redirect":"/home","parentId":"ant-design-pro-layout","id":"1"},"2":{"name":"首页","path":"/home","parentId":"ant-design-pro-layout","id":"2"},"3":{"name":"分类","path":"/categories","parentId":"ant-design-pro-layout","id":"3"},"4":{"name":"标签","path":"/tags","parentId":"ant-design-pro-layout","id":"4"},"5":{"name":"文章","path":"/articles","parentId":"ant-design-pro-layout","id":"5"},"6":{"name":"评论","path":"/comments","parentId":"ant-design-pro-layout","id":"6"},"ant-design-pro-layout":{"id":"ant-design-pro-layout","path":"/","isLayout":true}} as const;
   return {
     routes,
     routeComponents: {

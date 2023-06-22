@@ -4,6 +4,7 @@
 import React from 'react';
 import { Avatar, version, Dropdown, Menu, Spin } from 'antd';
 import { LogoutOutlined } from '/Users/didi/UmiBlog/websiteAdmin/node_modules/@umijs/plugins/node_modules/@ant-design/icons';
+import { SelectLang } from '@@/plugin-locale';
 
 export function getRightRenderContent (opts: {
    runtimeConfig: any,
@@ -91,6 +92,7 @@ export function getRightRenderContent (opts: {
       ) : (
         avatar
       )}
+      <SelectLang />
     </div>
   );
 }

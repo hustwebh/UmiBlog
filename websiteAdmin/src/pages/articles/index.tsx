@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Card, Table, Button, Tag, Popconfirm } from 'antd'
-import { connect } from 'dva'
+import { connect } from '@umijs/max'
 import { Link } from 'umi'
 import dayjs from 'dayjs'
 import { v4 as uuidv4 } from 'uuid'
+import { PageContainer } from '@ant-design/pro-components'
 
 const Article = (props: any) => {
   const { dispatch, articles, articleCount, loading } = props
@@ -91,7 +92,7 @@ const Article = (props: any) => {
     },
   ]
   return (
-    <>
+    <PageContainer ghost>
       <Card size="small">
         <Table
           columns={columns}
@@ -106,7 +107,7 @@ const Article = (props: any) => {
           }}
         />
       </Card>
-    </>
+    </PageContainer>
   )
 }
 

@@ -3,11 +3,10 @@
 // DO NOT CHANGE IT MANUALLY!
 import * as Plugin_0 from '/Users/didi/UmiBlog/websiteAdmin/src/app.ts';
 import * as Plugin_1 from '@@/core/helmet.ts';
-import * as Plugin_2 from '/Users/didi/UmiBlog/websiteAdmin/src/.umi/plugin-access/runtime.tsx';
-import * as Plugin_3 from '/Users/didi/UmiBlog/websiteAdmin/src/.umi/plugin-initialState/runtime.tsx';
-import * as Plugin_4 from '/Users/didi/UmiBlog/websiteAdmin/src/.umi/plugin-layout/runtime.tsx';
-import * as Plugin_5 from '/Users/didi/UmiBlog/websiteAdmin/src/.umi/plugin-model/runtime.tsx';
-import * as Plugin_6 from '/Users/didi/UmiBlog/websiteAdmin/src/.umi/plugin-qiankun-slave/slaveRuntimePlugin.ts';
+import * as Plugin_2 from '/Users/didi/UmiBlog/websiteAdmin/src/.umi/plugin-dva/runtime.tsx';
+import * as Plugin_3 from '/Users/didi/UmiBlog/websiteAdmin/src/.umi/plugin-layout/runtime.tsx';
+import * as Plugin_4 from '/Users/didi/UmiBlog/websiteAdmin/src/.umi/plugin-locale/runtime.tsx';
+import * as Plugin_5 from '/Users/didi/UmiBlog/websiteAdmin/src/.umi/plugin-qiankun-slave/slaveRuntimePlugin.ts';
 import { PluginManager } from 'umi';
 
 function __defaultExport (obj) {
@@ -28,29 +27,25 @@ export function getPlugins() {
     },
     {
       apply: Plugin_2,
-      path: process.env.NODE_ENV === 'production' ? void 0 : '/Users/didi/UmiBlog/websiteAdmin/src/.umi/plugin-access/runtime.tsx',
+      path: process.env.NODE_ENV === 'production' ? void 0 : '/Users/didi/UmiBlog/websiteAdmin/src/.umi/plugin-dva/runtime.tsx',
     },
     {
       apply: Plugin_3,
-      path: process.env.NODE_ENV === 'production' ? void 0 : '/Users/didi/UmiBlog/websiteAdmin/src/.umi/plugin-initialState/runtime.tsx',
-    },
-    {
-      apply: Plugin_4,
       path: process.env.NODE_ENV === 'production' ? void 0 : '/Users/didi/UmiBlog/websiteAdmin/src/.umi/plugin-layout/runtime.tsx',
     },
     {
-      apply: Plugin_5,
-      path: process.env.NODE_ENV === 'production' ? void 0 : '/Users/didi/UmiBlog/websiteAdmin/src/.umi/plugin-model/runtime.tsx',
+      apply: Plugin_4,
+      path: process.env.NODE_ENV === 'production' ? void 0 : '/Users/didi/UmiBlog/websiteAdmin/src/.umi/plugin-locale/runtime.tsx',
     },
     {
-      apply: Plugin_6,
+      apply: Plugin_5,
       path: process.env.NODE_ENV === 'production' ? void 0 : '/Users/didi/UmiBlog/websiteAdmin/src/.umi/plugin-qiankun-slave/slaveRuntimePlugin.ts',
     },
   ];
 }
 
 export function getValidKeys() {
-  return ['patchRoutes','patchClientRoutes','modifyContextOpts','modifyClientRenderOpts','rootContainer','innerProvider','i18nProvider','accessProvider','dataflowProvider','outerProvider','render','onRouteChange','antd','getInitialState','layout','qiankun','request',];
+  return ['patchRoutes','patchClientRoutes','modifyContextOpts','modifyClientRenderOpts','rootContainer','innerProvider','i18nProvider','accessProvider','dataflowProvider','outerProvider','render','onRouteChange','antd','dva','layout','locale','qiankun','request',];
 }
 
 let pluginManager = null;

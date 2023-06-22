@@ -3,7 +3,7 @@
 // DO NOT CHANGE IT MANUALLY!
 // @ts-nocheck
 /* eslint-disable */
-import { useModel } from '@@/plugin-model';
+const useModel = null;;
 import React, {
   forwardRef,
   FC,

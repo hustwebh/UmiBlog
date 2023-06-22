@@ -2,9 +2,7 @@
 // DO NOT CHANGE IT MANUALLY!
 /// <reference types="/Users/didi/UmiBlog/websiteAdmin/node_modules/@ant-design/pro-components" />
     import type { ProLayoutProps, HeaderProps } from "/Users/didi/UmiBlog/websiteAdmin/node_modules/@ant-design/pro-components";
-    import type InitialStateType from '@@/plugin-initialState/@@initialState';
-           type InitDataType = ReturnType<typeof InitialStateType>;
-        
+    type InitDataType = any;
 
     import type { IConfigFromPlugins } from '@@/core/pluginConfig';
 

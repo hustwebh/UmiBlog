@@ -9,10 +9,11 @@ import {
   Form,
   Popconfirm,
 } from 'antd'
-import { connect } from 'dva'
+import { connect } from '@umijs/max'
 import dayjs from 'dayjs'
 import { PlusOutlined } from '@ant-design/icons'
 import { v4 as uuidv4 } from 'uuid'
+import { PageContainer } from '@ant-design/pro-components'
 
 const Category = (props: any) => {
   const { dispatch, categories, loading } = props
@@ -23,7 +24,7 @@ const Category = (props: any) => {
       dispatch({ type: 'admin/categories' })
     }
   }, [])
-  const addCategory = () => {}
+  const addCategory = () => { }
   const handleCancel = () => {
     setVisible(false)
   }
@@ -84,7 +85,7 @@ const Category = (props: any) => {
   ]
 
   return (
-    <>
+    <PageContainer ghost>
       <Space style={{ marginBottom: 16 }}>
         <Button type="primary" icon={<PlusOutlined />} onClick={showModal}>
           添加分类
@@ -130,7 +131,7 @@ const Category = (props: any) => {
           </Form.Item>
         </Form>
       </Modal>
-    </>
+    </PageContainer>
   )
 }
 
