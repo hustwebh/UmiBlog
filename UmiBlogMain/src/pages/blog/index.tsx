@@ -41,6 +41,7 @@ const Index: React.FC = (props: any) => {
   useEffect(
     () => {
       if (dispatch) {
+        console.log(123)
         dispatch({
           type: 'article/articles',
           payload: { currentPage, pageSize: 5, keywords: '' },

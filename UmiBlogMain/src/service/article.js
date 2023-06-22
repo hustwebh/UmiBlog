@@ -1,6 +1,7 @@
-import request from '@/utils/request'
+import { request } from '@umijs/max'
 
 export async function getArticles({ currentPage, pageSize, keywords }) {
+  console.log(456)
   return request(
     `/api/article/articles?currentPage=${currentPage}&pageSize=${pageSize}&keywords=${keywords}`,
   )

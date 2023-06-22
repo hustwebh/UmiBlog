@@ -1,5 +1,5 @@
 import { stringify } from 'qs'
-import request from '@/utils/request'
+import { request } from '@umijs/max'
 
 // 保存draft
 export async function createDraft(data) {
