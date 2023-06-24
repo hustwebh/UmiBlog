@@ -15,10 +15,15 @@ export default defineConfig({
     baseNavigator: true,
   },
   proxy: {
+    // '/api': {
+    //   target: backstageUrl,
+    //   changeOrigin: true,
+    // },
     '/api': {
-      target: backstageUrl,
-      changeOrigin: true,
-    },
+      'target': backstageUrl,
+      'changeOrigin': true,
+      'pathRewrite': { '^/api' : '' },
+    }
   },
   qiankun:{
     master:{

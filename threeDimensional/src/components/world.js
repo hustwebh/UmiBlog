@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import Stats from 'stats.js'
-import galaxyVertexShader from './vertex.js'
-import galaxyFragmentShader from './fragment.js'
+import galaxyVertexShader from './vertex.glsl'
+import galaxyFragmentShader from './fragment.glsl'
 
 export let clock,
   scene,

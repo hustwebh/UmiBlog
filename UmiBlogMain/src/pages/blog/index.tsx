@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Row, Col, Card, Button, Popover, Pagination } from 'antd'
 import { GithubOutlined, QqOutlined, WechatOutlined } from '@ant-design/icons'
-import { connect,useLocation } from '@umijs/max'
+import { connect, history, useLocation, useDispatch } from '@umijs/max'
 import styles from './index.less'
 import ArticleBox from '../../components/ArticleBox'
 import type { ArticleBoxType } from '../../utils/const.type'
@@ -24,32 +24,25 @@ const accountList = [
 
 const Index: React.FC = (props: any) => {
   const {
-    dispatch,
     articles,
-    articleCount,
+    article_count,
     tags,
-    loading,
-    history,
-    // location: { state = {} },
   } = props
   const location = useLocation()
+  const dispatch = useDispatch()
   // const { category, tag } = location.state || {}
-
   const [currentPage, setCurrentPage] = useState(1)
-
+console.log(articles,article_count)
   //获取博客文章列表
   useEffect(
     () => {
-      if (dispatch) {
-        console.log(123)
-        dispatch({
-          type: 'article/articles',
-          payload: { currentPage, pageSize: 5, keywords: '' },
-        })
-      }
-    })
+      dispatch({
+        type: 'article/articles',
+        payload: { currentPage, pageSize: 5, keywords: '' },
+      })
+    }, [])
 
-  //获取博客标签列表
+  // //获取博客标签列表
   useEffect(() => {
     if (dispatch) {
       dispatch({
@@ -128,25 +121,21 @@ const Index: React.FC = (props: any) => {
             })}
             {/* </div> */}
           </Card>
-          {/* <Card loading={loading}>
-            <div className={s.notice}>{data?.data[0].notice}</div>
-          </Card> */}
           <Card
             title="标签集合"
             className={styles.siderBlocks}
             bodyStyle={{ display: 'flex', width: '100%', flexWrap: 'wrap' }}
           >
-            {/* <div> */}
             {tags && tags.length ? (
-              tags.map((item: string, index: number) => {
+              tags.map((item: { name: string, tag_id: number }) => {
                 return (
-                  <div key={index} className={styles.tagBox}>
-                    {item}
+                  <div key={item.tag_id} className={styles.tagBox}>
+                    {item.name}
                   </div>
                 )
               })
             ) : (
-              <span>标签加载丄1�7...</span>
+              <span>标签加载中</span>
             )}
             {/* </div> */}
           </Card>
@@ -154,8 +143,8 @@ const Index: React.FC = (props: any) => {
       </Row>
       <Row>
         <Pagination
-          total={articleCount}
-          showTotal={(articleCount) => `共有${articleCount}篇文章`}
+          total={article_count}
+          showTotal={(article_count) => `共有${article_count}篇文章`}
           defaultPageSize={5}
           defaultCurrent={currentPage}
           onChange={pageChange}
@@ -166,21 +155,19 @@ const Index: React.FC = (props: any) => {
 }
 
 const mapStateToProps = ({
-  article: { articles, articleCount, tags },
-  loading,
+  article: { articles, article_count, tags },
 }: {
   article: {
     articles: any
-    articleCount: number
+    article_count: number
     tags: string[]
   }
-  loading: any
 }) => ({
   articles,
-  articleCount,
+  article_count,
   tags,
-  loading:
-    loading.effects['article/tags'] && loading.effects['article/articles'],
+  // loading:
+  //   loading.effects['article/tags'] && loading.effects['article/articles'],
 })
 
 export default connect(mapStateToProps)(Index)

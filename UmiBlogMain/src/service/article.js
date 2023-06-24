@@ -1,9 +1,8 @@
 import { request } from '@umijs/max'
 
 export async function getArticles({ currentPage, pageSize, keywords }) {
-  console.log(456)
   return request(
-    `/api/article/articles?currentPage=${currentPage}&pageSize=${pageSize}&keywords=${keywords}`,
+    `/api/article/articles?current_page=${currentPage}&page_size=${pageSize}&keywords=${keywords}`,
   )
 }
 
@@ -18,8 +17,9 @@ export async function getTags() {
 }
 
 //获取文章详情信息
-export async function getArticleDetail({ articleId }) {
-  return request(`/api/article/detail?articleId=${articleId}`)
+export async function getArticleDetail({ article_id }) {
+  // return request(`/api/article/detail?article_id=${article_id}`)
+  return request(`/test`)
 }
 
 // 文章点赞

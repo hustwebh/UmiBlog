@@ -23,7 +23,7 @@ interface IMessageInfo {
 }
 
 function Chat() {
-  const { id, email, avatar } = storageHelper.get('account') || {};
+  const { id, email, token } = storageHelper.get('account') || {};
   const [connectReady, setConnectReady] = useState<boolean>(false)
   const [msgList, setMsgList] = useState<IMessageInfo[]>([])
   const [userToken, setUserToken] = useState<String>(Cookies.get('token') || '')
@@ -32,9 +32,9 @@ function Chat() {
 
   useLayoutEffect(() => {
     if (userToken !== "") {
-      ws.current = new WebSocket("ws://175.178.43.145:4001/ws" + "/?token=" + userToken)
+      ws.current = new WebSocket("ws://ycmr6n.natappfree.cc/ws" + "/?token=" + userToken)
       ws.current.onopen = () => {
-        setConnectReady(true)
+        setConnectReady(true)//setXXX都是前端处理函数，和你无关
       }
       ws.current.close = () => {
         setConnectReady(false)

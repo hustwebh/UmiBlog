@@ -22,7 +22,7 @@ export default function Index(props: ArticleBoxType) {
     category,
     favorite,
     comment,
-    articleId,
+    article_id,
     showDetail,
   } = props
 
@@ -30,11 +30,7 @@ export default function Index(props: ArticleBoxType) {
     <>
       <div
         className={styles.container}
-        onClick={() => {
-          // if(showDetail) {
-          showDetail(articleId)
-          // }
-        }}
+        onClick={() => showDetail(article_id)}
       >
         <Skeleton
           avatar

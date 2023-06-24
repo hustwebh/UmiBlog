@@ -18,17 +18,17 @@ import {
   WeiboCircleOutlined,
   createFromIconfontCN,
 } from '@ant-design/icons'
-import MathJax from 'react-mathjax'
-// import Markdown from '@/components/Markdown'
 import MarkdownIt from 'markdown-it'
+import markdownItAnchor from 'markdown-it-anchor'
+import markdownItTocDoneRight from 'markdown-it-toc-done-right'
 import hljs from 'highlight.js'
-// import Markdown from 'react-markdown'
 import ArticleAnchor from '@/components/ArticleAnchor'
 import Comments from '@/components/Comments'
 
 import styles from './index.less'
 import './markdown.css'
-import { connect } from 'dva'
+import { connect, useDispatch, useLocation} from '@umijs/max'
+import storageHelper from '@/utils/storage'
 
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
@@ -46,44 +46,58 @@ const UserAvatar = (props: any) =>
 
 const Index: React.FC = (props: any) => {
   const {
-    match: {
-      params: { articleId },
-    },
-    dispatch,
     isFavorite,
-    favoriteCount,
+    favorite_count,
     detail,
-    loading,
     comments,
-    account,
-    loading2,
   } = props
-
+  const location = useLocation()
+  const dispatch = useDispatch()
+  const account = storageHelper.get('account');
   const markdownRenderer = new MarkdownIt()
-
+  markdownRenderer
+    .use(markdownItAnchor, {
+      permalink: markdownItAnchor.permalink.ariaHidden({
+        symbol: '§',
+        space: false,
+        placement: 'before',
+      })
+    })
+    .use(markdownItTocDoneRight, {
+      containerClass: 'toc',//生成的容器的类名，这样最后返回来的字符串是 <nav class="toc"><nav/>
+      containerId: 'toc',//生成的容器的ID，这样最后返回来的字符串是 <nav id="toc"><nav/>
+      listType: 'ul',//导航列表使用ul还是ol
+      listClass: 'listClass',//li标签的样式名
+      linkClass: 'linkClass',//a标签的样式名
+      callback: function (html: any,ast:any) {
+        //把目录单独列出来
+        console.log(ast)
+        let anchorDiv = document.getElementById('anchor');
+        if (anchorDiv) anchorDiv.innerHTML = html
+      }
+    })
+  const article_id = Number.parseInt(location.pathname.split('/').pop()|| "")
   useEffect(() => {
     if (dispatch) {
-      dispatch({ type: 'article/detail', payload: { articleId } })
-      dispatch({ type: 'article/comments', payload: { articleId } })
-      if (account && account.id) {
+      dispatch({ type: 'article/detail', payload: { article_id } })
+      dispatch({ type: 'article/comments', payload: { article_id } })
+      if (account?.id) {
         dispatch({
           type: 'article/isFavorite',
-          payload: { articleId, userId: account.id },
+          payload: { article_id, user_id: account.id },
         })
       }
     }
   }, [])
 
   const handleFavorite = () => {
-    if (dispatch) {
-      if (account && account.id) {
-        dispatch({
-          type: 'article/favorite',
-          payload: { articleId, userId: account.id },
-        })
-      } else {
-        message.warning('请先登录!')
-      }
+    if (account?.id) {
+      dispatch({
+        type: 'article/favorite',
+        payload: { article_id, user_id: account.id },
+      })
+    } else {
+      message.warning('请先登录!')
     }
   }
 
@@ -94,7 +108,7 @@ const Index: React.FC = (props: any) => {
           <Card
             size="small"
             bordered={false}
-            loading={loading}
+            // loading={loading}
             className="p-1m"
           >
             <div>
@@ -119,12 +133,11 @@ const Index: React.FC = (props: any) => {
                 </div>
               </div>
 
-              <h1>{detail.title}</h1>
-              {detail.markdown && (
+              {detail.content && (
                 <div
                   className="markdown-body"
                   dangerouslySetInnerHTML={{
-                    __html: markdownRenderer.render(detail.markdown),
+                    __html: markdownRenderer.render(detail.content),
                   }}
                 ></div>
               )}
@@ -132,20 +145,20 @@ const Index: React.FC = (props: any) => {
           </Card>
           <Divider />
           <Comments
-            id={articleId}
+            id={article_id}
             author={detail.uid}
-            loading={loading2}
+            // loading={loading2}
             comments={comments}
-            account={account}
+            // account={account}
             dispatch={dispatch}
           />
         </div>
         <div className={styles.articleContainerSider}>
           <Card
-            title="关于作��1�7"
+            title="关于作者"
             bordered={false}
             size="small"
-            loading={loading}
+          // loading={loading}
           >
             <div style={{ display: 'flex', marginBottom: 10 }}>
               {detail && detail.user && (
@@ -153,7 +166,6 @@ const Index: React.FC = (props: any) => {
               )}
               <div className="pl-1m">
                 <h5>{detail.user && detail.user.nickname}</h5>
-                {/* <small>{detail.user && detail.user.profession}</small> */}
               </div>
             </div>
             <Row
@@ -183,8 +195,8 @@ const Index: React.FC = (props: any) => {
               </Col>
             </Row>
           </Card>
-          TODO：生成文章锚炄1�7
-          {detail && detail.anchor && <ArticleAnchor anchors={[]} />}
+          <div id='anchor' style={{ position: 'fixed' }}>TODO:生成文章锚点</div>
+          {/* <div dangerouslySetInnerHTML={{__html:markdownRenderer.render(`$<toc{"listType":"ul"}>\n\n${detail.content}`)}}></div> */}
         </div>
         <div className={styles.articlePanel}>
           <div className={styles.articlePanelItem}>
@@ -195,7 +207,7 @@ const Index: React.FC = (props: any) => {
               />
             </div>
             <div className={styles.articlePanelCount}>
-              <span>{favoriteCount}</span>
+              <span>{favorite_count}</span>
             </div>
           </div>
           <div className={styles.articlePanelItem}>
@@ -213,29 +225,26 @@ const Index: React.FC = (props: any) => {
 }
 
 const mapStateToProps = ({
-  article: { detail, isFavorite, favoriteCount, comments },
-  user: { account },
+  article: { detail, isFavorite, favorite_count, comments },
   loading,
   loading2,
 }: {
   article: {
     detail: object
     isFavorite: any
-    favoriteCount: number
+    favorite_count: number
     comments: any[]
   }
-  user: { account: object }
   loading: any
   loading2: any
 }) => {
   return {
     detail,
     isFavorite,
-    favoriteCount,
-    account,
+    favorite_count,
     comments,
-    loading: loading.effects['article/detail'],
-    loading2: loading.effects['article/comments'],
+    // loading: loading.effects['article/detail'],
+    // loading2: loading.effects['article/comments'],
   }
 }
 

@@ -3,9 +3,7 @@ import { history } from '@umijs/max';
 import {
   registerAccount,
   loginAccount,
-  // getAccount,
   logoutAccount,
-  // modifyAccount,
 } from '../service/user';
 import Cookies from 'js-cookie';
 import storageHelper from '@/utils/storage';

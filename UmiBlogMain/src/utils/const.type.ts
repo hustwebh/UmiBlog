@@ -7,7 +7,7 @@ export interface ArticleBoxType {
   comment: number
   imgs?: string[]
   category: string
-  articleId: number
+  article_id: number
   createAt: string
   tag?: string[]
   showDetail: Function

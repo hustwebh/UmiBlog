@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import ReactDOMServer from 'react-dom/server'
-import { connect } from 'dva'
+import { connect, useDispatch } from '@umijs/max'
 import moment from 'moment'
 import {
   Input,
@@ -70,7 +70,6 @@ const Content = (props: any) => {
 
 const Index: React.FC = (props: any) => {
   const {
-    dispatch,
     title,
     drafts,
     account,
@@ -80,7 +79,7 @@ const Index: React.FC = (props: any) => {
       params: { key },
     },
   } = props
-
+  const dispatch = useDispatch()
   const [visible, setVisible] = useState(false)
   const [value, setValue] = React.useState(markdown)
   const inputRef = useRef<InputRef>(null) || undefined
@@ -102,14 +101,12 @@ const Index: React.FC = (props: any) => {
       message.info('请先登录')
       history.push('/blog')
     }
-    if (dispatch) {
-      // dispatch({ type: 'write/category' })
-      if (key !== 'new' && /^\d+$/.test(key)) {
-        dispatch({ type: 'write/draft', payload: { id: key } })
-      } else {
-        dispatch({ type: 'write/setMarkdown', payload: { markdown: '' } })
-        dispatch({ type: 'write/setTitle', payload: { title: null } })
-      }
+    // dispatch({ type: 'write/category' })
+    if (key !== 'new' && /^\d+$/.test(key)) {
+      dispatch({ type: 'write/draft', payload: { id: key } })
+    } else {
+      dispatch({ type: 'write/setMarkdown', payload: { markdown: '' } })
+      dispatch({ type: 'write/setTitle', payload: { title: null } })
     }
     if (inputRef.current) {
       inputRef.current.focus()
